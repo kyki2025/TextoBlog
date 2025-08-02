@@ -16,7 +16,9 @@ const esbuildOpts = {
   color: true,
   entryPoints: ['src/main.tsx', 'index.html'],
   outdir: 'dist',
-  entryNames: '[name]',
+        entryNames: 'main',
+  assetNames: '[name]',
+  chunkNames: '[name]',
   write: true,
   bundle: true,
   format: 'iife',
@@ -25,6 +27,7 @@ const esbuildOpts = {
   treeShaking: true,
   jsx: 'automatic',
   target: 'es2020',
+  metafile: true,
   loader: {
     '.html': 'copy',
     '.png': 'file',

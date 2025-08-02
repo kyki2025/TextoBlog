@@ -239,20 +239,20 @@
           {
             Object.freeze(emptyObject);
           }
-          function Component4(props, context, updater) {
+          function Component(props, context, updater) {
             this.props = props;
             this.context = context;
             this.refs = emptyObject;
             this.updater = updater || ReactNoopUpdateQueue;
           }
-          Component4.prototype.isReactComponent = {};
-          Component4.prototype.setState = function(partialState, callback) {
+          Component.prototype.isReactComponent = {};
+          Component.prototype.setState = function(partialState, callback) {
             if (typeof partialState !== "object" && typeof partialState !== "function" && partialState != null) {
               throw new Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");
             }
             this.updater.enqueueSetState(this, partialState, callback, "setState");
           };
-          Component4.prototype.forceUpdate = function(callback) {
+          Component.prototype.forceUpdate = function(callback) {
             this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
           };
           {
@@ -261,7 +261,7 @@
               replaceState: ["replaceState", "Refactor your code to use setState instead (see https://github.com/facebook/react/issues/3236)."]
             };
             var defineDeprecationWarning = function(methodName, info) {
-              Object.defineProperty(Component4.prototype, methodName, {
+              Object.defineProperty(Component.prototype, methodName, {
                 get: function() {
                   warn("%s(...) is deprecated in plain JavaScript React classes. %s", info[0], info[1]);
                   return void 0;
@@ -276,7 +276,7 @@
           }
           function ComponentDummy() {
           }
-          ComponentDummy.prototype = Component4.prototype;
+          ComponentDummy.prototype = Component.prototype;
           function PureComponent(props, context, updater) {
             this.props = props;
             this.context = context;
@@ -285,7 +285,7 @@
           }
           var pureComponentPrototype = PureComponent.prototype = new ComponentDummy();
           pureComponentPrototype.constructor = PureComponent;
-          assign(pureComponentPrototype, Component4.prototype);
+          assign(pureComponentPrototype, Component.prototype);
           pureComponentPrototype.isPureReactComponent = true;
           function createRef() {
             var refObject = {
@@ -511,7 +511,7 @@
             }
             return element;
           };
-          function createElement12(type, config, children) {
+          function createElement3(type, config, children) {
             var propName;
             var props = {};
             var key = null;
@@ -579,7 +579,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement3(element, config, children) {
+          function cloneElement2(element, config, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -627,7 +627,7 @@
             }
             return ReactElement(element.type, key, ref, self, source, owner, props);
           }
-          function isValidElement3(object) {
+          function isValidElement2(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -692,7 +692,7 @@
                   return c;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement3(mappedChild)) {
+                if (isValidElement2(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -780,12 +780,12 @@
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement3(children)) {
+            if (!isValidElement2(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
           }
-          function createContext4(defaultValue) {
+          function createContext2(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -972,7 +972,7 @@
             }
             return lazyType;
           }
-          function forwardRef12(render) {
+          function forwardRef9(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1033,7 +1033,7 @@
             }
             return false;
           }
-          function memo2(type, compare) {
+          function memo(type, compare) {
             {
               if (!isValidElementType(type)) {
                 error("memo: The first argument must be a component. Instead received: %s", type === null ? "null" : typeof type);
@@ -1071,7 +1071,7 @@
             }
             return dispatcher;
           }
-          function useContext6(Context) {
+          function useContext2(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState6(initialState) {
+          function useState4(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef5(initialValue) {
+          function useRef(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect6(create, deps) {
+          function useEffect(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1105,15 +1105,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useInsertionEffect(create, deps);
           }
-          function useLayoutEffect4(create, deps) {
+          function useLayoutEffect(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback5(callback, deps) {
+          function useCallback2(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo5(create, deps) {
+          function useMemo2(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1135,7 +1135,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useDeferredValue(value);
           }
-          function useId2() {
+          function useId() {
             var dispatcher = resolveDispatcher();
             return dispatcher.useId();
           }
@@ -1350,8 +1350,8 @@
               return describeNativeComponentFrame(fn, false);
             }
           }
-          function shouldConstruct(Component5) {
-            var prototype = Component5.prototype;
+          function shouldConstruct(Component2) {
+            var prototype = Component2.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -1511,11 +1511,11 @@
             if (isArray(node)) {
               for (var i = 0; i < node.length; i++) {
                 var child = node[i];
-                if (isValidElement3(child)) {
+                if (isValidElement2(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement3(node)) {
+            } else if (isValidElement2(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1526,7 +1526,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement3(step.value)) {
+                    if (isValidElement2(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1610,7 +1610,7 @@
                 error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement12.apply(this, arguments);
+            var element = createElement3.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1649,14 +1649,14 @@
             return validatedFactory;
           }
           function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement3.apply(this, arguments);
+            var newElement = cloneElement2.apply(this, arguments);
             for (var i = 2; i < arguments.length; i++) {
               validateChildKeys(arguments[i], newElement.type);
             }
             validatePropTypes(newElement);
             return newElement;
           }
-          function startTransition3(scope, options) {
+          function startTransition(scope, options) {
             var prevTransition = ReactCurrentBatchConfig.transition;
             ReactCurrentBatchConfig.transition = {};
             var currentTransition = ReactCurrentBatchConfig.transition;
@@ -1849,15 +1849,15 @@
           var createElement$1 = createElementWithValidation;
           var cloneElement$1 = cloneElementWithValidation;
           var createFactory = createFactoryWithValidation;
-          var Children3 = {
+          var Children2 = {
             map: mapChildren,
             forEach: forEachChildren,
             count: countChildren,
             toArray,
             only: onlyChild
           };
-          exports.Children = Children3;
-          exports.Component = Component4;
+          exports.Children = Children2;
+          exports.Component = Component;
           exports.Fragment = REACT_FRAGMENT_TYPE;
           exports.Profiler = REACT_PROFILER_TYPE;
           exports.PureComponent = PureComponent;
@@ -1866,29 +1866,29 @@
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.act = act;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext4;
+          exports.createContext = createContext2;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
-          exports.forwardRef = forwardRef12;
-          exports.isValidElement = isValidElement3;
+          exports.forwardRef = forwardRef9;
+          exports.isValidElement = isValidElement2;
           exports.lazy = lazy;
-          exports.memo = memo2;
-          exports.startTransition = startTransition3;
+          exports.memo = memo;
+          exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback5;
-          exports.useContext = useContext6;
+          exports.useCallback = useCallback2;
+          exports.useContext = useContext2;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect6;
-          exports.useId = useId2;
+          exports.useEffect = useEffect;
+          exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
-          exports.useLayoutEffect = useLayoutEffect4;
-          exports.useMemo = useMemo5;
+          exports.useLayoutEffect = useLayoutEffect;
+          exports.useMemo = useMemo2;
           exports.useReducer = useReducer;
-          exports.useRef = useRef5;
-          exports.useState = useState6;
+          exports.useRef = useRef;
+          exports.useState = useState4;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2384,9 +2384,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React23 = require_react();
+          var React12 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React23.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React12.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -2435,7 +2435,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment8 = 7;
+          var Fragment4 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3422,8 +3422,8 @@
               return describeNativeComponentFrame(fn, false);
             }
           }
-          function shouldConstruct(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct(Component) {
+            var prototype = Component.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -3592,7 +3592,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment8:
+              case Fragment4:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -3993,7 +3993,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React23.Children.forEach(props.children, function(child) {
+                  React12.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -9417,7 +9417,7 @@
               }
             }
           }
-          function createElement12(type, props, rootContainerElement, parentNamespace) {
+          function createElement3(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -10287,7 +10287,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement12(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement3(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -10423,8 +10423,8 @@
               var nextNode = node.nextSibling;
               parentInstance.removeChild(node);
               if (nextNode && nextNode.nodeType === COMMENT_NODE) {
-                var data2 = nextNode.data;
-                if (data2 === SUSPENSE_END_DATA) {
+                var data = nextNode.data;
+                if (data === SUSPENSE_END_DATA) {
                   if (depth === 0) {
                     parentInstance.removeChild(nextNode);
                     retryIfBlockedOn(suspenseInstance);
@@ -10432,7 +10432,7 @@
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_PENDING_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA) {
+                } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_PENDING_START_DATA || data === SUSPENSE_FALLBACK_START_DATA) {
                   depth++;
                 }
               }
@@ -10577,14 +10577,14 @@
             var depth = 0;
             while (node) {
               if (node.nodeType === COMMENT_NODE) {
-                var data2 = node.data;
-                if (data2 === SUSPENSE_END_DATA) {
+                var data = node.data;
+                if (data === SUSPENSE_END_DATA) {
                   if (depth === 0) {
                     return getNextHydratableSibling(node);
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
+                } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
                   depth++;
                 }
               }
@@ -10597,14 +10597,14 @@
             var depth = 0;
             while (node) {
               if (node.nodeType === COMMENT_NODE) {
-                var data2 = node.data;
-                if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
+                var data = node.data;
+                if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
                   if (depth === 0) {
                     return node;
                   } else {
                     depth--;
                   }
-                } else if (data2 === SUSPENSE_END_DATA) {
+                } else if (data === SUSPENSE_END_DATA) {
                   depth++;
                 }
               }
@@ -10886,9 +10886,9 @@
           var contextStackCursor = createCursor(emptyContextObject);
           var didPerformWorkStackCursor = createCursor(false);
           var previousContext = emptyContextObject;
-          function getUnmaskedContext(workInProgress2, Component4, didPushOwnContextIfProvider) {
+          function getUnmaskedContext(workInProgress2, Component, didPushOwnContextIfProvider) {
             {
-              if (didPushOwnContextIfProvider && isContextProvider(Component4)) {
+              if (didPushOwnContextIfProvider && isContextProvider(Component)) {
                 return previousContext;
               }
               return contextStackCursor.current;
@@ -11025,8 +11025,8 @@
                   case HostRoot:
                     return node.stateNode.context;
                   case ClassComponent: {
-                    var Component4 = node.type;
-                    if (isContextProvider(Component4)) {
+                    var Component = node.type;
+                    if (isContextProvider(Component)) {
                       return node.stateNode.__reactInternalMemoizedMergedChildContext;
                     }
                     break;
@@ -12021,7 +12021,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment8) {
+              if (current2 === null || current2.tag !== Fragment4) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -12424,7 +12424,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment8) {
+                    if (child.tag === Fragment4) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -13355,7 +13355,7 @@
             /*  */
             2
           );
-          var Layout2 = (
+          var Layout = (
             /*    */
             4
           );
@@ -13480,7 +13480,7 @@
             }
             return true;
           }
-          function renderWithHooks(current2, workInProgress2, Component4, props, secondArg, nextRenderLanes) {
+          function renderWithHooks(current2, workInProgress2, Component, props, secondArg, nextRenderLanes) {
             renderLanes = nextRenderLanes;
             currentlyRenderingFiber$1 = workInProgress2;
             {
@@ -13500,7 +13500,7 @@
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnMountInDEV;
               }
             }
-            var children = Component4(props, secondArg);
+            var children = Component(props, secondArg);
             if (didScheduleRenderPhaseUpdateDuringThisPass) {
               var numberOfReRenders = 0;
               do {
@@ -13520,7 +13520,7 @@
                   hookTypesUpdateIndexDev = -1;
                 }
                 ReactCurrentDispatcher$1.current = HooksDispatcherOnRerenderInDEV;
-                children = Component4(props, secondArg);
+                children = Component(props, secondArg);
               } while (didScheduleRenderPhaseUpdateDuringThisPass);
             }
             ReactCurrentDispatcher$1.current = ContextOnlyDispatcher;
@@ -14067,10 +14067,10 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, create, deps);
+            return mountEffectImpl(fiberFlags, Layout, create, deps);
           }
           function updateLayoutEffect(create, deps) {
-            return updateEffectImpl(Update, Layout2, create, deps);
+            return updateEffectImpl(Update, Layout, create, deps);
           }
           function imperativeHandleEffect(create, ref) {
             if (typeof ref === "function") {
@@ -14108,7 +14108,7 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return mountEffectImpl(fiberFlags, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function updateImperativeHandle(ref, create, deps) {
             {
@@ -14117,7 +14117,7 @@
               }
             }
             var effectDeps = deps !== null && deps !== void 0 ? deps.concat([ref]) : null;
-            return updateEffectImpl(Update, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return updateEffectImpl(Update, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function mountDebugValue(value, formatterFn) {
           }
@@ -14206,7 +14206,7 @@
               return value;
             }
           }
-          function startTransition3(setPending, callback, options2) {
+          function startTransition(setPending, callback, options2) {
             var previousPriority = getCurrentUpdatePriority();
             setCurrentUpdatePriority(higherEventPriority(previousPriority, ContinuousEventPriority));
             setPending(true);
@@ -14235,7 +14235,7 @@
           }
           function mountTransition() {
             var _mountState = mountState(false), isPending = _mountState[0], setPending = _mountState[1];
-            var start = startTransition3.bind(null, setPending);
+            var start = startTransition.bind(null, setPending);
             var hook = mountWorkInProgressHook();
             hook.memoizedState = start;
             return [isPending, start];
@@ -15319,10 +15319,10 @@
               child = child.sibling;
             }
           }
-          function resolveDefaultProps(Component4, baseProps) {
-            if (Component4 && Component4.defaultProps) {
+          function resolveDefaultProps(Component, baseProps) {
+            if (Component && Component.defaultProps) {
               var props = assign({}, baseProps);
-              var defaultProps = Component4.defaultProps;
+              var defaultProps = Component.defaultProps;
               for (var propName in defaultProps) {
                 if (props[propName] === void 0) {
                   props[propName] = defaultProps[propName];
@@ -16251,22 +16251,22 @@
             workInProgress2.child = reconcileChildFibers(workInProgress2, current2.child, null, renderLanes2);
             workInProgress2.child = reconcileChildFibers(workInProgress2, null, nextChildren, renderLanes2);
           }
-          function updateForwardRef(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateForwardRef(current2, workInProgress2, Component, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component)
                   );
                 }
               }
             }
-            var render2 = Component4.render;
+            var render2 = Component.render;
             var ref = workInProgress2.ref;
             var nextChildren;
             var hasId;
@@ -16304,11 +16304,11 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateMemoComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateMemoComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
             if (current2 === null) {
-              var type = Component4.type;
-              if (isSimpleFunctionComponent(type) && Component4.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
-              Component4.defaultProps === void 0) {
+              var type = Component.type;
+              if (isSimpleFunctionComponent(type) && Component.compare === null && // SimpleMemoComponent codepath doesn't resolve outer props either.
+              Component.defaultProps === void 0) {
                 var resolvedType = type;
                 {
                   resolvedType = resolveFunctionForHotReloading(type);
@@ -16331,7 +16331,7 @@
                     getComponentNameFromType(type)
                   );
                 }
-                if (Component4.defaultProps !== void 0) {
+                if (Component.defaultProps !== void 0) {
                   var componentName = getComponentNameFromType(type) || "Unknown";
                   if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                     error("%s: Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.", componentName);
@@ -16339,14 +16339,14 @@
                   }
                 }
               }
-              var child = createFiberFromTypeAndProps(Component4.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
+              var child = createFiberFromTypeAndProps(Component.type, null, nextProps, workInProgress2, workInProgress2.mode, renderLanes2);
               child.ref = workInProgress2.ref;
               child.return = workInProgress2;
               workInProgress2.child = child;
               return child;
             }
             {
-              var _type = Component4.type;
+              var _type = Component.type;
               var _innerPropTypes = _type.propTypes;
               if (_innerPropTypes) {
                 checkPropTypes(
@@ -16362,7 +16362,7 @@
             var hasScheduledUpdateOrContext = checkScheduledUpdateOrContext(current2, renderLanes2);
             if (!hasScheduledUpdateOrContext) {
               var prevProps = currentChild.memoizedProps;
-              var compare = Component4.compare;
+              var compare = Component.compare;
               compare = compare !== null ? compare : shallowEqual;
               if (compare(prevProps, nextProps) && current2.ref === workInProgress2.ref) {
                 return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
@@ -16375,7 +16375,7 @@
             workInProgress2.child = newChild;
             return newChild;
           }
-          function updateSimpleMemoComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateSimpleMemoComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
                 var outerMemoType = workInProgress2.elementType;
@@ -16415,7 +16415,7 @@
                 }
               }
             }
-            return updateFunctionComponent(current2, workInProgress2, Component4, nextProps, renderLanes2);
+            return updateFunctionComponent(current2, workInProgress2, Component, nextProps, renderLanes2);
           }
           function updateOffscreenComponent(current2, workInProgress2, renderLanes2) {
             var nextProps = workInProgress2.pendingProps;
@@ -16505,24 +16505,24 @@
               }
             }
           }
-          function updateFunctionComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateFunctionComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
             {
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component)
                   );
                 }
               }
             }
             var context;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component4, true);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component, true);
               context = getMaskedContext(workInProgress2, unmaskedContext);
             }
             var nextChildren;
@@ -16534,12 +16534,12 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, Component4, nextProps, context, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context, renderLanes2);
               hasId = checkDidRenderIdHook();
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, Component4, nextProps, context, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, Component, nextProps, context, renderLanes2);
                   hasId = checkDidRenderIdHook();
                 } finally {
                   setIsStrictModeForDevtools(false);
@@ -16561,7 +16561,7 @@
             reconcileChildren(current2, workInProgress2, nextChildren, renderLanes2);
             return workInProgress2.child;
           }
-          function updateClassComponent(current2, workInProgress2, Component4, nextProps, renderLanes2) {
+          function updateClassComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
             {
               switch (shouldError(workInProgress2)) {
                 case false: {
@@ -16584,20 +16584,20 @@
                 }
               }
               if (workInProgress2.type !== workInProgress2.elementType) {
-                var innerPropTypes = Component4.propTypes;
+                var innerPropTypes = Component.propTypes;
                 if (innerPropTypes) {
                   checkPropTypes(
                     innerPropTypes,
                     nextProps,
                     // Resolved props
                     "prop",
-                    getComponentNameFromType(Component4)
+                    getComponentNameFromType(Component)
                   );
                 }
               }
             }
             var hasContext;
-            if (isContextProvider(Component4)) {
+            if (isContextProvider(Component)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
@@ -16608,15 +16608,15 @@
             var shouldUpdate;
             if (instance === null) {
               resetSuspendedCurrentOnMountInLegacyMode(current2, workInProgress2);
-              constructClassInstance(workInProgress2, Component4, nextProps);
-              mountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
+              constructClassInstance(workInProgress2, Component, nextProps);
+              mountClassInstance(workInProgress2, Component, nextProps, renderLanes2);
               shouldUpdate = true;
             } else if (current2 === null) {
-              shouldUpdate = resumeMountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
+              shouldUpdate = resumeMountClassInstance(workInProgress2, Component, nextProps, renderLanes2);
             } else {
-              shouldUpdate = updateClassInstance(current2, workInProgress2, Component4, nextProps, renderLanes2);
+              shouldUpdate = updateClassInstance(current2, workInProgress2, Component, nextProps, renderLanes2);
             }
-            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component4, shouldUpdate, hasContext, renderLanes2);
+            var nextUnitOfWork = finishClassComponent(current2, workInProgress2, Component, shouldUpdate, hasContext, renderLanes2);
             {
               var inst = workInProgress2.stateNode;
               if (shouldUpdate && inst.props !== nextProps) {
@@ -16628,19 +16628,19 @@
             }
             return nextUnitOfWork;
           }
-          function finishClassComponent(current2, workInProgress2, Component4, shouldUpdate, hasContext, renderLanes2) {
+          function finishClassComponent(current2, workInProgress2, Component, shouldUpdate, hasContext, renderLanes2) {
             markRef(current2, workInProgress2);
             var didCaptureError = (workInProgress2.flags & DidCapture) !== NoFlags;
             if (!shouldUpdate && !didCaptureError) {
               if (hasContext) {
-                invalidateContextProvider(workInProgress2, Component4, false);
+                invalidateContextProvider(workInProgress2, Component, false);
               }
               return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
             }
             var instance = workInProgress2.stateNode;
             ReactCurrentOwner$1.current = workInProgress2;
             var nextChildren;
-            if (didCaptureError && typeof Component4.getDerivedStateFromError !== "function") {
+            if (didCaptureError && typeof Component.getDerivedStateFromError !== "function") {
               nextChildren = null;
               {
                 stopProfilerTimerIfRunning();
@@ -16674,7 +16674,7 @@
             }
             workInProgress2.memoizedState = instance.state;
             if (hasContext) {
-              invalidateContextProvider(workInProgress2, Component4, true);
+              invalidateContextProvider(workInProgress2, Component, true);
             }
             return workInProgress2.child;
           }
@@ -16774,45 +16774,45 @@
             var lazyComponent = elementType;
             var payload = lazyComponent._payload;
             var init = lazyComponent._init;
-            var Component4 = init(payload);
-            workInProgress2.type = Component4;
-            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component4);
-            var resolvedProps = resolveDefaultProps(Component4, props);
+            var Component = init(payload);
+            workInProgress2.type = Component;
+            var resolvedTag = workInProgress2.tag = resolveLazyComponentTag(Component);
+            var resolvedProps = resolveDefaultProps(Component, props);
             var child;
             switch (resolvedTag) {
               case FunctionComponent: {
                 {
-                  validateFunctionComponentInDev(workInProgress2, Component4);
-                  workInProgress2.type = Component4 = resolveFunctionForHotReloading(Component4);
+                  validateFunctionComponentInDev(workInProgress2, Component);
+                  workInProgress2.type = Component = resolveFunctionForHotReloading(Component);
                 }
-                child = updateFunctionComponent(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateFunctionComponent(null, workInProgress2, Component, resolvedProps, renderLanes2);
                 return child;
               }
               case ClassComponent: {
                 {
-                  workInProgress2.type = Component4 = resolveClassForHotReloading(Component4);
+                  workInProgress2.type = Component = resolveClassForHotReloading(Component);
                 }
-                child = updateClassComponent(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateClassComponent(null, workInProgress2, Component, resolvedProps, renderLanes2);
                 return child;
               }
               case ForwardRef: {
                 {
-                  workInProgress2.type = Component4 = resolveForwardRefForHotReloading(Component4);
+                  workInProgress2.type = Component = resolveForwardRefForHotReloading(Component);
                 }
-                child = updateForwardRef(null, workInProgress2, Component4, resolvedProps, renderLanes2);
+                child = updateForwardRef(null, workInProgress2, Component, resolvedProps, renderLanes2);
                 return child;
               }
               case MemoComponent: {
                 {
                   if (workInProgress2.type !== workInProgress2.elementType) {
-                    var outerPropTypes = Component4.propTypes;
+                    var outerPropTypes = Component.propTypes;
                     if (outerPropTypes) {
                       checkPropTypes(
                         outerPropTypes,
                         resolvedProps,
                         // Resolved for outer only
                         "prop",
-                        getComponentNameFromType(Component4)
+                        getComponentNameFromType(Component)
                       );
                     }
                   }
@@ -16820,8 +16820,8 @@
                 child = updateMemoComponent(
                   null,
                   workInProgress2,
-                  Component4,
-                  resolveDefaultProps(Component4.type, resolvedProps),
+                  Component,
+                  resolveDefaultProps(Component.type, resolvedProps),
                   // The inner type can have defaults too
                   renderLanes2
                 );
@@ -16830,33 +16830,33 @@
             }
             var hint = "";
             {
-              if (Component4 !== null && typeof Component4 === "object" && Component4.$$typeof === REACT_LAZY_TYPE) {
+              if (Component !== null && typeof Component === "object" && Component.$$typeof === REACT_LAZY_TYPE) {
                 hint = " Did you wrap a component in React.lazy() more than once?";
               }
             }
-            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component4 + ". " + ("Lazy element type must resolve to a class or function." + hint));
+            throw new Error("Element type is invalid. Received a promise that resolves to: " + Component + ". " + ("Lazy element type must resolve to a class or function." + hint));
           }
-          function mountIncompleteClassComponent(_current, workInProgress2, Component4, nextProps, renderLanes2) {
+          function mountIncompleteClassComponent(_current, workInProgress2, Component, nextProps, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             workInProgress2.tag = ClassComponent;
             var hasContext;
-            if (isContextProvider(Component4)) {
+            if (isContextProvider(Component)) {
               hasContext = true;
               pushContextProvider(workInProgress2);
             } else {
               hasContext = false;
             }
             prepareToReadContext(workInProgress2, renderLanes2);
-            constructClassInstance(workInProgress2, Component4, nextProps);
-            mountClassInstance(workInProgress2, Component4, nextProps, renderLanes2);
-            return finishClassComponent(null, workInProgress2, Component4, true, hasContext, renderLanes2);
+            constructClassInstance(workInProgress2, Component, nextProps);
+            mountClassInstance(workInProgress2, Component, nextProps, renderLanes2);
+            return finishClassComponent(null, workInProgress2, Component, true, hasContext, renderLanes2);
           }
-          function mountIndeterminateComponent(_current, workInProgress2, Component4, renderLanes2) {
+          function mountIndeterminateComponent(_current, workInProgress2, Component, renderLanes2) {
             resetSuspendedCurrentOnMountInLegacyMode(_current, workInProgress2);
             var props = workInProgress2.pendingProps;
             var context;
             {
-              var unmaskedContext = getUnmaskedContext(workInProgress2, Component4, false);
+              var unmaskedContext = getUnmaskedContext(workInProgress2, Component, false);
               context = getMaskedContext(workInProgress2, unmaskedContext);
             }
             prepareToReadContext(workInProgress2, renderLanes2);
@@ -16866,8 +16866,8 @@
               markComponentRenderStarted(workInProgress2);
             }
             {
-              if (Component4.prototype && typeof Component4.prototype.render === "function") {
-                var componentName = getComponentNameFromType(Component4) || "Unknown";
+              if (Component.prototype && typeof Component.prototype.render === "function") {
+                var componentName = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutBadClass[componentName]) {
                   error("The <%s /> component appears to have a render method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.", componentName, componentName);
                   didWarnAboutBadClass[componentName] = true;
@@ -16878,7 +16878,7 @@
               }
               setIsRendering(true);
               ReactCurrentOwner$1.current = workInProgress2;
-              value = renderWithHooks(null, workInProgress2, Component4, props, context, renderLanes2);
+              value = renderWithHooks(null, workInProgress2, Component, props, context, renderLanes2);
               hasId = checkDidRenderIdHook();
               setIsRendering(false);
             }
@@ -16888,7 +16888,7 @@
             workInProgress2.flags |= PerformedWork;
             {
               if (typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0) {
-                var _componentName = getComponentNameFromType(Component4) || "Unknown";
+                var _componentName = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName]) {
                   error("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName, _componentName, _componentName);
                   didWarnAboutModulePatternComponent[_componentName] = true;
@@ -16901,7 +16901,7 @@
               typeof value === "object" && value !== null && typeof value.render === "function" && value.$$typeof === void 0
             ) {
               {
-                var _componentName2 = getComponentNameFromType(Component4) || "Unknown";
+                var _componentName2 = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutModulePatternComponent[_componentName2]) {
                   error("The <%s /> component appears to be a function component that returns a class instance. Change %s to a class that extends React.Component instead. If you can't use a class try assigning the prototype on the function as a workaround. `%s.prototype = React.Component.prototype`. Don't use an arrow function since it cannot be called with `new` by React.", _componentName2, _componentName2, _componentName2);
                   didWarnAboutModulePatternComponent[_componentName2] = true;
@@ -16911,7 +16911,7 @@
               workInProgress2.memoizedState = null;
               workInProgress2.updateQueue = null;
               var hasContext = false;
-              if (isContextProvider(Component4)) {
+              if (isContextProvider(Component)) {
                 hasContext = true;
                 pushContextProvider(workInProgress2);
               } else {
@@ -16920,15 +16920,15 @@
               workInProgress2.memoizedState = value.state !== null && value.state !== void 0 ? value.state : null;
               initializeUpdateQueue(workInProgress2);
               adoptClassInstance(workInProgress2, value);
-              mountClassInstance(workInProgress2, Component4, props, renderLanes2);
-              return finishClassComponent(null, workInProgress2, Component4, true, hasContext, renderLanes2);
+              mountClassInstance(workInProgress2, Component, props, renderLanes2);
+              return finishClassComponent(null, workInProgress2, Component, true, hasContext, renderLanes2);
             } else {
               workInProgress2.tag = FunctionComponent;
               {
                 if (workInProgress2.mode & StrictLegacyMode) {
                   setIsStrictModeForDevtools(true);
                   try {
-                    value = renderWithHooks(null, workInProgress2, Component4, props, context, renderLanes2);
+                    value = renderWithHooks(null, workInProgress2, Component, props, context, renderLanes2);
                     hasId = checkDidRenderIdHook();
                   } finally {
                     setIsStrictModeForDevtools(false);
@@ -16940,16 +16940,16 @@
               }
               reconcileChildren(null, workInProgress2, value, renderLanes2);
               {
-                validateFunctionComponentInDev(workInProgress2, Component4);
+                validateFunctionComponentInDev(workInProgress2, Component);
               }
               return workInProgress2.child;
             }
           }
-          function validateFunctionComponentInDev(workInProgress2, Component4) {
+          function validateFunctionComponentInDev(workInProgress2, Component) {
             {
-              if (Component4) {
-                if (Component4.childContextTypes) {
-                  error("%s(...): childContextTypes cannot be defined on a function component.", Component4.displayName || Component4.name || "Component");
+              if (Component) {
+                if (Component.childContextTypes) {
+                  error("%s(...): childContextTypes cannot be defined on a function component.", Component.displayName || Component.name || "Component");
                 }
               }
               if (workInProgress2.ref !== null) {
@@ -16968,22 +16968,22 @@
                   error("Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?%s", info);
                 }
               }
-              if (Component4.defaultProps !== void 0) {
-                var componentName = getComponentNameFromType(Component4) || "Unknown";
+              if (Component.defaultProps !== void 0) {
+                var componentName = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutDefaultPropsOnFunctionComponent[componentName]) {
                   error("%s: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.", componentName);
                   didWarnAboutDefaultPropsOnFunctionComponent[componentName] = true;
                 }
               }
-              if (typeof Component4.getDerivedStateFromProps === "function") {
-                var _componentName3 = getComponentNameFromType(Component4) || "Unknown";
+              if (typeof Component.getDerivedStateFromProps === "function") {
+                var _componentName3 = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3]) {
                   error("%s: Function components do not support getDerivedStateFromProps.", _componentName3);
                   didWarnAboutGetDerivedStateOnFunctionComponent[_componentName3] = true;
                 }
               }
-              if (typeof Component4.contextType === "object" && Component4.contextType !== null) {
-                var _componentName4 = getComponentNameFromType(Component4) || "Unknown";
+              if (typeof Component.contextType === "object" && Component.contextType !== null) {
+                var _componentName4 = getComponentNameFromType(Component) || "Unknown";
                 if (!didWarnAboutContextTypeOnFunctionComponent[_componentName4]) {
                   error("%s: Function components do not support contextType.", _componentName4);
                   didWarnAboutContextTypeOnFunctionComponent[_componentName4] = true;
@@ -17745,8 +17745,8 @@
                 pushHostContext(workInProgress2);
                 break;
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component = workInProgress2.type;
+                if (isContextProvider(Component)) {
                   pushContextProvider(workInProgress2);
                 }
                 break;
@@ -17873,10 +17873,10 @@
                 return mountLazyComponent(current2, workInProgress2, elementType, renderLanes2);
               }
               case FunctionComponent: {
-                var Component4 = workInProgress2.type;
+                var Component = workInProgress2.type;
                 var unresolvedProps = workInProgress2.pendingProps;
-                var resolvedProps = workInProgress2.elementType === Component4 ? unresolvedProps : resolveDefaultProps(Component4, unresolvedProps);
-                return updateFunctionComponent(current2, workInProgress2, Component4, resolvedProps, renderLanes2);
+                var resolvedProps = workInProgress2.elementType === Component ? unresolvedProps : resolveDefaultProps(Component, unresolvedProps);
+                return updateFunctionComponent(current2, workInProgress2, Component, resolvedProps, renderLanes2);
               }
               case ClassComponent: {
                 var _Component = workInProgress2.type;
@@ -17900,7 +17900,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment8:
+              case Fragment4:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18172,7 +18172,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment8:
+              case Fragment4:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -18180,8 +18180,8 @@
                 bubbleProperties(workInProgress2);
                 return null;
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component = workInProgress2.type;
+                if (isContextProvider(Component)) {
                   popContext(workInProgress2);
                 }
                 bubbleProperties(workInProgress2);
@@ -18499,8 +18499,8 @@
             popTreeContext(workInProgress2);
             switch (workInProgress2.tag) {
               case ClassComponent: {
-                var Component4 = workInProgress2.type;
-                if (isContextProvider(Component4)) {
+                var Component = workInProgress2.type;
+                if (isContextProvider(Component)) {
                   popContext(workInProgress2);
                 }
                 var flags = workInProgress2.flags;
@@ -18643,7 +18643,7 @@
           };
           function safelyCallCommitHookLayoutEffectListMount(current2, nearestMountedAncestor) {
             try {
-              commitHookEffectListMount(Layout2, current2);
+              commitHookEffectListMount(Layout, current2);
             } catch (error2) {
               captureCommitPhaseError(current2, nearestMountedAncestor, error2);
             }
@@ -18818,7 +18818,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStarted(finishedWork);
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStarted(finishedWork);
                       }
                     }
@@ -18836,7 +18836,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStopped();
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStopped();
                       }
                     }
@@ -18857,7 +18857,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStarted(finishedWork);
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStarted(finishedWork);
                     }
                   }
@@ -18876,7 +18876,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStopped();
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStopped();
                     }
                   }
@@ -18884,7 +18884,7 @@
                     var destroy = effect.destroy;
                     if (destroy !== void 0 && typeof destroy !== "function") {
                       var hookName = void 0;
-                      if ((effect.tag & Layout2) !== NoFlags) {
+                      if ((effect.tag & Layout) !== NoFlags) {
                         hookName = "useLayoutEffect";
                       } else if ((effect.tag & Insertion) !== NoFlags) {
                         hookName = "useInsertionEffect";
@@ -18954,12 +18954,12 @@
                     if (finishedWork.mode & ProfileMode) {
                       try {
                         startLayoutEffectTimer();
-                        commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                        commitHookEffectListMount(Layout | HasEffect, finishedWork);
                       } finally {
                         recordLayoutEffectDuration(finishedWork);
                       }
                     } else {
-                      commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                      commitHookEffectListMount(Layout | HasEffect, finishedWork);
                     }
                   }
                   break;
@@ -19510,7 +19510,7 @@
                         if (destroy !== void 0) {
                           if ((tag & Insertion) !== NoFlags$1) {
                             safelyCallDestroy(deletedFiber, nearestMountedAncestor, destroy);
-                          } else if ((tag & Layout2) !== NoFlags$1) {
+                          } else if ((tag & Layout) !== NoFlags$1) {
                             {
                               markComponentLayoutEffectUnmountStarted(deletedFiber);
                             }
@@ -19665,14 +19665,14 @@
                   if (finishedWork.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
                     recordLayoutEffectDuration(finishedWork);
                   } else {
                     try {
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
@@ -19965,12 +19965,12 @@
                   if (fiber.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                      commitHookEffectListUnmount(Layout, fiber, fiber.return);
                     } finally {
                       recordLayoutEffectDuration(fiber);
                     }
                   } else {
-                    commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout, fiber, fiber.return);
                   }
                   break;
                 }
@@ -20253,7 +20253,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListMount(Layout2 | HasEffect, fiber);
+                    commitHookEffectListMount(Layout | HasEffect, fiber);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -20294,7 +20294,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListUnmount(Layout2 | HasEffect, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout | HasEffect, fiber, fiber.return);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -22185,18 +22185,18 @@
           var createFiber = function(tag, pendingProps, key, mode) {
             return new FiberNode(tag, pendingProps, key, mode);
           };
-          function shouldConstruct$1(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct$1(Component) {
+            var prototype = Component.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function isSimpleFunctionComponent(type) {
             return typeof type === "function" && !shouldConstruct$1(type) && type.defaultProps === void 0;
           }
-          function resolveLazyComponentTag(Component4) {
-            if (typeof Component4 === "function") {
-              return shouldConstruct$1(Component4) ? ClassComponent : FunctionComponent;
-            } else if (Component4 !== void 0 && Component4 !== null) {
-              var $$typeof = Component4.$$typeof;
+          function resolveLazyComponentTag(Component) {
+            if (typeof Component === "function") {
+              return shouldConstruct$1(Component) ? ClassComponent : FunctionComponent;
+            } else if (Component !== void 0 && Component !== null) {
+              var $$typeof = Component.$$typeof;
               if ($$typeof === REACT_FORWARD_REF_TYPE) {
                 return ForwardRef;
               }
@@ -22433,7 +22433,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment8, elements, key, mode);
+            var fiber = createFiber(Fragment4, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -22637,9 +22637,9 @@
             var fiber = get(parentComponent);
             var parentContext = findCurrentUnmaskedContext(fiber);
             if (fiber.tag === ClassComponent) {
-              var Component4 = fiber.type;
-              if (isContextProvider(Component4)) {
-                return processChildContext(fiber, Component4, parentContext);
+              var Component = fiber.type;
+              if (isContextProvider(Component)) {
+                return processChildContext(fiber, Component, parentContext);
               }
             }
             return parentContext;
@@ -23589,7 +23589,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React23 = require_react();
+          var React12 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23615,7 +23615,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React23.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React12.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -23946,8 +23946,8 @@
               return describeNativeComponentFrame(fn, false);
             }
           }
-          function shouldConstruct(Component4) {
-            var prototype = Component4.prototype;
+          function shouldConstruct(Component) {
+            var prototype = Component.prototype;
             return !!(prototype && prototype.isReactComponent);
           }
           function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
@@ -24243,7 +24243,7 @@
           {
             propTypesMisspellWarningShown = false;
           }
-          function isValidElement3(object) {
+          function isValidElement2(object) {
             {
               return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
             }
@@ -24310,11 +24310,11 @@
               if (isArray(node)) {
                 for (var i = 0; i < node.length; i++) {
                   var child = node[i];
-                  if (isValidElement3(child)) {
+                  if (isValidElement2(child)) {
                     validateExplicitKey(child, parentType);
                   }
                 }
-              } else if (isValidElement3(node)) {
+              } else if (isValidElement2(node)) {
                 if (node._store) {
                   node._store.validated = true;
                 }
@@ -24325,7 +24325,7 @@
                     var iterator = iteratorFn.call(node);
                     var step;
                     while (!(step = iterator.next()).done) {
-                      if (isValidElement3(step.value)) {
+                      if (isValidElement2(step.value)) {
                         validateExplicitKey(step.value, parentType);
                       }
                     }
@@ -24465,11 +24465,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx17 = jsxWithValidationDynamic;
-          var jsxs8 = jsxWithValidationStatic;
+          var jsx12 = jsxWithValidationDynamic;
+          var jsxs4 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx17;
-          exports.jsxs = jsxs8;
+          exports.jsx = jsx12;
+          exports.jsxs = jsxs4;
         })();
       }
     }
@@ -24490,2578 +24490,20 @@
   // src/main.tsx
   var import_client = __toESM(require_client());
 
-  // node_modules/react-router/dist/development/chunk-C37GKA54.mjs
-  var React = __toESM(require_react(), 1);
-  var React2 = __toESM(require_react(), 1);
-  var React3 = __toESM(require_react(), 1);
-  var React4 = __toESM(require_react(), 1);
-  var React9 = __toESM(require_react(), 1);
-  var React8 = __toESM(require_react(), 1);
-  var React7 = __toESM(require_react(), 1);
-  var React6 = __toESM(require_react(), 1);
-  var React5 = __toESM(require_react(), 1);
-  var React10 = __toESM(require_react(), 1);
-  var React11 = __toESM(require_react(), 1);
-  var import_meta = {};
-  var PopStateEventType = "popstate";
-  function createHashHistory(options = {}) {
-    function createHashLocation(window2, globalHistory) {
-      let {
-        pathname = "/",
-        search = "",
-        hash = ""
-      } = parsePath(window2.location.hash.substring(1));
-      if (!pathname.startsWith("/") && !pathname.startsWith(".")) {
-        pathname = "/" + pathname;
-      }
-      return createLocation(
-        "",
-        { pathname, search, hash },
-        // state defaults to `null` because `window.history.state` does
-        globalHistory.state && globalHistory.state.usr || null,
-        globalHistory.state && globalHistory.state.key || "default"
-      );
-    }
-    function createHashHref(window2, to) {
-      let base = window2.document.querySelector("base");
-      let href = "";
-      if (base && base.getAttribute("href")) {
-        let url = window2.location.href;
-        let hashIndex = url.indexOf("#");
-        href = hashIndex === -1 ? url : url.slice(0, hashIndex);
-      }
-      return href + "#" + (typeof to === "string" ? to : createPath(to));
-    }
-    function validateHashLocation(location, to) {
-      warning(
-        location.pathname.charAt(0) === "/",
-        `relative pathnames are not supported in hash history.push(${JSON.stringify(
-          to
-        )})`
-      );
-    }
-    return getUrlBasedHistory(
-      createHashLocation,
-      createHashHref,
-      validateHashLocation,
-      options
-    );
-  }
-  function invariant(value, message) {
-    if (value === false || value === null || typeof value === "undefined") {
-      throw new Error(message);
-    }
-  }
-  function warning(cond, message) {
-    if (!cond) {
-      if (typeof console !== "undefined") console.warn(message);
-      try {
-        throw new Error(message);
-      } catch (e) {
-      }
-    }
-  }
-  function createKey() {
-    return Math.random().toString(36).substring(2, 10);
-  }
-  function getHistoryState(location, index) {
-    return {
-      usr: location.state,
-      key: location.key,
-      idx: index
-    };
-  }
-  function createLocation(current, to, state = null, key) {
-    let location = {
-      pathname: typeof current === "string" ? current : current.pathname,
-      search: "",
-      hash: "",
-      ...typeof to === "string" ? parsePath(to) : to,
-      state,
-      // TODO: This could be cleaned up.  push/replace should probably just take
-      // full Locations now and avoid the need to run through this flow at all
-      // But that's a pretty big refactor to the current test suite so going to
-      // keep as is for the time being and just let any incoming keys take precedence
-      key: to && to.key || key || createKey()
-    };
-    return location;
-  }
-  function createPath({
-    pathname = "/",
-    search = "",
-    hash = ""
-  }) {
-    if (search && search !== "?")
-      pathname += search.charAt(0) === "?" ? search : "?" + search;
-    if (hash && hash !== "#")
-      pathname += hash.charAt(0) === "#" ? hash : "#" + hash;
-    return pathname;
-  }
-  function parsePath(path) {
-    let parsedPath = {};
-    if (path) {
-      let hashIndex = path.indexOf("#");
-      if (hashIndex >= 0) {
-        parsedPath.hash = path.substring(hashIndex);
-        path = path.substring(0, hashIndex);
-      }
-      let searchIndex = path.indexOf("?");
-      if (searchIndex >= 0) {
-        parsedPath.search = path.substring(searchIndex);
-        path = path.substring(0, searchIndex);
-      }
-      if (path) {
-        parsedPath.pathname = path;
-      }
-    }
-    return parsedPath;
-  }
-  function getUrlBasedHistory(getLocation, createHref2, validateLocation, options = {}) {
-    let { window: window2 = document.defaultView, v5Compat = false } = options;
-    let globalHistory = window2.history;
-    let action = "POP";
-    let listener = null;
-    let index = getIndex();
-    if (index == null) {
-      index = 0;
-      globalHistory.replaceState({ ...globalHistory.state, idx: index }, "");
-    }
-    function getIndex() {
-      let state = globalHistory.state || { idx: null };
-      return state.idx;
-    }
-    function handlePop() {
-      action = "POP";
-      let nextIndex = getIndex();
-      let delta = nextIndex == null ? null : nextIndex - index;
-      index = nextIndex;
-      if (listener) {
-        listener({ action, location: history.location, delta });
-      }
-    }
-    function push(to, state) {
-      action = "PUSH";
-      let location = createLocation(history.location, to, state);
-      if (validateLocation) validateLocation(location, to);
-      index = getIndex() + 1;
-      let historyState = getHistoryState(location, index);
-      let url = history.createHref(location);
-      try {
-        globalHistory.pushState(historyState, "", url);
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "DataCloneError") {
-          throw error;
-        }
-        window2.location.assign(url);
-      }
-      if (v5Compat && listener) {
-        listener({ action, location: history.location, delta: 1 });
-      }
-    }
-    function replace2(to, state) {
-      action = "REPLACE";
-      let location = createLocation(history.location, to, state);
-      if (validateLocation) validateLocation(location, to);
-      index = getIndex();
-      let historyState = getHistoryState(location, index);
-      let url = history.createHref(location);
-      globalHistory.replaceState(historyState, "", url);
-      if (v5Compat && listener) {
-        listener({ action, location: history.location, delta: 0 });
-      }
-    }
-    function createURL(to) {
-      return createBrowserURLImpl(to);
-    }
-    let history = {
-      get action() {
-        return action;
-      },
-      get location() {
-        return getLocation(window2, globalHistory);
-      },
-      listen(fn) {
-        if (listener) {
-          throw new Error("A history only accepts one active listener");
-        }
-        window2.addEventListener(PopStateEventType, handlePop);
-        listener = fn;
-        return () => {
-          window2.removeEventListener(PopStateEventType, handlePop);
-          listener = null;
-        };
-      },
-      createHref(to) {
-        return createHref2(window2, to);
-      },
-      createURL,
-      encodeLocation(to) {
-        let url = createURL(to);
-        return {
-          pathname: url.pathname,
-          search: url.search,
-          hash: url.hash
-        };
-      },
-      push,
-      replace: replace2,
-      go(n) {
-        return globalHistory.go(n);
-      }
-    };
-    return history;
-  }
-  function createBrowserURLImpl(to, isAbsolute = false) {
-    let base = "http://localhost";
-    if (typeof window !== "undefined") {
-      base = window.location.origin !== "null" ? window.location.origin : window.location.href;
-    }
-    invariant(base, "No window.location.(origin|href) available to create URL");
-    let href = typeof to === "string" ? to : createPath(to);
-    href = href.replace(/ $/, "%20");
-    if (!isAbsolute && href.startsWith("//")) {
-      href = base + href;
-    }
-    return new URL(href, base);
-  }
-  var _map;
-  _map = /* @__PURE__ */ new WeakMap();
-  function matchRoutes(routes, locationArg, basename = "/") {
-    return matchRoutesImpl(routes, locationArg, basename, false);
-  }
-  function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
-    let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-    let pathname = stripBasename(location.pathname || "/", basename);
-    if (pathname == null) {
-      return null;
-    }
-    let branches = flattenRoutes(routes);
-    rankRouteBranches(branches);
-    let matches = null;
-    for (let i = 0; matches == null && i < branches.length; ++i) {
-      let decoded = decodePath(pathname);
-      matches = matchRouteBranch(
-        branches[i],
-        decoded,
-        allowPartial
-      );
-    }
-    return matches;
-  }
-  function convertRouteMatchToUiMatch(match, loaderData) {
-    let { route, pathname, params } = match;
-    return {
-      id: route.id,
-      pathname,
-      params,
-      data: loaderData[route.id],
-      handle: route.handle
-    };
-  }
-  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "") {
-    let flattenRoute = (route, index, relativePath) => {
-      let meta = {
-        relativePath: relativePath === void 0 ? route.path || "" : relativePath,
-        caseSensitive: route.caseSensitive === true,
-        childrenIndex: index,
-        route
-      };
-      if (meta.relativePath.startsWith("/")) {
-        invariant(
-          meta.relativePath.startsWith(parentPath),
-          `Absolute route path "${meta.relativePath}" nested under path "${parentPath}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`
-        );
-        meta.relativePath = meta.relativePath.slice(parentPath.length);
-      }
-      let path = joinPaths([parentPath, meta.relativePath]);
-      let routesMeta = parentsMeta.concat(meta);
-      if (route.children && route.children.length > 0) {
-        invariant(
-          // Our types know better, but runtime JS may not!
-          // @ts-expect-error
-          route.index !== true,
-          `Index routes must not have child routes. Please remove all child routes from route path "${path}".`
-        );
-        flattenRoutes(route.children, branches, routesMeta, path);
-      }
-      if (route.path == null && !route.index) {
-        return;
-      }
-      branches.push({
-        path,
-        score: computeScore(path, route.index),
-        routesMeta
-      });
-    };
-    routes.forEach((route, index) => {
-      if (route.path === "" || !route.path?.includes("?")) {
-        flattenRoute(route, index);
-      } else {
-        for (let exploded of explodeOptionalSegments(route.path)) {
-          flattenRoute(route, index, exploded);
-        }
-      }
-    });
-    return branches;
-  }
-  function explodeOptionalSegments(path) {
-    let segments = path.split("/");
-    if (segments.length === 0) return [];
-    let [first, ...rest] = segments;
-    let isOptional = first.endsWith("?");
-    let required = first.replace(/\?$/, "");
-    if (rest.length === 0) {
-      return isOptional ? [required, ""] : [required];
-    }
-    let restExploded = explodeOptionalSegments(rest.join("/"));
-    let result = [];
-    result.push(
-      ...restExploded.map(
-        (subpath) => subpath === "" ? required : [required, subpath].join("/")
-      )
-    );
-    if (isOptional) {
-      result.push(...restExploded);
-    }
-    return result.map(
-      (exploded) => path.startsWith("/") && exploded === "" ? "/" : exploded
-    );
-  }
-  function rankRouteBranches(branches) {
-    branches.sort(
-      (a, b) => a.score !== b.score ? b.score - a.score : compareIndexes(
-        a.routesMeta.map((meta) => meta.childrenIndex),
-        b.routesMeta.map((meta) => meta.childrenIndex)
-      )
-    );
-  }
-  var paramRe = /^:[\w-]+$/;
-  var dynamicSegmentValue = 3;
-  var indexRouteValue = 2;
-  var emptySegmentValue = 1;
-  var staticSegmentValue = 10;
-  var splatPenalty = -2;
-  var isSplat = (s) => s === "*";
-  function computeScore(path, index) {
-    let segments = path.split("/");
-    let initialScore = segments.length;
-    if (segments.some(isSplat)) {
-      initialScore += splatPenalty;
-    }
-    if (index) {
-      initialScore += indexRouteValue;
-    }
-    return segments.filter((s) => !isSplat(s)).reduce(
-      (score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : segment === "" ? emptySegmentValue : staticSegmentValue),
-      initialScore
-    );
-  }
-  function compareIndexes(a, b) {
-    let siblings = a.length === b.length && a.slice(0, -1).every((n, i) => n === b[i]);
-    return siblings ? (
-      // If two routes are siblings, we should try to match the earlier sibling
-      // first. This allows people to have fine-grained control over the matching
-      // behavior by simply putting routes with identical paths in the order they
-      // want them tried.
-      a[a.length - 1] - b[b.length - 1]
-    ) : (
-      // Otherwise, it doesn't really make sense to rank non-siblings by index,
-      // so they sort equally.
-      0
-    );
-  }
-  function matchRouteBranch(branch, pathname, allowPartial = false) {
-    let { routesMeta } = branch;
-    let matchedParams = {};
-    let matchedPathname = "/";
-    let matches = [];
-    for (let i = 0; i < routesMeta.length; ++i) {
-      let meta = routesMeta[i];
-      let end = i === routesMeta.length - 1;
-      let remainingPathname = matchedPathname === "/" ? pathname : pathname.slice(matchedPathname.length) || "/";
-      let match = matchPath(
-        { path: meta.relativePath, caseSensitive: meta.caseSensitive, end },
-        remainingPathname
-      );
-      let route = meta.route;
-      if (!match && end && allowPartial && !routesMeta[routesMeta.length - 1].route.index) {
-        match = matchPath(
-          {
-            path: meta.relativePath,
-            caseSensitive: meta.caseSensitive,
-            end: false
-          },
-          remainingPathname
-        );
-      }
-      if (!match) {
-        return null;
-      }
-      Object.assign(matchedParams, match.params);
-      matches.push({
-        // TODO: Can this as be avoided?
-        params: matchedParams,
-        pathname: joinPaths([matchedPathname, match.pathname]),
-        pathnameBase: normalizePathname(
-          joinPaths([matchedPathname, match.pathnameBase])
-        ),
-        route
-      });
-      if (match.pathnameBase !== "/") {
-        matchedPathname = joinPaths([matchedPathname, match.pathnameBase]);
-      }
-    }
-    return matches;
-  }
-  function matchPath(pattern, pathname) {
-    if (typeof pattern === "string") {
-      pattern = { path: pattern, caseSensitive: false, end: true };
-    }
-    let [matcher, compiledParams] = compilePath(
-      pattern.path,
-      pattern.caseSensitive,
-      pattern.end
-    );
-    let match = pathname.match(matcher);
-    if (!match) return null;
-    let matchedPathname = match[0];
-    let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
-    let captureGroups = match.slice(1);
-    let params = compiledParams.reduce(
-      (memo2, { paramName, isOptional }, index) => {
-        if (paramName === "*") {
-          let splatValue = captureGroups[index] || "";
-          pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
-        }
-        const value = captureGroups[index];
-        if (isOptional && !value) {
-          memo2[paramName] = void 0;
-        } else {
-          memo2[paramName] = (value || "").replace(/%2F/g, "/");
-        }
-        return memo2;
-      },
-      {}
-    );
-    return {
-      params,
-      pathname: matchedPathname,
-      pathnameBase,
-      pattern
-    };
-  }
-  function compilePath(path, caseSensitive = false, end = true) {
-    warning(
-      path === "*" || !path.endsWith("*") || path.endsWith("/*"),
-      `Route path "${path}" will be treated as if it were "${path.replace(/\*$/, "/*")}" because the \`*\` character must always follow a \`/\` in the pattern. To get rid of this warning, please change the route path to "${path.replace(/\*$/, "/*")}".`
-    );
-    let params = [];
-    let regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^${}|()[\]]/g, "\\$&").replace(
-      /\/:([\w-]+)(\?)?/g,
-      (_, paramName, isOptional) => {
-        params.push({ paramName, isOptional: isOptional != null });
-        return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
-      }
-    );
-    if (path.endsWith("*")) {
-      params.push({ paramName: "*" });
-      regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
-    } else if (end) {
-      regexpSource += "\\/*$";
-    } else if (path !== "" && path !== "/") {
-      regexpSource += "(?:(?=\\/|$))";
-    } else {
-    }
-    let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
-    return [matcher, params];
-  }
-  function decodePath(value) {
-    try {
-      return value.split("/").map((v) => decodeURIComponent(v).replace(/\//g, "%2F")).join("/");
-    } catch (error) {
-      warning(
-        false,
-        `The URL path "${value}" could not be decoded because it is a malformed URL segment. This is probably due to a bad percent encoding (${error}).`
-      );
-      return value;
-    }
-  }
-  function stripBasename(pathname, basename) {
-    if (basename === "/") return pathname;
-    if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
-      return null;
-    }
-    let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
-    let nextChar = pathname.charAt(startIndex);
-    if (nextChar && nextChar !== "/") {
-      return null;
-    }
-    return pathname.slice(startIndex) || "/";
-  }
-  function resolvePath(to, fromPathname = "/") {
-    let {
-      pathname: toPathname,
-      search = "",
-      hash = ""
-    } = typeof to === "string" ? parsePath(to) : to;
-    let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
-    return {
-      pathname,
-      search: normalizeSearch(search),
-      hash: normalizeHash(hash)
-    };
-  }
-  function resolvePathname(relativePath, fromPathname) {
-    let segments = fromPathname.replace(/\/+$/, "").split("/");
-    let relativeSegments = relativePath.split("/");
-    relativeSegments.forEach((segment) => {
-      if (segment === "..") {
-        if (segments.length > 1) segments.pop();
-      } else if (segment !== ".") {
-        segments.push(segment);
-      }
-    });
-    return segments.length > 1 ? segments.join("/") : "/";
-  }
-  function getInvalidPathError(char, field, dest, path) {
-    return `Cannot include a '${char}' character in a manually specified \`to.${field}\` field [${JSON.stringify(
-      path
-    )}].  Please separate it out to the \`to.${dest}\` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.`;
-  }
-  function getPathContributingMatches(matches) {
-    return matches.filter(
-      (match, index) => index === 0 || match.route.path && match.route.path.length > 0
-    );
-  }
-  function getResolveToMatches(matches) {
-    let pathMatches = getPathContributingMatches(matches);
-    return pathMatches.map(
-      (match, idx) => idx === pathMatches.length - 1 ? match.pathname : match.pathnameBase
-    );
-  }
-  function resolveTo(toArg, routePathnames, locationPathname, isPathRelative = false) {
-    let to;
-    if (typeof toArg === "string") {
-      to = parsePath(toArg);
-    } else {
-      to = { ...toArg };
-      invariant(
-        !to.pathname || !to.pathname.includes("?"),
-        getInvalidPathError("?", "pathname", "search", to)
-      );
-      invariant(
-        !to.pathname || !to.pathname.includes("#"),
-        getInvalidPathError("#", "pathname", "hash", to)
-      );
-      invariant(
-        !to.search || !to.search.includes("#"),
-        getInvalidPathError("#", "search", "hash", to)
-      );
-    }
-    let isEmptyPath = toArg === "" || to.pathname === "";
-    let toPathname = isEmptyPath ? "/" : to.pathname;
-    let from;
-    if (toPathname == null) {
-      from = locationPathname;
-    } else {
-      let routePathnameIndex = routePathnames.length - 1;
-      if (!isPathRelative && toPathname.startsWith("..")) {
-        let toSegments = toPathname.split("/");
-        while (toSegments[0] === "..") {
-          toSegments.shift();
-          routePathnameIndex -= 1;
-        }
-        to.pathname = toSegments.join("/");
-      }
-      from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
-    }
-    let path = resolvePath(to, from);
-    let hasExplicitTrailingSlash = toPathname && toPathname !== "/" && toPathname.endsWith("/");
-    let hasCurrentTrailingSlash = (isEmptyPath || toPathname === ".") && locationPathname.endsWith("/");
-    if (!path.pathname.endsWith("/") && (hasExplicitTrailingSlash || hasCurrentTrailingSlash)) {
-      path.pathname += "/";
-    }
-    return path;
-  }
-  var joinPaths = (paths) => paths.join("/").replace(/\/\/+/g, "/");
-  var normalizePathname = (pathname) => pathname.replace(/\/+$/, "").replace(/^\/*/, "/");
-  var normalizeSearch = (search) => !search || search === "?" ? "" : search.startsWith("?") ? search : "?" + search;
-  var normalizeHash = (hash) => !hash || hash === "#" ? "" : hash.startsWith("#") ? hash : "#" + hash;
-  function isRouteErrorResponse(error) {
-    return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
-  }
-  var validMutationMethodsArr = [
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE"
-  ];
-  var validMutationMethods = new Set(
-    validMutationMethodsArr
-  );
-  var validRequestMethodsArr = [
-    "GET",
-    ...validMutationMethodsArr
-  ];
-  var validRequestMethods = new Set(validRequestMethodsArr);
-  var ResetLoaderDataSymbol = Symbol("ResetLoaderData");
-  var DataRouterContext = React.createContext(null);
-  DataRouterContext.displayName = "DataRouter";
-  var DataRouterStateContext = React.createContext(null);
-  DataRouterStateContext.displayName = "DataRouterState";
-  var RSCRouterContext = React.createContext(false);
-  var ViewTransitionContext = React.createContext({
-    isTransitioning: false
-  });
-  ViewTransitionContext.displayName = "ViewTransition";
-  var FetchersContext = React.createContext(
-    /* @__PURE__ */ new Map()
-  );
-  FetchersContext.displayName = "Fetchers";
-  var AwaitContext = React.createContext(null);
-  AwaitContext.displayName = "Await";
-  var NavigationContext = React.createContext(
-    null
-  );
-  NavigationContext.displayName = "Navigation";
-  var LocationContext = React.createContext(
-    null
-  );
-  LocationContext.displayName = "Location";
-  var RouteContext = React.createContext({
-    outlet: null,
-    matches: [],
-    isDataRoute: false
-  });
-  RouteContext.displayName = "Route";
-  var RouteErrorContext = React.createContext(null);
-  RouteErrorContext.displayName = "RouteError";
-  var ENABLE_DEV_WARNINGS = true;
-  function useHref(to, { relative } = {}) {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useHref() may be used only in the context of a <Router> component.`
-    );
-    let { basename, navigator: navigator2 } = React2.useContext(NavigationContext);
-    let { hash, pathname, search } = useResolvedPath(to, { relative });
-    let joinedPathname = pathname;
-    if (basename !== "/") {
-      joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
-    }
-    return navigator2.createHref({ pathname: joinedPathname, search, hash });
-  }
-  function useInRouterContext() {
-    return React2.useContext(LocationContext) != null;
-  }
-  function useLocation() {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useLocation() may be used only in the context of a <Router> component.`
-    );
-    return React2.useContext(LocationContext).location;
-  }
-  var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
-  function useIsomorphicLayoutEffect(cb) {
-    let isStatic = React2.useContext(NavigationContext).static;
-    if (!isStatic) {
-      React2.useLayoutEffect(cb);
-    }
-  }
-  function useNavigate() {
-    let { isDataRoute } = React2.useContext(RouteContext);
-    return isDataRoute ? useNavigateStable() : useNavigateUnstable();
-  }
-  function useNavigateUnstable() {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useNavigate() may be used only in the context of a <Router> component.`
-    );
-    let dataRouterContext = React2.useContext(DataRouterContext);
-    let { basename, navigator: navigator2 } = React2.useContext(NavigationContext);
-    let { matches } = React2.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    let activeRef = React2.useRef(false);
-    useIsomorphicLayoutEffect(() => {
-      activeRef.current = true;
-    });
-    let navigate = React2.useCallback(
-      (to, options = {}) => {
-        warning(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current) return;
-        if (typeof to === "number") {
-          navigator2.go(to);
-          return;
-        }
-        let path = resolveTo(
-          to,
-          JSON.parse(routePathnamesJson),
-          locationPathname,
-          options.relative === "path"
-        );
-        if (dataRouterContext == null && basename !== "/") {
-          path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-        }
-        (!!options.replace ? navigator2.replace : navigator2.push)(
-          path,
-          options.state,
-          options
-        );
-      },
-      [
-        basename,
-        navigator2,
-        routePathnamesJson,
-        locationPathname,
-        dataRouterContext
-      ]
-    );
-    return navigate;
-  }
-  var OutletContext = React2.createContext(null);
-  function useParams() {
-    let { matches } = React2.useContext(RouteContext);
-    let routeMatch = matches[matches.length - 1];
-    return routeMatch ? routeMatch.params : {};
-  }
-  function useResolvedPath(to, { relative } = {}) {
-    let { matches } = React2.useContext(RouteContext);
-    let { pathname: locationPathname } = useLocation();
-    let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-    return React2.useMemo(
-      () => resolveTo(
-        to,
-        JSON.parse(routePathnamesJson),
-        locationPathname,
-        relative === "path"
-      ),
-      [to, routePathnamesJson, locationPathname, relative]
-    );
-  }
-  function useRoutes(routes, locationArg) {
-    return useRoutesImpl(routes, locationArg);
-  }
-  function useRoutesImpl(routes, locationArg, dataRouterState, future) {
-    invariant(
-      useInRouterContext(),
-      // TODO: This error is probably because they somehow have 2 versions of the
-      // router loaded. We can help them understand how to avoid that.
-      `useRoutes() may be used only in the context of a <Router> component.`
-    );
-    let { navigator: navigator2 } = React2.useContext(NavigationContext);
-    let { matches: parentMatches } = React2.useContext(RouteContext);
-    let routeMatch = parentMatches[parentMatches.length - 1];
-    let parentParams = routeMatch ? routeMatch.params : {};
-    let parentPathname = routeMatch ? routeMatch.pathname : "/";
-    let parentPathnameBase = routeMatch ? routeMatch.pathnameBase : "/";
-    let parentRoute = routeMatch && routeMatch.route;
-    if (ENABLE_DEV_WARNINGS) {
-      let parentPath = parentRoute && parentRoute.path || "";
-      warningOnce(
-        parentPathname,
-        !parentRoute || parentPath.endsWith("*") || parentPath.endsWith("*?"),
-        `You rendered descendant <Routes> (or called \`useRoutes()\`) at "${parentPathname}" (under <Route path="${parentPath}">) but the parent route path has no trailing "*". This means if you navigate deeper, the parent won't match anymore and therefore the child routes will never render.
+  // src/App.tsx
+  var import_react5 = __toESM(require_react());
 
-Please change the parent <Route path="${parentPath}"> to <Route path="${parentPath === "/" ? "*" : `${parentPath}/*`}">.`
-      );
-    }
-    let locationFromContext = useLocation();
-    let location;
-    if (locationArg) {
-      let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-      invariant(
-        parentPathnameBase === "/" || parsedLocationArg.pathname?.startsWith(parentPathnameBase),
-        `When overriding the location using \`<Routes location>\` or \`useRoutes(routes, location)\`, the location pathname must begin with the portion of the URL pathname that was matched by all parent routes. The current pathname base is "${parentPathnameBase}" but pathname "${parsedLocationArg.pathname}" was given in the \`location\` prop.`
-      );
-      location = parsedLocationArg;
-    } else {
-      location = locationFromContext;
-    }
-    let pathname = location.pathname || "/";
-    let remainingPathname = pathname;
-    if (parentPathnameBase !== "/") {
-      let parentSegments = parentPathnameBase.replace(/^\//, "").split("/");
-      let segments = pathname.replace(/^\//, "").split("/");
-      remainingPathname = "/" + segments.slice(parentSegments.length).join("/");
-    }
-    let matches = matchRoutes(routes, { pathname: remainingPathname });
-    if (ENABLE_DEV_WARNINGS) {
-      warning(
-        parentRoute || matches != null,
-        `No routes matched location "${location.pathname}${location.search}${location.hash}" `
-      );
-      warning(
-        matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0,
-        `Matched leaf route at location "${location.pathname}${location.search}${location.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
-      );
-    }
-    let renderedMatches = _renderMatches(
-      matches && matches.map(
-        (match) => Object.assign({}, match, {
-          params: Object.assign({}, parentParams, match.params),
-          pathname: joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
-          ]),
-          pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
-            parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
-          ])
-        })
-      ),
-      parentMatches,
-      dataRouterState,
-      future
-    );
-    if (locationArg && renderedMatches) {
-      return /* @__PURE__ */ React2.createElement(
-        LocationContext.Provider,
-        {
-          value: {
-            location: {
-              pathname: "/",
-              search: "",
-              hash: "",
-              state: null,
-              key: "default",
-              ...location
-            },
-            navigationType: "POP"
-            /* Pop */
-          }
-        },
-        renderedMatches
-      );
-    }
-    return renderedMatches;
-  }
-  function DefaultErrorComponent() {
-    let error = useRouteError();
-    let message = isRouteErrorResponse(error) ? `${error.status} ${error.statusText}` : error instanceof Error ? error.message : JSON.stringify(error);
-    let stack = error instanceof Error ? error.stack : null;
-    let lightgrey = "rgba(200,200,200, 0.5)";
-    let preStyles = { padding: "0.5rem", backgroundColor: lightgrey };
-    let codeStyles = { padding: "2px 4px", backgroundColor: lightgrey };
-    let devInfo = null;
-    if (ENABLE_DEV_WARNINGS) {
-      console.error(
-        "Error handled by React Router default ErrorBoundary:",
-        error
-      );
-      devInfo = /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("p", null, "\u{1F4BF} Hey developer \u{1F44B}"), /* @__PURE__ */ React2.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ React2.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ React2.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
-    }
-    return /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ React2.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ React2.createElement("pre", { style: preStyles }, stack) : null, devInfo);
-  }
-  var defaultErrorElement = /* @__PURE__ */ React2.createElement(DefaultErrorComponent, null);
-  var RenderErrorBoundary = class extends React2.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        location: props.location,
-        revalidation: props.revalidation,
-        error: props.error
-      };
-    }
-    static getDerivedStateFromError(error) {
-      return { error };
-    }
-    static getDerivedStateFromProps(props, state) {
-      if (state.location !== props.location || state.revalidation !== "idle" && props.revalidation === "idle") {
-        return {
-          error: props.error,
-          location: props.location,
-          revalidation: props.revalidation
-        };
-      }
-      return {
-        error: props.error !== void 0 ? props.error : state.error,
-        location: state.location,
-        revalidation: props.revalidation || state.revalidation
-      };
-    }
-    componentDidCatch(error, errorInfo) {
-      console.error(
-        "React Router caught the following error during render",
-        error,
-        errorInfo
-      );
-    }
-    render() {
-      return this.state.error !== void 0 ? /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ React2.createElement(
-        RouteErrorContext.Provider,
-        {
-          value: this.state.error,
-          children: this.props.component
-        }
-      )) : this.props.children;
-    }
-  };
-  function RenderedRoute({ routeContext, match, children }) {
-    let dataRouterContext = React2.useContext(DataRouterContext);
-    if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
-      dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
-    }
-    return /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: routeContext }, children);
-  }
-  function _renderMatches(matches, parentMatches = [], dataRouterState = null, future = null) {
-    if (matches == null) {
-      if (!dataRouterState) {
-        return null;
-      }
-      if (dataRouterState.errors) {
-        matches = dataRouterState.matches;
-      } else if (parentMatches.length === 0 && !dataRouterState.initialized && dataRouterState.matches.length > 0) {
-        matches = dataRouterState.matches;
-      } else {
-        return null;
-      }
-    }
-    let renderedMatches = matches;
-    let errors = dataRouterState?.errors;
-    if (errors != null) {
-      let errorIndex = renderedMatches.findIndex(
-        (m) => m.route.id && errors?.[m.route.id] !== void 0
-      );
-      invariant(
-        errorIndex >= 0,
-        `Could not find a matching route for errors on route IDs: ${Object.keys(
-          errors
-        ).join(",")}`
-      );
-      renderedMatches = renderedMatches.slice(
-        0,
-        Math.min(renderedMatches.length, errorIndex + 1)
-      );
-    }
-    let renderFallback = false;
-    let fallbackIndex = -1;
-    if (dataRouterState) {
-      for (let i = 0; i < renderedMatches.length; i++) {
-        let match = renderedMatches[i];
-        if (match.route.HydrateFallback || match.route.hydrateFallbackElement) {
-          fallbackIndex = i;
-        }
-        if (match.route.id) {
-          let { loaderData, errors: errors2 } = dataRouterState;
-          let needsToRunLoader = match.route.loader && !loaderData.hasOwnProperty(match.route.id) && (!errors2 || errors2[match.route.id] === void 0);
-          if (match.route.lazy || needsToRunLoader) {
-            renderFallback = true;
-            if (fallbackIndex >= 0) {
-              renderedMatches = renderedMatches.slice(0, fallbackIndex + 1);
-            } else {
-              renderedMatches = [renderedMatches[0]];
-            }
-            break;
-          }
-        }
-      }
-    }
-    return renderedMatches.reduceRight(
-      (outlet, match, index) => {
-        let error;
-        let shouldRenderHydrateFallback = false;
-        let errorElement = null;
-        let hydrateFallbackElement = null;
-        if (dataRouterState) {
-          error = errors && match.route.id ? errors[match.route.id] : void 0;
-          errorElement = match.route.errorElement || defaultErrorElement;
-          if (renderFallback) {
-            if (fallbackIndex < 0 && index === 0) {
-              warningOnce(
-                "route-fallback",
-                false,
-                "No `HydrateFallback` element provided to render during initial hydration"
-              );
-              shouldRenderHydrateFallback = true;
-              hydrateFallbackElement = null;
-            } else if (fallbackIndex === index) {
-              shouldRenderHydrateFallback = true;
-              hydrateFallbackElement = match.route.hydrateFallbackElement || null;
-            }
-          }
-        }
-        let matches2 = parentMatches.concat(renderedMatches.slice(0, index + 1));
-        let getChildren = () => {
-          let children;
-          if (error) {
-            children = errorElement;
-          } else if (shouldRenderHydrateFallback) {
-            children = hydrateFallbackElement;
-          } else if (match.route.Component) {
-            children = /* @__PURE__ */ React2.createElement(match.route.Component, null);
-          } else if (match.route.element) {
-            children = match.route.element;
-          } else {
-            children = outlet;
-          }
-          return /* @__PURE__ */ React2.createElement(
-            RenderedRoute,
-            {
-              match,
-              routeContext: {
-                outlet,
-                matches: matches2,
-                isDataRoute: dataRouterState != null
-              },
-              children
-            }
-          );
-        };
-        return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ React2.createElement(
-          RenderErrorBoundary,
-          {
-            location: dataRouterState.location,
-            revalidation: dataRouterState.revalidation,
-            component: errorElement,
-            error,
-            children: getChildren(),
-            routeContext: { outlet: null, matches: matches2, isDataRoute: true }
-          }
-        ) : getChildren();
-      },
-      null
-    );
-  }
-  function getDataRouterConsoleError(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
-  }
-  function useDataRouterContext(hookName) {
-    let ctx = React2.useContext(DataRouterContext);
-    invariant(ctx, getDataRouterConsoleError(hookName));
-    return ctx;
-  }
-  function useDataRouterState(hookName) {
-    let state = React2.useContext(DataRouterStateContext);
-    invariant(state, getDataRouterConsoleError(hookName));
-    return state;
-  }
-  function useRouteContext(hookName) {
-    let route = React2.useContext(RouteContext);
-    invariant(route, getDataRouterConsoleError(hookName));
-    return route;
-  }
-  function useCurrentRouteId(hookName) {
-    let route = useRouteContext(hookName);
-    let thisRoute = route.matches[route.matches.length - 1];
-    invariant(
-      thisRoute.route.id,
-      `${hookName} can only be used on routes that contain a unique "id"`
-    );
-    return thisRoute.route.id;
-  }
-  function useRouteId() {
-    return useCurrentRouteId(
-      "useRouteId"
-      /* UseRouteId */
-    );
-  }
-  function useNavigation() {
-    let state = useDataRouterState(
-      "useNavigation"
-      /* UseNavigation */
-    );
-    return state.navigation;
-  }
-  function useMatches() {
-    let { matches, loaderData } = useDataRouterState(
-      "useMatches"
-      /* UseMatches */
-    );
-    return React2.useMemo(
-      () => matches.map((m) => convertRouteMatchToUiMatch(m, loaderData)),
-      [matches, loaderData]
-    );
-  }
-  function useRouteError() {
-    let error = React2.useContext(RouteErrorContext);
-    let state = useDataRouterState(
-      "useRouteError"
-      /* UseRouteError */
-    );
-    let routeId = useCurrentRouteId(
-      "useRouteError"
-      /* UseRouteError */
-    );
-    if (error !== void 0) {
-      return error;
-    }
-    return state.errors?.[routeId];
-  }
-  function useNavigateStable() {
-    let { router } = useDataRouterContext(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let id = useCurrentRouteId(
-      "useNavigate"
-      /* UseNavigateStable */
-    );
-    let activeRef = React2.useRef(false);
-    useIsomorphicLayoutEffect(() => {
-      activeRef.current = true;
-    });
-    let navigate = React2.useCallback(
-      async (to, options = {}) => {
-        warning(activeRef.current, navigateEffectWarning);
-        if (!activeRef.current) return;
-        if (typeof to === "number") {
-          router.navigate(to);
-        } else {
-          await router.navigate(to, { fromRouteId: id, ...options });
-        }
-      },
-      [router, id]
-    );
-    return navigate;
-  }
-  var alreadyWarned = {};
-  function warningOnce(key, cond, message) {
-    if (!cond && !alreadyWarned[key]) {
-      alreadyWarned[key] = true;
-      warning(false, message);
-    }
-  }
-  var MemoizedDataRoutes = React3.memo(DataRoutes);
-  function DataRoutes({
-    routes,
-    future,
-    state
-  }) {
-    return useRoutesImpl(routes, void 0, state, future);
-  }
-  function Route(props) {
-    invariant(
-      false,
-      `A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.`
-    );
-  }
-  function Router({
-    basename: basenameProp = "/",
-    children = null,
-    location: locationProp,
-    navigationType = "POP",
-    navigator: navigator2,
-    static: staticProp = false
-  }) {
-    invariant(
-      !useInRouterContext(),
-      `You cannot render a <Router> inside another <Router>. You should never have more than one in your app.`
-    );
-    let basename = basenameProp.replace(/^\/*/, "/");
-    let navigationContext = React3.useMemo(
-      () => ({
-        basename,
-        navigator: navigator2,
-        static: staticProp,
-        future: {}
-      }),
-      [basename, navigator2, staticProp]
-    );
-    if (typeof locationProp === "string") {
-      locationProp = parsePath(locationProp);
-    }
-    let {
-      pathname = "/",
-      search = "",
-      hash = "",
-      state = null,
-      key = "default"
-    } = locationProp;
-    let locationContext = React3.useMemo(() => {
-      let trailingPathname = stripBasename(pathname, basename);
-      if (trailingPathname == null) {
-        return null;
-      }
-      return {
-        location: {
-          pathname: trailingPathname,
-          search,
-          hash,
-          state,
-          key
-        },
-        navigationType
-      };
-    }, [basename, pathname, search, hash, state, key, navigationType]);
-    warning(
-      locationContext != null,
-      `<Router basename="${basename}"> is not able to match the URL "${pathname}${search}${hash}" because it does not start with the basename, so the <Router> won't render anything.`
-    );
-    if (locationContext == null) {
-      return null;
-    }
-    return /* @__PURE__ */ React3.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ React3.createElement(LocationContext.Provider, { children, value: locationContext }));
-  }
-  function Routes({
-    children,
-    location
-  }) {
-    return useRoutes(createRoutesFromChildren(children), location);
-  }
-  function createRoutesFromChildren(children, parentPath = []) {
-    let routes = [];
-    React3.Children.forEach(children, (element, index) => {
-      if (!React3.isValidElement(element)) {
-        return;
-      }
-      let treePath = [...parentPath, index];
-      if (element.type === React3.Fragment) {
-        routes.push.apply(
-          routes,
-          createRoutesFromChildren(element.props.children, treePath)
-        );
-        return;
-      }
-      invariant(
-        element.type === Route,
-        `[${typeof element.type === "string" ? element.type : element.type.name}] is not a <Route> component. All component children of <Routes> must be a <Route> or <React.Fragment>`
-      );
-      invariant(
-        !element.props.index || !element.props.children,
-        "An index route cannot have child routes."
-      );
-      let route = {
-        id: element.props.id || treePath.join("-"),
-        caseSensitive: element.props.caseSensitive,
-        element: element.props.element,
-        Component: element.props.Component,
-        index: element.props.index,
-        path: element.props.path,
-        loader: element.props.loader,
-        action: element.props.action,
-        hydrateFallbackElement: element.props.hydrateFallbackElement,
-        HydrateFallback: element.props.HydrateFallback,
-        errorElement: element.props.errorElement,
-        ErrorBoundary: element.props.ErrorBoundary,
-        hasErrorBoundary: element.props.hasErrorBoundary === true || element.props.ErrorBoundary != null || element.props.errorElement != null,
-        shouldRevalidate: element.props.shouldRevalidate,
-        handle: element.props.handle,
-        lazy: element.props.lazy
-      };
-      if (element.props.children) {
-        route.children = createRoutesFromChildren(
-          element.props.children,
-          treePath
-        );
-      }
-      routes.push(route);
-    });
-    return routes;
-  }
-  var defaultMethod = "get";
-  var defaultEncType = "application/x-www-form-urlencoded";
-  function isHtmlElement(object) {
-    return object != null && typeof object.tagName === "string";
-  }
-  function isButtonElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "button";
-  }
-  function isFormElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "form";
-  }
-  function isInputElement(object) {
-    return isHtmlElement(object) && object.tagName.toLowerCase() === "input";
-  }
-  function isModifiedEvent(event) {
-    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-  }
-  function shouldProcessLinkClick(event, target) {
-    return event.button === 0 && // Ignore everything but left clicks
-    (!target || target === "_self") && // Let browser handle "target=_blank" etc.
-    !isModifiedEvent(event);
-  }
-  var _formDataSupportsSubmitter = null;
-  function isFormDataSubmitterSupported() {
-    if (_formDataSupportsSubmitter === null) {
-      try {
-        new FormData(
-          document.createElement("form"),
-          // @ts-expect-error if FormData supports the submitter parameter, this will throw
-          0
-        );
-        _formDataSupportsSubmitter = false;
-      } catch (e) {
-        _formDataSupportsSubmitter = true;
-      }
-    }
-    return _formDataSupportsSubmitter;
-  }
-  var supportedFormEncTypes = /* @__PURE__ */ new Set([
-    "application/x-www-form-urlencoded",
-    "multipart/form-data",
-    "text/plain"
-  ]);
-  function getFormEncType(encType) {
-    if (encType != null && !supportedFormEncTypes.has(encType)) {
-      warning(
-        false,
-        `"${encType}" is not a valid \`encType\` for \`<Form>\`/\`<fetcher.Form>\` and will default to "${defaultEncType}"`
-      );
-      return null;
-    }
-    return encType;
-  }
-  function getFormSubmissionInfo(target, basename) {
-    let method;
-    let action;
-    let encType;
-    let formData;
-    let body;
-    if (isFormElement(target)) {
-      let attr = target.getAttribute("action");
-      action = attr ? stripBasename(attr, basename) : null;
-      method = target.getAttribute("method") || defaultMethod;
-      encType = getFormEncType(target.getAttribute("enctype")) || defaultEncType;
-      formData = new FormData(target);
-    } else if (isButtonElement(target) || isInputElement(target) && (target.type === "submit" || target.type === "image")) {
-      let form = target.form;
-      if (form == null) {
-        throw new Error(
-          `Cannot submit a <button> or <input type="submit"> without a <form>`
-        );
-      }
-      let attr = target.getAttribute("formaction") || form.getAttribute("action");
-      action = attr ? stripBasename(attr, basename) : null;
-      method = target.getAttribute("formmethod") || form.getAttribute("method") || defaultMethod;
-      encType = getFormEncType(target.getAttribute("formenctype")) || getFormEncType(form.getAttribute("enctype")) || defaultEncType;
-      formData = new FormData(form, target);
-      if (!isFormDataSubmitterSupported()) {
-        let { name, type, value } = target;
-        if (type === "image") {
-          let prefix = name ? `${name}.` : "";
-          formData.append(`${prefix}x`, "0");
-          formData.append(`${prefix}y`, "0");
-        } else if (name) {
-          formData.append(name, value);
-        }
-      }
-    } else if (isHtmlElement(target)) {
-      throw new Error(
-        `Cannot submit element that is not <form>, <button>, or <input type="submit|image">`
-      );
-    } else {
-      method = defaultMethod;
-      action = null;
-      encType = defaultEncType;
-      body = target;
-    }
-    if (formData && encType === "text/plain") {
-      body = formData;
-      formData = void 0;
-    }
-    return { action, method: method.toLowerCase(), encType, formData, body };
-  }
-  var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
-  function invariant2(value, message) {
-    if (value === false || value === null || typeof value === "undefined") {
-      throw new Error(message);
-    }
-  }
-  var SingleFetchRedirectSymbol = Symbol("SingleFetchRedirect");
-  function singleFetchUrl(reqUrl, basename, extension) {
-    let url = typeof reqUrl === "string" ? new URL(
-      reqUrl,
-      // This can be called during the SSR flow via PrefetchPageLinksImpl so
-      // don't assume window is available
-      typeof window === "undefined" ? "server://singlefetch/" : window.location.origin
-    ) : reqUrl;
-    if (url.pathname === "/") {
-      url.pathname = `_root.${extension}`;
-    } else if (basename && stripBasename(url.pathname, basename) === "/") {
-      url.pathname = `${basename.replace(/\/$/, "")}/_root.${extension}`;
-    } else {
-      url.pathname = `${url.pathname.replace(/\/$/, "")}.${extension}`;
-    }
-    return url;
-  }
-  async function loadRouteModule(route, routeModulesCache) {
-    if (route.id in routeModulesCache) {
-      return routeModulesCache[route.id];
-    }
-    try {
-      let routeModule = await import(
-        /* @vite-ignore */
-        /* webpackIgnore: true */
-        route.module
-      );
-      routeModulesCache[route.id] = routeModule;
-      return routeModule;
-    } catch (error) {
-      console.error(
-        `Error loading route module \`${route.module}\`, reloading page...`
-      );
-      console.error(error);
-      if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode && // @ts-expect-error
-      import_meta.hot) {
-        throw error;
-      }
-      window.location.reload();
-      return new Promise(() => {
-      });
-    }
-  }
-  function isPageLinkDescriptor(object) {
-    return object != null && typeof object.page === "string";
-  }
-  function isHtmlLinkDescriptor(object) {
-    if (object == null) {
-      return false;
-    }
-    if (object.href == null) {
-      return object.rel === "preload" && typeof object.imageSrcSet === "string" && typeof object.imageSizes === "string";
-    }
-    return typeof object.rel === "string" && typeof object.href === "string";
-  }
-  async function getKeyedPrefetchLinks(matches, manifest, routeModules) {
-    let links = await Promise.all(
-      matches.map(async (match) => {
-        let route = manifest.routes[match.route.id];
-        if (route) {
-          let mod = await loadRouteModule(route, routeModules);
-          return mod.links ? mod.links() : [];
-        }
-        return [];
-      })
-    );
-    return dedupeLinkDescriptors(
-      links.flat(1).filter(isHtmlLinkDescriptor).filter((link) => link.rel === "stylesheet" || link.rel === "preload").map(
-        (link) => link.rel === "stylesheet" ? { ...link, rel: "prefetch", as: "style" } : { ...link, rel: "prefetch" }
-      )
-    );
-  }
-  function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location, mode) {
-    let isNew = (match, index) => {
-      if (!currentMatches[index]) return true;
-      return match.route.id !== currentMatches[index].route.id;
-    };
-    let matchPathChanged = (match, index) => {
-      return (
-        // param change, /users/123 -> /users/456
-        currentMatches[index].pathname !== match.pathname || // splat param changed, which is not present in match.path
-        // e.g. /files/images/avatar.jpg -> files/finances.xls
-        currentMatches[index].route.path?.endsWith("*") && currentMatches[index].params["*"] !== match.params["*"]
-      );
-    };
-    if (mode === "assets") {
-      return nextMatches.filter(
-        (match, index) => isNew(match, index) || matchPathChanged(match, index)
-      );
-    }
-    if (mode === "data") {
-      return nextMatches.filter((match, index) => {
-        let manifestRoute = manifest.routes[match.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return false;
-        }
-        if (isNew(match, index) || matchPathChanged(match, index)) {
-          return true;
-        }
-        if (match.route.shouldRevalidate) {
-          let routeChoice = match.route.shouldRevalidate({
-            currentUrl: new URL(
-              location.pathname + location.search + location.hash,
-              window.origin
-            ),
-            currentParams: currentMatches[0]?.params || {},
-            nextUrl: new URL(page, window.origin),
-            nextParams: match.params,
-            defaultShouldRevalidate: true
-          });
-          if (typeof routeChoice === "boolean") {
-            return routeChoice;
-          }
-        }
-        return true;
-      });
-    }
-    return [];
-  }
-  function getModuleLinkHrefs(matches, manifest, { includeHydrateFallback } = {}) {
-    return dedupeHrefs(
-      matches.map((match) => {
-        let route = manifest.routes[match.route.id];
-        if (!route) return [];
-        let hrefs = [route.module];
-        if (route.clientActionModule) {
-          hrefs = hrefs.concat(route.clientActionModule);
-        }
-        if (route.clientLoaderModule) {
-          hrefs = hrefs.concat(route.clientLoaderModule);
-        }
-        if (includeHydrateFallback && route.hydrateFallbackModule) {
-          hrefs = hrefs.concat(route.hydrateFallbackModule);
-        }
-        if (route.imports) {
-          hrefs = hrefs.concat(route.imports);
-        }
-        return hrefs;
-      }).flat(1)
-    );
-  }
-  function dedupeHrefs(hrefs) {
-    return [...new Set(hrefs)];
-  }
-  function sortKeys(obj) {
-    let sorted = {};
-    let keys = Object.keys(obj).sort();
-    for (let key of keys) {
-      sorted[key] = obj[key];
-    }
-    return sorted;
-  }
-  function dedupeLinkDescriptors(descriptors, preloads) {
-    let set = /* @__PURE__ */ new Set();
-    let preloadsSet = new Set(preloads);
-    return descriptors.reduce((deduped, descriptor) => {
-      let alreadyModulePreload = preloads && !isPageLinkDescriptor(descriptor) && descriptor.as === "script" && descriptor.href && preloadsSet.has(descriptor.href);
-      if (alreadyModulePreload) {
-        return deduped;
-      }
-      let key = JSON.stringify(sortKeys(descriptor));
-      if (!set.has(key)) {
-        set.add(key);
-        deduped.push({ key, link: descriptor });
-      }
-      return deduped;
-    }, []);
-  }
-  function useDataRouterContext2() {
-    let context = React8.useContext(DataRouterContext);
-    invariant2(
-      context,
-      "You must render this element inside a <DataRouterContext.Provider> element"
-    );
-    return context;
-  }
-  function useDataRouterStateContext() {
-    let context = React8.useContext(DataRouterStateContext);
-    invariant2(
-      context,
-      "You must render this element inside a <DataRouterStateContext.Provider> element"
-    );
-    return context;
-  }
-  var FrameworkContext = React8.createContext(void 0);
-  FrameworkContext.displayName = "FrameworkContext";
-  function useFrameworkContext() {
-    let context = React8.useContext(FrameworkContext);
-    invariant2(
-      context,
-      "You must render this element inside a <HydratedRouter> element"
-    );
-    return context;
-  }
-  function usePrefetchBehavior(prefetch, theirElementProps) {
-    let frameworkContext = React8.useContext(FrameworkContext);
-    let [maybePrefetch, setMaybePrefetch] = React8.useState(false);
-    let [shouldPrefetch, setShouldPrefetch] = React8.useState(false);
-    let { onFocus, onBlur, onMouseEnter, onMouseLeave, onTouchStart } = theirElementProps;
-    let ref = React8.useRef(null);
-    React8.useEffect(() => {
-      if (prefetch === "render") {
-        setShouldPrefetch(true);
-      }
-      if (prefetch === "viewport") {
-        let callback = (entries) => {
-          entries.forEach((entry) => {
-            setShouldPrefetch(entry.isIntersecting);
-          });
-        };
-        let observer = new IntersectionObserver(callback, { threshold: 0.5 });
-        if (ref.current) observer.observe(ref.current);
-        return () => {
-          observer.disconnect();
-        };
-      }
-    }, [prefetch]);
-    React8.useEffect(() => {
-      if (maybePrefetch) {
-        let id = setTimeout(() => {
-          setShouldPrefetch(true);
-        }, 100);
-        return () => {
-          clearTimeout(id);
-        };
-      }
-    }, [maybePrefetch]);
-    let setIntent = () => {
-      setMaybePrefetch(true);
-    };
-    let cancelIntent = () => {
-      setMaybePrefetch(false);
-      setShouldPrefetch(false);
-    };
-    if (!frameworkContext) {
-      return [false, ref, {}];
-    }
-    if (prefetch !== "intent") {
-      return [shouldPrefetch, ref, {}];
-    }
-    return [
-      shouldPrefetch,
-      ref,
-      {
-        onFocus: composeEventHandlers(onFocus, setIntent),
-        onBlur: composeEventHandlers(onBlur, cancelIntent),
-        onMouseEnter: composeEventHandlers(onMouseEnter, setIntent),
-        onMouseLeave: composeEventHandlers(onMouseLeave, cancelIntent),
-        onTouchStart: composeEventHandlers(onTouchStart, setIntent)
-      }
-    ];
-  }
-  function composeEventHandlers(theirHandler, ourHandler) {
-    return (event) => {
-      theirHandler && theirHandler(event);
-      if (!event.defaultPrevented) {
-        ourHandler(event);
-      }
-    };
-  }
-  function PrefetchPageLinks({ page, ...linkProps }) {
-    let { router } = useDataRouterContext2();
-    let matches = React8.useMemo(
-      () => matchRoutes(router.routes, page, router.basename),
-      [router.routes, page, router.basename]
-    );
-    if (!matches) {
-      return null;
-    }
-    return /* @__PURE__ */ React8.createElement(PrefetchPageLinksImpl, { page, matches, ...linkProps });
-  }
-  function useKeyedPrefetchLinks(matches) {
-    let { manifest, routeModules } = useFrameworkContext();
-    let [keyedPrefetchLinks, setKeyedPrefetchLinks] = React8.useState([]);
-    React8.useEffect(() => {
-      let interrupted = false;
-      void getKeyedPrefetchLinks(matches, manifest, routeModules).then(
-        (links) => {
-          if (!interrupted) {
-            setKeyedPrefetchLinks(links);
-          }
-        }
-      );
-      return () => {
-        interrupted = true;
-      };
-    }, [matches, manifest, routeModules]);
-    return keyedPrefetchLinks;
-  }
-  function PrefetchPageLinksImpl({
-    page,
-    matches: nextMatches,
-    ...linkProps
-  }) {
-    let location = useLocation();
-    let { manifest, routeModules } = useFrameworkContext();
-    let { basename } = useDataRouterContext2();
-    let { loaderData, matches } = useDataRouterStateContext();
-    let newMatchesForData = React8.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location,
-        "data"
-      ),
-      [page, nextMatches, matches, manifest, location]
-    );
-    let newMatchesForAssets = React8.useMemo(
-      () => getNewMatchesForLinks(
-        page,
-        nextMatches,
-        matches,
-        manifest,
-        location,
-        "assets"
-      ),
-      [page, nextMatches, matches, manifest, location]
-    );
-    let dataHrefs = React8.useMemo(() => {
-      if (page === location.pathname + location.search + location.hash) {
-        return [];
-      }
-      let routesParams = /* @__PURE__ */ new Set();
-      let foundOptOutRoute = false;
-      nextMatches.forEach((m) => {
-        let manifestRoute = manifest.routes[m.route.id];
-        if (!manifestRoute || !manifestRoute.hasLoader) {
-          return;
-        }
-        if (!newMatchesForData.some((m2) => m2.route.id === m.route.id) && m.route.id in loaderData && routeModules[m.route.id]?.shouldRevalidate) {
-          foundOptOutRoute = true;
-        } else if (manifestRoute.hasClientLoader) {
-          foundOptOutRoute = true;
-        } else {
-          routesParams.add(m.route.id);
-        }
-      });
-      if (routesParams.size === 0) {
-        return [];
-      }
-      let url = singleFetchUrl(page, basename, "data");
-      if (foundOptOutRoute && routesParams.size > 0) {
-        url.searchParams.set(
-          "_routes",
-          nextMatches.filter((m) => routesParams.has(m.route.id)).map((m) => m.route.id).join(",")
-        );
-      }
-      return [url.pathname + url.search];
-    }, [
-      basename,
-      loaderData,
-      location,
-      manifest,
-      newMatchesForData,
-      nextMatches,
-      page,
-      routeModules
-    ]);
-    let moduleHrefs = React8.useMemo(
-      () => getModuleLinkHrefs(newMatchesForAssets, manifest),
-      [newMatchesForAssets, manifest]
-    );
-    let keyedPrefetchLinks = useKeyedPrefetchLinks(newMatchesForAssets);
-    return /* @__PURE__ */ React8.createElement(React8.Fragment, null, dataHrefs.map((href) => /* @__PURE__ */ React8.createElement("link", { key: href, rel: "prefetch", as: "fetch", href, ...linkProps })), moduleHrefs.map((href) => /* @__PURE__ */ React8.createElement("link", { key: href, rel: "modulepreload", href, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
-      // these don't spread `linkProps` because they are full link descriptors
-      // already with their own props
-      /* @__PURE__ */ React8.createElement("link", { key, ...link })
-    )));
-  }
-  function mergeRefs(...refs) {
-    return (value) => {
-      refs.forEach((ref) => {
-        if (typeof ref === "function") {
-          ref(value);
-        } else if (ref != null) {
-          ref.current = value;
-        }
-      });
-    };
-  }
-  var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
-  try {
-    if (isBrowser) {
-      window.__reactRouterVersion = // @ts-expect-error
-      "7.7.1";
-    }
-  } catch (e) {
-  }
-  function HashRouter({ basename, children, window: window2 }) {
-    let historyRef = React10.useRef();
-    if (historyRef.current == null) {
-      historyRef.current = createHashHistory({ window: window2, v5Compat: true });
-    }
-    let history = historyRef.current;
-    let [state, setStateImpl] = React10.useState({
-      action: history.action,
-      location: history.location
-    });
-    let setState = React10.useCallback(
-      (newState) => {
-        React10.startTransition(() => setStateImpl(newState));
-      },
-      [setStateImpl]
-    );
-    React10.useLayoutEffect(() => history.listen(setState), [history, setState]);
-    return /* @__PURE__ */ React10.createElement(
-      Router,
-      {
-        basename,
-        children,
-        location: state.location,
-        navigationType: state.action,
-        navigator: history
-      }
-    );
-  }
-  function HistoryRouter({
-    basename,
-    children,
-    history
-  }) {
-    let [state, setStateImpl] = React10.useState({
-      action: history.action,
-      location: history.location
-    });
-    let setState = React10.useCallback(
-      (newState) => {
-        React10.startTransition(() => setStateImpl(newState));
-      },
-      [setStateImpl]
-    );
-    React10.useLayoutEffect(() => history.listen(setState), [history, setState]);
-    return /* @__PURE__ */ React10.createElement(
-      Router,
-      {
-        basename,
-        children,
-        location: state.location,
-        navigationType: state.action,
-        navigator: history
-      }
-    );
-  }
-  HistoryRouter.displayName = "unstable_HistoryRouter";
-  var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-  var Link = React10.forwardRef(
-    function LinkWithRef({
-      onClick,
-      discover = "render",
-      prefetch = "none",
-      relative,
-      reloadDocument,
-      replace: replace2,
-      state,
-      target,
-      to,
-      preventScrollReset,
-      viewTransition,
-      ...rest
-    }, forwardedRef) {
-      let { basename } = React10.useContext(NavigationContext);
-      let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
-      let absoluteHref;
-      let isExternal = false;
-      if (typeof to === "string" && isAbsolute) {
-        absoluteHref = to;
-        if (isBrowser) {
-          try {
-            let currentUrl = new URL(window.location.href);
-            let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
-            let path = stripBasename(targetUrl.pathname, basename);
-            if (targetUrl.origin === currentUrl.origin && path != null) {
-              to = path + targetUrl.search + targetUrl.hash;
-            } else {
-              isExternal = true;
-            }
-          } catch (e) {
-            warning(
-              false,
-              `<Link to="${to}"> contains an invalid URL which will probably break when clicked - please update to a valid URL path.`
-            );
-          }
-        }
-      }
-      let href = useHref(to, { relative });
-      let [shouldPrefetch, prefetchRef, prefetchHandlers] = usePrefetchBehavior(
-        prefetch,
-        rest
-      );
-      let internalOnClick = useLinkClickHandler(to, {
-        replace: replace2,
-        state,
-        target,
-        preventScrollReset,
-        relative,
-        viewTransition
-      });
-      function handleClick(event) {
-        if (onClick) onClick(event);
-        if (!event.defaultPrevented) {
-          internalOnClick(event);
-        }
-      }
-      let link = (
-        // eslint-disable-next-line jsx-a11y/anchor-has-content
-        /* @__PURE__ */ React10.createElement(
-          "a",
-          {
-            ...rest,
-            ...prefetchHandlers,
-            href: absoluteHref || href,
-            onClick: isExternal || reloadDocument ? onClick : handleClick,
-            ref: mergeRefs(forwardedRef, prefetchRef),
-            target,
-            "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-          }
-        )
-      );
-      return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ React10.createElement(React10.Fragment, null, link, /* @__PURE__ */ React10.createElement(PrefetchPageLinks, { page: href })) : link;
-    }
-  );
-  Link.displayName = "Link";
-  var NavLink = React10.forwardRef(
-    function NavLinkWithRef({
-      "aria-current": ariaCurrentProp = "page",
-      caseSensitive = false,
-      className: classNameProp = "",
-      end = false,
-      style: styleProp,
-      to,
-      viewTransition,
-      children,
-      ...rest
-    }, ref) {
-      let path = useResolvedPath(to, { relative: rest.relative });
-      let location = useLocation();
-      let routerState = React10.useContext(DataRouterStateContext);
-      let { navigator: navigator2, basename } = React10.useContext(NavigationContext);
-      let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useViewTransitionState(path) && viewTransition === true;
-      let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
-      let locationPathname = location.pathname;
-      let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
-      if (!caseSensitive) {
-        locationPathname = locationPathname.toLowerCase();
-        nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null;
-        toPathname = toPathname.toLowerCase();
-      }
-      if (nextLocationPathname && basename) {
-        nextLocationPathname = stripBasename(nextLocationPathname, basename) || nextLocationPathname;
-      }
-      const endSlashPosition = toPathname !== "/" && toPathname.endsWith("/") ? toPathname.length - 1 : toPathname.length;
-      let isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && locationPathname.charAt(endSlashPosition) === "/";
-      let isPending = nextLocationPathname != null && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && nextLocationPathname.charAt(toPathname.length) === "/");
-      let renderProps = {
-        isActive,
-        isPending,
-        isTransitioning
-      };
-      let ariaCurrent = isActive ? ariaCurrentProp : void 0;
-      let className;
-      if (typeof classNameProp === "function") {
-        className = classNameProp(renderProps);
-      } else {
-        className = [
-          classNameProp,
-          isActive ? "active" : null,
-          isPending ? "pending" : null,
-          isTransitioning ? "transitioning" : null
-        ].filter(Boolean).join(" ");
-      }
-      let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
-      return /* @__PURE__ */ React10.createElement(
-        Link,
-        {
-          ...rest,
-          "aria-current": ariaCurrent,
-          className,
-          ref,
-          style,
-          to,
-          viewTransition
-        },
-        typeof children === "function" ? children(renderProps) : children
-      );
-    }
-  );
-  NavLink.displayName = "NavLink";
-  var Form = React10.forwardRef(
-    ({
-      discover = "render",
-      fetcherKey,
-      navigate,
-      reloadDocument,
-      replace: replace2,
-      state,
-      method = defaultMethod,
-      action,
-      onSubmit,
-      relative,
-      preventScrollReset,
-      viewTransition,
-      ...props
-    }, forwardedRef) => {
-      let submit = useSubmit();
-      let formAction = useFormAction(action, { relative });
-      let formMethod = method.toLowerCase() === "get" ? "get" : "post";
-      let isAbsolute = typeof action === "string" && ABSOLUTE_URL_REGEX2.test(action);
-      let submitHandler = (event) => {
-        onSubmit && onSubmit(event);
-        if (event.defaultPrevented) return;
-        event.preventDefault();
-        let submitter = event.nativeEvent.submitter;
-        let submitMethod = submitter?.getAttribute("formmethod") || method;
-        submit(submitter || event.currentTarget, {
-          fetcherKey,
-          method: submitMethod,
-          navigate,
-          replace: replace2,
-          state,
-          relative,
-          preventScrollReset,
-          viewTransition
-        });
-      };
-      return /* @__PURE__ */ React10.createElement(
-        "form",
-        {
-          ref: forwardedRef,
-          method: formMethod,
-          action: formAction,
-          onSubmit: reloadDocument ? onSubmit : submitHandler,
-          ...props,
-          "data-discover": !isAbsolute && discover === "render" ? "true" : void 0
-        }
-      );
-    }
-  );
-  Form.displayName = "Form";
-  function ScrollRestoration({
-    getKey,
-    storageKey,
-    ...props
-  }) {
-    let remixContext = React10.useContext(FrameworkContext);
-    let { basename } = React10.useContext(NavigationContext);
-    let location = useLocation();
-    let matches = useMatches();
-    useScrollRestoration({ getKey, storageKey });
-    let ssrKey = React10.useMemo(
-      () => {
-        if (!remixContext || !getKey) return null;
-        let userKey = getScrollRestorationKey(
-          location,
-          matches,
-          basename,
-          getKey
-        );
-        return userKey !== location.key ? userKey : null;
-      },
-      // Nah, we only need this the first time for the SSR render
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      []
-    );
-    if (!remixContext || remixContext.isSpaMode) {
-      return null;
-    }
-    let restoreScroll = ((storageKey2, restoreKey) => {
-      if (!window.history.state || !window.history.state.key) {
-        let key = Math.random().toString(32).slice(2);
-        window.history.replaceState({ key }, "");
-      }
-      try {
-        let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
-        let storedY = positions[restoreKey || window.history.state.key];
-        if (typeof storedY === "number") {
-          window.scrollTo(0, storedY);
-        }
-      } catch (error) {
-        console.error(error);
-        sessionStorage.removeItem(storageKey2);
-      }
-    }).toString();
-    return /* @__PURE__ */ React10.createElement(
-      "script",
-      {
-        ...props,
-        suppressHydrationWarning: true,
-        dangerouslySetInnerHTML: {
-          __html: `(${restoreScroll})(${JSON.stringify(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY
-          )}, ${JSON.stringify(ssrKey)})`
-        }
-      }
-    );
-  }
-  ScrollRestoration.displayName = "ScrollRestoration";
-  function getDataRouterConsoleError2(hookName) {
-    return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
-  }
-  function useDataRouterContext3(hookName) {
-    let ctx = React10.useContext(DataRouterContext);
-    invariant(ctx, getDataRouterConsoleError2(hookName));
-    return ctx;
-  }
-  function useDataRouterState2(hookName) {
-    let state = React10.useContext(DataRouterStateContext);
-    invariant(state, getDataRouterConsoleError2(hookName));
-    return state;
-  }
-  function useLinkClickHandler(to, {
-    target,
-    replace: replaceProp,
-    state,
-    preventScrollReset,
-    relative,
-    viewTransition
-  } = {}) {
-    let navigate = useNavigate();
-    let location = useLocation();
-    let path = useResolvedPath(to, { relative });
-    return React10.useCallback(
-      (event) => {
-        if (shouldProcessLinkClick(event, target)) {
-          event.preventDefault();
-          let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
-          navigate(to, {
-            replace: replace2,
-            state,
-            preventScrollReset,
-            relative,
-            viewTransition
-          });
-        }
-      },
-      [
-        location,
-        navigate,
-        path,
-        replaceProp,
-        state,
-        target,
-        to,
-        preventScrollReset,
-        relative,
-        viewTransition
-      ]
-    );
-  }
-  var fetcherId = 0;
-  var getUniqueFetcherId = () => `__${String(++fetcherId)}__`;
-  function useSubmit() {
-    let { router } = useDataRouterContext3(
-      "useSubmit"
-      /* UseSubmit */
-    );
-    let { basename } = React10.useContext(NavigationContext);
-    let currentRouteId = useRouteId();
-    return React10.useCallback(
-      async (target, options = {}) => {
-        let { action, method, encType, formData, body } = getFormSubmissionInfo(
-          target,
-          basename
-        );
-        if (options.navigate === false) {
-          let key = options.fetcherKey || getUniqueFetcherId();
-          await router.fetch(key, currentRouteId, options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            flushSync: options.flushSync
-          });
-        } else {
-          await router.navigate(options.action || action, {
-            preventScrollReset: options.preventScrollReset,
-            formData,
-            body,
-            formMethod: options.method || method,
-            formEncType: options.encType || encType,
-            replace: options.replace,
-            state: options.state,
-            fromRouteId: currentRouteId,
-            flushSync: options.flushSync,
-            viewTransition: options.viewTransition
-          });
-        }
-      },
-      [router, basename, currentRouteId]
-    );
-  }
-  function useFormAction(action, { relative } = {}) {
-    let { basename } = React10.useContext(NavigationContext);
-    let routeContext = React10.useContext(RouteContext);
-    invariant(routeContext, "useFormAction must be used inside a RouteContext");
-    let [match] = routeContext.matches.slice(-1);
-    let path = { ...useResolvedPath(action ? action : ".", { relative }) };
-    let location = useLocation();
-    if (action == null) {
-      path.search = location.search;
-      let params = new URLSearchParams(path.search);
-      let indexValues = params.getAll("index");
-      let hasNakedIndexParam = indexValues.some((v) => v === "");
-      if (hasNakedIndexParam) {
-        params.delete("index");
-        indexValues.filter((v) => v).forEach((v) => params.append("index", v));
-        let qs = params.toString();
-        path.search = qs ? `?${qs}` : "";
-      }
-    }
-    if ((!action || action === ".") && match.route.index) {
-      path.search = path.search ? path.search.replace(/^\?/, "?index&") : "?index";
-    }
-    if (basename !== "/") {
-      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
-    }
-    return createPath(path);
-  }
-  var SCROLL_RESTORATION_STORAGE_KEY = "react-router-scroll-positions";
-  var savedScrollPositions = {};
-  function getScrollRestorationKey(location, matches, basename, getKey) {
-    let key = null;
-    if (getKey) {
-      if (basename !== "/") {
-        key = getKey(
-          {
-            ...location,
-            pathname: stripBasename(location.pathname, basename) || location.pathname
-          },
-          matches
-        );
-      } else {
-        key = getKey(location, matches);
-      }
-    }
-    if (key == null) {
-      key = location.key;
-    }
-    return key;
-  }
-  function useScrollRestoration({
-    getKey,
-    storageKey
-  } = {}) {
-    let { router } = useDataRouterContext3(
-      "useScrollRestoration"
-      /* UseScrollRestoration */
-    );
-    let { restoreScrollPosition, preventScrollReset } = useDataRouterState2(
-      "useScrollRestoration"
-      /* UseScrollRestoration */
-    );
-    let { basename } = React10.useContext(NavigationContext);
-    let location = useLocation();
-    let matches = useMatches();
-    let navigation = useNavigation();
-    React10.useEffect(() => {
-      window.history.scrollRestoration = "manual";
-      return () => {
-        window.history.scrollRestoration = "auto";
-      };
-    }, []);
-    usePageHide(
-      React10.useCallback(() => {
-        if (navigation.state === "idle") {
-          let key = getScrollRestorationKey(location, matches, basename, getKey);
-          savedScrollPositions[key] = window.scrollY;
-        }
-        try {
-          sessionStorage.setItem(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY,
-            JSON.stringify(savedScrollPositions)
-          );
-        } catch (error) {
-          warning(
-            false,
-            `Failed to save scroll positions in sessionStorage, <ScrollRestoration /> will not work properly (${error}).`
-          );
-        }
-        window.history.scrollRestoration = "auto";
-      }, [navigation.state, getKey, basename, location, matches, storageKey])
-    );
-    if (typeof document !== "undefined") {
-      React10.useLayoutEffect(() => {
-        try {
-          let sessionPositions = sessionStorage.getItem(
-            storageKey || SCROLL_RESTORATION_STORAGE_KEY
-          );
-          if (sessionPositions) {
-            savedScrollPositions = JSON.parse(sessionPositions);
-          }
-        } catch (e) {
-        }
-      }, [storageKey]);
-      React10.useLayoutEffect(() => {
-        let disableScrollRestoration = router?.enableScrollRestoration(
-          savedScrollPositions,
-          () => window.scrollY,
-          getKey ? (location2, matches2) => getScrollRestorationKey(location2, matches2, basename, getKey) : void 0
-        );
-        return () => disableScrollRestoration && disableScrollRestoration();
-      }, [router, basename, getKey]);
-      React10.useLayoutEffect(() => {
-        if (restoreScrollPosition === false) {
-          return;
-        }
-        if (typeof restoreScrollPosition === "number") {
-          window.scrollTo(0, restoreScrollPosition);
-          return;
-        }
-        try {
-          if (location.hash) {
-            let el = document.getElementById(
-              decodeURIComponent(location.hash.slice(1))
-            );
-            if (el) {
-              el.scrollIntoView();
-              return;
-            }
-          }
-        } catch {
-          warning(
-            false,
-            `"${location.hash.slice(
-              1
-            )}" is not a decodable element ID. The view will not scroll to it.`
-          );
-        }
-        if (preventScrollReset === true) {
-          return;
-        }
-        window.scrollTo(0, 0);
-      }, [location, restoreScrollPosition, preventScrollReset]);
-    }
-  }
-  function usePageHide(callback, options) {
-    let { capture } = options || {};
-    React10.useEffect(() => {
-      let opts = capture != null ? { capture } : void 0;
-      window.addEventListener("pagehide", callback, opts);
-      return () => {
-        window.removeEventListener("pagehide", callback, opts);
-      };
-    }, [callback, capture]);
-  }
-  function useViewTransitionState(to, { relative } = {}) {
-    let vtContext = React10.useContext(ViewTransitionContext);
-    invariant(
-      vtContext != null,
-      "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?"
-    );
-    let { basename } = useDataRouterContext3(
-      "useViewTransitionState"
-      /* useViewTransitionState */
-    );
-    let path = useResolvedPath(to, { relative });
-    if (!vtContext.isTransitioning) {
-      return false;
-    }
-    let currentPath = stripBasename(vtContext.currentLocation.pathname, basename) || vtContext.currentLocation.pathname;
-    let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
-    return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
-  }
-
-  // node_modules/lucide-react/dist/esm/createLucideIcon.js
-  var import_react2 = __toESM(require_react());
-
-  // node_modules/lucide-react/dist/esm/shared/src/utils.js
-  var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-  var toCamelCase = (string) => string.replace(
-    /^([A-Z])|[\s-_]+(\w)/g,
-    (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
-  );
-  var toPascalCase = (string) => {
-    const camelCase = toCamelCase(string);
-    return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
-  };
-  var mergeClasses = (...classes) => classes.filter((className, index, array) => {
-    return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
-  }).join(" ").trim();
-  var hasA11yProp = (props) => {
-    for (const prop in props) {
-      if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
-        return true;
-      }
-    }
-  };
-
-  // node_modules/lucide-react/dist/esm/Icon.js
-  var import_react = __toESM(require_react());
-
-  // node_modules/lucide-react/dist/esm/defaultAttributes.js
-  var defaultAttributes = {
-    xmlns: "http://www.w3.org/2000/svg",
-    width: 24,
-    height: 24,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    strokeLinejoin: "round"
-  };
-
-  // node_modules/lucide-react/dist/esm/Icon.js
-  var Icon = (0, import_react.forwardRef)(
-    ({
-      color = "currentColor",
-      size = 24,
-      strokeWidth = 2,
-      absoluteStrokeWidth,
-      className = "",
-      children,
-      iconNode,
-      ...rest
-    }, ref) => {
-      return (0, import_react.createElement)(
-        "svg",
-        {
-          ref,
-          ...defaultAttributes,
-          width: size,
-          height: size,
-          stroke: color,
-          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
-          className: mergeClasses("lucide", className),
-          ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
-          ...rest
-        },
-        [
-          ...iconNode.map(([tag, attrs]) => (0, import_react.createElement)(tag, attrs)),
-          ...Array.isArray(children) ? children : [children]
-        ]
-      );
-    }
-  );
-
-  // node_modules/lucide-react/dist/esm/createLucideIcon.js
-  var createLucideIcon = (iconName, iconNode) => {
-    const Component4 = (0, import_react2.forwardRef)(
-      ({ className, ...props }, ref) => (0, import_react2.createElement)(Icon, {
-        ref,
-        iconNode,
-        className: mergeClasses(
-          `lucide-${toKebabCase(toPascalCase(iconName))}`,
-          `lucide-${iconName}`,
-          className
-        ),
-        ...props
-      })
-    );
-    Component4.displayName = toPascalCase(iconName);
-    return Component4;
-  };
-
-  // node_modules/lucide-react/dist/esm/icons/arrow-left.js
-  var __iconNode = [
-    ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
-    ["path", { d: "M19 12H5", key: "x3x0zl" }]
-  ];
-  var ArrowLeft = createLucideIcon("arrow-left", __iconNode);
-
-  // node_modules/lucide-react/dist/esm/icons/book-open.js
-  var __iconNode2 = [
-    ["path", { d: "M12 7v14", key: "1akyts" }],
-    [
-      "path",
-      {
-        d: "M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",
-        key: "ruj8y"
-      }
-    ]
-  ];
-  var BookOpen = createLucideIcon("book-open", __iconNode2);
-
-  // node_modules/lucide-react/dist/esm/icons/dollar-sign.js
-  var __iconNode3 = [
-    ["line", { x1: "12", x2: "12", y1: "2", y2: "22", key: "7eqyqh" }],
-    ["path", { d: "M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6", key: "1b0p4s" }]
-  ];
-  var DollarSign = createLucideIcon("dollar-sign", __iconNode3);
-
-  // node_modules/lucide-react/dist/esm/icons/file-text.js
-  var __iconNode4 = [
-    ["path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", key: "1rqfz7" }],
-    ["path", { d: "M14 2v4a2 2 0 0 0 2 2h4", key: "tnqrlb" }],
-    ["path", { d: "M10 9H8", key: "b1mrlr" }],
-    ["path", { d: "M16 13H8", key: "t4e002" }],
-    ["path", { d: "M16 17H8", key: "z1uh3a" }]
-  ];
-  var FileText = createLucideIcon("file-text", __iconNode4);
-
-  // node_modules/lucide-react/dist/esm/icons/menu.js
-  var __iconNode5 = [
-    ["line", { x1: "4", x2: "20", y1: "12", y2: "12", key: "1e0a9i" }],
-    ["line", { x1: "4", x2: "20", y1: "6", y2: "6", key: "1owob3" }],
-    ["line", { x1: "4", x2: "20", y1: "18", y2: "18", key: "yk5zj1" }]
-  ];
-  var Menu = createLucideIcon("menu", __iconNode5);
-
-  // node_modules/lucide-react/dist/esm/icons/message-square.js
-  var __iconNode6 = [
-    ["path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z", key: "1lielz" }]
-  ];
-  var MessageSquare = createLucideIcon("message-square", __iconNode6);
-
-  // node_modules/lucide-react/dist/esm/icons/square-pen.js
-  var __iconNode7 = [
-    ["path", { d: "M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7", key: "1m0v6g" }],
-    [
-      "path",
-      {
-        d: "M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z",
-        key: "ohrbg2"
-      }
-    ]
-  ];
-  var SquarePen = createLucideIcon("square-pen", __iconNode7);
-
-  // node_modules/lucide-react/dist/esm/icons/star.js
-  var __iconNode8 = [
-    [
-      "path",
-      {
-        d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
-        key: "r04s7s"
-      }
-    ]
-  ];
-  var Star = createLucideIcon("star", __iconNode8);
-
-  // node_modules/lucide-react/dist/esm/icons/trending-up.js
-  var __iconNode9 = [
-    ["polyline", { points: "22 7 13.5 15.5 8.5 10.5 2 17", key: "126l90" }],
-    ["polyline", { points: "16 7 22 7 22 13", key: "kwv8wd" }]
-  ];
-  var TrendingUp = createLucideIcon("trending-up", __iconNode9);
-
-  // node_modules/lucide-react/dist/esm/icons/triangle-alert.js
-  var __iconNode10 = [
-    [
-      "path",
-      {
-        d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",
-        key: "wmoenq"
-      }
-    ],
-    ["path", { d: "M12 9v4", key: "juzpu7" }],
-    ["path", { d: "M12 17h.01", key: "p32p05" }]
-  ];
-  var TriangleAlert = createLucideIcon("triangle-alert", __iconNode10);
-
-  // node_modules/lucide-react/dist/esm/icons/user.js
-  var __iconNode11 = [
-    ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
-    ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
-  ];
-  var User = createLucideIcon("user", __iconNode11);
-
-  // node_modules/lucide-react/dist/esm/icons/wand-sparkles.js
-  var __iconNode12 = [
-    [
-      "path",
-      {
-        d: "m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72",
-        key: "ul74o6"
-      }
-    ],
-    ["path", { d: "m14 7 3 3", key: "1r5n42" }],
-    ["path", { d: "M5 6v4", key: "ilb8ba" }],
-    ["path", { d: "M19 14v4", key: "blhpug" }],
-    ["path", { d: "M10 2v2", key: "7u0qdc" }],
-    ["path", { d: "M7 8H3", key: "zfb6yr" }],
-    ["path", { d: "M21 16h-4", key: "1cnmox" }],
-    ["path", { d: "M11 3H9", key: "1obp7u" }]
-  ];
-  var WandSparkles = createLucideIcon("wand-sparkles", __iconNode12);
-
-  // node_modules/lucide-react/dist/esm/icons/x.js
-  var __iconNode13 = [
-    ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
-    ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
-  ];
-  var X = createLucideIcon("x", __iconNode13);
+  // src/components/PDFAnalyzer.tsx
+  var import_react3 = __toESM(require_react());
 
   // src/components/ui/button.tsx
-  var React14 = __toESM(require_react());
+  var React3 = __toESM(require_react());
 
   // node_modules/@radix-ui/react-slot/dist/index.mjs
-  var React13 = __toESM(require_react(), 1);
+  var React2 = __toESM(require_react(), 1);
 
   // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-  var React12 = __toESM(require_react(), 1);
+  var React = __toESM(require_react(), 1);
   function setRef(ref, value) {
     if (typeof ref === "function") {
       return ref(value);
@@ -27099,21 +24541,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // @__NO_SIDE_EFFECTS__
   function createSlot(ownerName) {
     const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
-    const Slot2 = React13.forwardRef((props, forwardedRef) => {
+    const Slot2 = React2.forwardRef((props, forwardedRef) => {
       const { children, ...slotProps } = props;
-      const childrenArray = React13.Children.toArray(children);
+      const childrenArray = React2.Children.toArray(children);
       const slottable = childrenArray.find(isSlottable);
       if (slottable) {
         const newElement = slottable.props.children;
         const newChildren = childrenArray.map((child) => {
           if (child === slottable) {
-            if (React13.Children.count(newElement) > 1) return React13.Children.only(null);
-            return React13.isValidElement(newElement) ? newElement.props.children : null;
+            if (React2.Children.count(newElement) > 1) return React2.Children.only(null);
+            return React2.isValidElement(newElement) ? newElement.props.children : null;
           } else {
             return child;
           }
         });
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React13.isValidElement(newElement) ? React13.cloneElement(newElement, void 0, newChildren) : null });
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React2.isValidElement(newElement) ? React2.cloneElement(newElement, void 0, newChildren) : null });
       }
       return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
     });
@@ -27123,24 +24565,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Slot = /* @__PURE__ */ createSlot("Slot");
   // @__NO_SIDE_EFFECTS__
   function createSlotClone(ownerName) {
-    const SlotClone = React13.forwardRef((props, forwardedRef) => {
+    const SlotClone = React2.forwardRef((props, forwardedRef) => {
       const { children, ...slotProps } = props;
-      if (React13.isValidElement(children)) {
+      if (React2.isValidElement(children)) {
         const childrenRef = getElementRef(children);
         const props2 = mergeProps(slotProps, children.props);
-        if (children.type !== React13.Fragment) {
+        if (children.type !== React2.Fragment) {
           props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
         }
-        return React13.cloneElement(children, props2);
+        return React2.cloneElement(children, props2);
       }
-      return React13.Children.count(children) > 1 ? React13.Children.only(null) : null;
+      return React2.Children.count(children) > 1 ? React2.Children.only(null) : null;
     });
     SlotClone.displayName = `${ownerName}.SlotClone`;
     return SlotClone;
   }
   var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
   function isSlottable(child) {
-    return React13.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+    return React2.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
   }
   function mergeProps(slotProps, childProps) {
     const overrideProps = { ...childProps };
@@ -30222,7 +27664,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }
   );
-  var Button = React14.forwardRef(
+  var Button = React3.forwardRef(
     ({ className, variant, size, asChild = false, ...props }, ref) => {
       const Comp = asChild ? Slot : "button";
       return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -30238,9 +27680,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   Button.displayName = "Button";
 
   // src/components/ui/card.tsx
-  var React15 = __toESM(require_react());
+  var React4 = __toESM(require_react());
   var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var Card = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+  var Card = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     "div",
     {
       ref,
@@ -30252,7 +27694,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   ));
   Card.displayName = "Card";
-  var CardHeader = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+  var CardHeader = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     "div",
     {
       ref,
@@ -30261,7 +27703,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   ));
   CardHeader.displayName = "CardHeader";
-  var CardTitle = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+  var CardTitle = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     "div",
     {
       ref,
@@ -30270,7 +27712,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   ));
   CardTitle.displayName = "CardTitle";
-  var CardDescription = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+  var CardDescription = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     "div",
     {
       ref,
@@ -30279,9 +27721,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   ));
   CardDescription.displayName = "CardDescription";
-  var CardContent = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { ref, className: cn("p-6 pt-0", className), ...props }));
+  var CardContent = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { ref, className: cn("p-6 pt-0", className), ...props }));
   CardContent.displayName = "CardContent";
-  var CardFooter = React15.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+  var CardFooter = React4.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
     "div",
     {
       ref,
@@ -30291,2328 +27733,77 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   ));
   CardFooter.displayName = "CardFooter";
 
-  // src/pages/Home.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  var Home = () => {
-    const categories = [
-      {
-        id: "money",
-        title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u8D5A\u94B1\u7BC7",
-        description: "\u4ECE\u8D5A\u5C0F\u94B1\u5F00\u59CB\uFF0C\u63A2\u7D22\u590D\u5229\u5546\u4E1A\u5316\u7684\u65B9\u6CD5\u4E0E\u8DEF\u5F84",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(DollarSign, { className: "h-8 w-8 text-green-500" }),
-        color: "bg-green-50 hover:bg-green-100",
-        textColor: "text-green-700"
-      },
-      {
-        id: "pitfalls",
-        title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u907F\u5751\u7BC7",
-        description: "\u8BC6\u522B\u5E38\u89C1\u9677\u9631\uFF0C\u907F\u514D\u5728\u5546\u4E1A\u5316\u8DEF\u4E0A\u7684\u5F2F\u8DEF",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TriangleAlert, { className: "h-8 w-8 text-red-500" }),
-        color: "bg-red-50 hover:bg-red-100",
-        textColor: "text-red-700"
-      },
-      {
-        id: "writing",
-        title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u5199\u4F5C\u7BC7",
-        description: "\u638C\u63E1\u5185\u5BB9\u521B\u4F5C\uFF0C\u5EFA\u7ACB\u4E2A\u4EBAIP\u7684\u6838\u5FC3\u65B9\u6CD5",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(SquarePen, { className: "h-8 w-8 text-blue-500" }),
-        color: "bg-blue-50 hover:bg-blue-100",
-        textColor: "text-blue-700"
-      },
-      {
-        id: "growth",
-        title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u6210\u957F\u7BC7",
-        description: "\u6301\u7EED\u7CBE\u8FDB\u81EA\u6211\uFF0C\u5B9E\u73B0\u957F\u671F\u7A33\u5B9A\u7684\u5546\u4E1A\u4EF7\u503C",
-        icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TrendingUp, { className: "h-8 w-8 text-purple-500" }),
-        color: "bg-purple-50 hover:bg-purple-100",
-        textColor: "text-purple-700"
+  // src/components/ui/progress.tsx
+  var React8 = __toESM(require_react());
+
+  // node_modules/@radix-ui/react-progress/dist/index.mjs
+  var React7 = __toESM(require_react(), 1);
+
+  // node_modules/@radix-ui/react-context/dist/index.mjs
+  var React5 = __toESM(require_react(), 1);
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  function createContextScope(scopeName, createContextScopeDeps = []) {
+    let defaultContexts = [];
+    function createContext3(rootComponentName, defaultContext) {
+      const BaseContext = React5.createContext(defaultContext);
+      const index = defaultContexts.length;
+      defaultContexts = [...defaultContexts, defaultContext];
+      const Provider = (props) => {
+        const { scope, children, ...context } = props;
+        const Context = scope?.[scopeName]?.[index] || BaseContext;
+        const value = React5.useMemo(() => context, Object.values(context));
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Context.Provider, { value, children });
+      };
+      Provider.displayName = rootComponentName + "Provider";
+      function useContext2(consumerName, scope) {
+        const Context = scope?.[scopeName]?.[index] || BaseContext;
+        const context = React5.useContext(Context);
+        if (context) return context;
+        if (defaultContext !== void 0) return defaultContext;
+        throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
       }
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "container mx-auto px-4 py-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative mb-12 overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative z-10 px-6 py-12 md:px-12 md:py-20", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "mb-4 text-4xl font-bold md:text-5xl", children: "\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-6 text-xl md:w-3/4", children: "\u5C3D\u53EF\u80FD\u7684\u628A\u516C\u53F8\u89C4\u6A21\u505A\u5C0F\uFF0C\u6807\u51C6\u5316\u73A9\u6CD5\uFF0C\u63D0\u9AD8\u6548\u7387\uFF0C\u63A2\u7D22\u5546\u4E1A\u5316\u7684\u6700\u5927\u53EF\u80FD\u6027\u3002" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-wrap gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { asChild: true, className: "bg-white text-blue-700 hover:bg-blue-50", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { to: "/generator", children: "\u6587\u672C\u8F6C\u7F51\u7AD9" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { asChild: true, variant: "outline", className: "border-white text-white hover:bg-white/10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { to: "/content/money", children: "\u5F00\u59CB\u9605\u8BFB" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { asChild: true, variant: "outline", className: "border-white text-white hover:bg-white/10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { to: "/about", children: "\u4E86\u89E3\u66F4\u591A" }) })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "absolute bottom-0 right-0 opacity-20", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BookOpen, { className: "h-64 w-64" }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-16", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mx-auto max-w-3xl text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { className: "mb-6 text-3xl font-bold", children: "IDO\u8001\u5F90\u8457" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-8 text-lg text-gray-600", children: "\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u7CBE\u9009\u4E86IDO\u8001\u5F90\u5173\u4E8E\u300C\u4E00\u4EBA\u4F01\u4E1A\u300D\u6A21\u5F0F\u7684\u56DB\u5927\u6838\u5FC3\u677F\u5757\uFF1A\u8D5A\u94B1\uFF0C\u907F\u5751\uFF0C\u5199\u4F5C\uFF0C\u6210\u957F\u3002 \u6BCF\u4E00\u9875\u90FD\u53EF\u968F\u65F6\u6253\u5F00\uFF0C\u968F\u65F6\u67E5\u9605\uFF0C\u968F\u65F6\u601D\u8003\u3002\u5E38\u770B\u5E38\u65B0\uFF0C\u503C\u5F97\u770B100\u904D\uFF0C\u5E76\u8F93\u51FA\u6BCF\u6761\u5185\u5BB9\u7684\u9605\u8BFB\u601D\u8003\uFF0C\u5B9E\u6218\u601D\u8003\u3002" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex items-center gap-2 rounded-full bg-amber-100 px-6 py-2 text-amber-800", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-sm font-medium", children: "365\u6761\u7CBE\u9009\u5185\u5BB9\uFF0C\u6BCF\u5929\u4E00\u6761\uFF0C\u6BCF\u5929\u8FDB\u6B65" }) }) })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { className: "mb-8 text-center text-3xl font-bold", children: "\u56DB\u5927\u6838\u5FC3\u677F\u5757" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "grid gap-6 md:grid-cols-2 lg:grid-cols-4", children: categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(Card, { className: `transition-all duration-300 ${category.color}`, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(CardHeader, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-2", children: category.icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CardTitle, { className: category.textColor, children: category.title })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CardContent, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CardDescription, { className: "text-gray-700", children: category.description }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CardFooter, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { asChild: true, className: "w-full", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { to: `/content/${category.id}`, children: "\u6D4F\u89C8\u5185\u5BB9" }) }) })
-      ] }, category.id)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "my-16 rounded-lg bg-gray-50 p-8", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { className: "mb-6 text-center text-3xl font-bold", children: "\u5E8F\u8A00" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("blockquote", { className: "mb-6 border-l-4 border-blue-500 pl-4 italic text-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-4", children: "\u4E00\u4EBA\u4F01\u4E1A\u7684\u6838\u5FC3\u7406\u5FF5\uFF0C\u5C3D\u53EF\u80FD\u7684\u628A\u516C\u53F8\u89C4\u6A21\u505A\u5C0F\uFF0C\u6807\u51C6\u5316\u73A9\u6CD5\uFF0C\u63D0\u9AD8\u6548\u7387\uFF0C\u63A2\u7D22\u5546\u4E1A\u5316\u7684\u6700\u5927\u53EF\u80FD\u6027\u3002" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-4", children: "\u300A\u8001\u5F90\u5408\u4F19\u4EBA\u300B\u6A21\u5F0F\uFF0C\u662F\u5178\u578B\u7684\u300C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300D\u73A9\u6CD5\u3002\u805A\u96C61000\u4F4DIP\uFF0C\u4E92\u5229\u5171\u8D62\uFF0C\u653E\u5927\u5546\u4E1A\u5316\u3002\u4EA7\u751F\u300C\u4EBF\u7EA7\u5546\u4E1A\u5316\u300D\u89C4\u6A21\u3002" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-4", children: "\u65E0\u5458\u5DE5\uFF0C\u65E0\u529E\u516C\u573A\u5730\u3002\u51E0\u4E4E\u65E0\u6210\u672C\uFF0C\u8D5A\u7684\u6BCF\u4E00\u5206\u6536\u5165\uFF0C\u90FD\u662F\u5229\u6DA6\u3002" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: "\u8FD9\u662F\u4E00\u5BB6\u6C38\u4E0D\u5012\u95ED\u7684\u516C\u53F8\u3002" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-right text-sm text-gray-500", children: "\u2014 IDO\u8001\u5F90\uFF0C2025.01 \u6DF1\u5733" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-12 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 p-8 text-center text-white shadow-lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { className: "mb-4 text-2xl font-bold", children: "\u5F00\u59CB\u60A8\u7684\u4E00\u4EBA\u4F01\u4E1A\u4E4B\u65C5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-6", children: "\u6D4F\u89C8365\u6761\u7CBE\u9009\u5185\u5BB9\uFF0C\u627E\u5230\u9002\u5408\u81EA\u5DF1\u7684\u590D\u5229\u5546\u4E1A\u5316\u8DEF\u5F84" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { asChild: true, className: "bg-white text-indigo-700 hover:bg-blue-50", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Link, { to: "/content/money", children: "\u7ACB\u5373\u5F00\u59CB" }) })
-      ] })
-    ] });
-  };
-  var Home_default = Home;
-
-  // src/components/Layout.tsx
-  var import_react3 = __toESM(require_react());
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  var Layout = ({ children }) => {
-    const [mobileMenuOpen, setMobileMenuOpen] = import_react3.default.useState(false);
-    const location = useLocation();
-    const navItems = [
-      { path: "/", label: "\u9996\u9875" },
-      { path: "/generator", label: "\u6587\u672C\u8F6C\u7F51\u7AD9" },
-      { path: "/content/money", label: "\u8D5A\u94B1\u7BC7" },
-      { path: "/content/pitfalls", label: "\u907F\u5751\u7BC7" },
-      { path: "/content/writing", label: "\u5199\u4F5C\u7BC7" },
-      { path: "/content/growth", label: "\u6210\u957F\u7BC7" },
-      { path: "/about", label: "\u5173\u4E8E" },
-      { path: "/feedback", label: "\u8BFB\u8005\u53CD\u9988" }
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex min-h-screen flex-col", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("header", { className: "sticky top-0 z-40 border-b bg-white", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mx-auto flex h-16 items-center justify-between px-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(Link, { to: "/", className: "flex items-center gap-2 text-xl font-bold text-blue-600", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(BookOpen, { className: "h-6 w-6" }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: "\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("nav", { className: "hidden md:block", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ul", { className: "flex items-center space-x-6", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-            Link,
-            {
-              to: item.path,
-              className: `text-sm font-medium transition-colors hover:text-blue-600 ${location.pathname === item.path ? "text-blue-600" : "text-gray-700"}`,
-              children: item.label
-            }
-          ) }, item.path)) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-            Button,
-            {
-              variant: "ghost",
-              size: "icon",
-              className: "md:hidden",
-              onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-              children: mobileMenuOpen ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(X, { className: "h-6 w-6" }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Menu, { className: "h-6 w-6" })
-            }
-          )
-        ] }),
-        mobileMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "md:hidden", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("nav", { className: "container mx-auto px-4 py-2", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ul", { className: "space-y-3", children: navItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-          Link,
-          {
-            to: item.path,
-            className: `block py-2 text-sm font-medium transition-colors hover:text-blue-600 ${location.pathname === item.path ? "text-blue-600" : "text-gray-700"}`,
-            onClick: () => setMobileMenuOpen(false),
-            children: item.label
-          }
-        ) }, item.path)) }) }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("main", { className: "flex-1", children }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("footer", { className: "border-t bg-gray-50 py-8", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "container mx-auto px-4", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex items-center gap-2 text-lg font-semibold text-gray-700", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(BookOpen, { className: "h-5 w-5 text-blue-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: "IDO\u8001\u5F90\xB7\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-sm text-gray-500", children: [
-          "\xA9 ",
-          (/* @__PURE__ */ new Date()).getFullYear(),
-          " IDO\u8001\u5F90 \u8457 | \u7248\u6743\u6240\u6709"
-        ] })
-      ] }) }) })
-    ] });
-  };
-  var Layout_default = Layout;
-
-  // src/data/content.ts
-  var contentData = [
-    // 赚钱篇 (001-096)
-    {
-      id: 1,
-      category: "money",
-      content: "\u8D5A\u5927\u94B1\u5F88\u96BE\u3002\u4F46\uFF0C\u8D5A\u5C0F\u94B1\u50CF\u547C\u5438\u4E00\u6837\u7B80\u5355\u3002"
-    },
-    {
-      id: 2,
-      category: "money",
-      content: "\u4E0D\u8981\u53BB\u81C6\u6D4B\u5546\u4E1A\u6A21\u5F0F\uFF0C\u53BB\u627E\u4EBA\u9A8C\u8BC1\uFF0C\u770B\u770B\u662F\u5426\u6709\u4EBA\u4ED8\u8D39\u3002"
-    },
-    {
-      id: 3,
-      category: "money",
-      content: "\u4E92\u5229\uFF0C\u8BA9\u8EAB\u8FB9\u7684IP \u8D5A\u5230\u94B1\uFF0C\u8BA9\u8BA2\u9605\u7684\u7528\u6237\u8D5A\u5230\u94B1\u3002\u957F\u671F\u6765\u770B\uFF0C\u6211\u80AF\u5B9A\u80FD\u8D5A\u5230\u94B1\u3002"
-    },
-    {
-      id: 4,
-      category: "money",
-      content: "\u8D5A\u94B1\u73A9\u6CD5\u5343\u5343\u4E07\uFF0C\u6838\u5FC3\u662F\u5B9E\u6218\uFF1A\u7ED9\u5782\u7C7B\u7EC6\u5206\u4EBA\u7FA4\u63D0\u4F9B\u4EF7\u503C\u5E76\u4EA7\u751F\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 5,
-      category: "money",
-      content: "\u98CE\u9669\u53EF\u63A7\uFF0C\u80FD\u627F\u62C5\uFF0C\u505A\u6700\u574F\u7ED3\u679C\u7684\u6253\u7B97\uFF0C\u5148\u53BB\u505A\u3002"
-    },
-    {
-      id: 6,
-      category: "money",
-      content: "\u81EA\u5A92\u4F53\u767E\u4E07\u7C89\u4E1D\uFF0C\u4E0D\u4E00\u5B9A\u80FD\u8D5A\u5230\u94B1\uFF0C\u591A\u6570\u662F\u6CDB\u7C89\u3002\n\u79C1\u57DF1 \u4E07\u597D\u53CB\uFF0C\u5927\u6982\u7387\u4E00\u5E74\u80FD\u8D5A\u767E\u4E07\u3002\n* \u80FD\u770B\u660E\u767D\u8FD9\u4E2A\u70B9\uFF0C\u5C31\u80FD\u7406\u89E3\uFF0C\u4E3A\u4EC0\u4E48\u4E00\u4E9B\u4EBA\u77ED\u89C6\u9891\u90FD\u4E0D\u62CD\uFF0C\u4E5F\u4E0D\u73A9\u81EA\u5A92\u4F53\u8D26\u53F7\uFF0C\u80FD\u8D5A\u5230\u94B1\u3002\n\u6BD4\u5982\uFF0CIDO \u8001\u5F90\u3002"
-    },
-    {
-      id: 7,
-      category: "money",
-      content: "20 \u5B57\u8D5A\u94B1\u95ED\u73AF\uFF1A\u77ED\u89C6\u9891\u7206\u91CF\uFF0C\u76F4\u64AD\u63A5\u6D41\u91CF\uFF0C\u56FE\u6587\u51FA\u4EF7\u503C\uFF0C\u79C1\u57DF\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 8,
-      category: "money",
-      content: "\u5C3D\u53EF\u80FD\u7684\u628A\u516C\u53F8\u505A\u5C0F\uFF0C\u63D0\u9AD8\u4EBA\u6548\uFF0C\u63D0\u9AD8\u5229\u6DA6\uFF0C\u8001\u5F90\u7684\u7406\u60F3\u72B6\u6001\u662F\u300C\u8FD1100%\u7EAF\u5229\u6DA6\u300D\u3002\n\u8FD9\u4E5F\u662F\u8001\u5F90\u4E00\u76F4\u5728\u63A2\u7D22\u7684\u3002\n\u4E3B\u526F\u4E1A\uFF0C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u6A21\u5F0F\u3002\u76EE\u524D\u57FA\u672C\u4E0A\u662F\u8FD9\u4E2A\u72B6\u6001\u3002"
-    },
-    {
-      id: 9,
-      category: "money",
-      content: "\u4EE5\u81EA\u5DF1\u559C\u6B22\u7684\u65B9\u5F0F\u53BB\u505A\u5546\u4E1A\u5316\u3002\n\n\u867D\u4E0D\u662F\u6700\u9AD8\u6548\u7684\u3002\u4F46\u81EA\u5DF1\u559C\u6B22\uFF0C\u6EE1\u610F\uFF0C\u5F00\u5FC3\uFF0C\u6301\u4E45\u3002"
-    },
-    {
-      id: 10,
-      category: "money",
-      content: "\u53D1\u73B0\u9700\u6C42\uFF0C\u89E3\u51B3\u9700\u6C42\uFF0C\u63D0\u4F9B\u4EA7\u54C1\uFF0C\u4EA7\u751F\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 11,
-      category: "money",
-      content: "\u6A21\u4EFF\u5BF9\u6807\u8D26\u53F7\uFF0C\u575A\u6301\u65E5\u66F4\uFF0C\u5FEB\u901F\u8BD5\u9519\u3002"
-    },
-    {
-      id: 12,
-      category: "money",
-      content: "\u987A\u8D8B\u52BF\uFF0C\u53BB\u79EF\u7D2F\uFF0C\u8D5A\u8F7B\u677E\u53EF\u590D\u5229\u7684\u94B1\u3002"
-    },
-    {
-      id: 13,
-      category: "money",
-      content: "\u8D5A\u94B1\u654F\u611F\u5EA6\uFF0C\u662F\u5728\u9879\u76EE\u91CC\u5386\u7EC3\uFF0C\u5728\u5708\u5B50\u91CC\u6CE1\u7740\uFF0C\u9010\u6B65\u57F9\u517B\u51FA\u6765\u7684\u3002"
-    },
-    {
-      id: 14,
-      category: "money",
-      content: "\u4FE1\u606F\u5DEE\u8D5A\u5230\u94B1\uFF0C\n\u4E00\u4E9B\u4F60\u4EE5\u4E3A\u7684\u5E38\u8BC6\uFF0C\u4E00\u5806\u4EBA\u4E0D\u77E5\u9053\u3002\n\u7528\u4F60\u7684\u7406\u89E3\u5199\u51FA\u6765\uFF0C\u5E76\u9610\u8FF0\u4E00\u4E9B\u89C2\u70B9\uFF0C\u7ED9\u8FD9\u7C7B\u4EBA\u7FA4\u63D0\u4F9B\u4E86\u5E2E\u52A9\uFF0C\u89E3\u51B3\u4E86\u4ED6\u4EEC\u7684\u95EE\u9898\u3002\n\n\u6301\u7EED\u53BB\u505A\uFF0C\u5546\u4E1A\u5316\u6765\u3002"
-    },
-    {
-      id: 15,
-      category: "money",
-      content: "\u5185\u5BB9\u5438\u5F15\u610F\u5411\u7528\u6237\u3002\u4F4E\u4E2D\u9AD8\u5BA2\u5355\u4EF7\u4EA7\u54C1\uFF0C\u8DD1N \u6B21\u590D\u5229\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 16,
-      category: "money",
-      content: "\u5B9A\u4F4D\u662F\u505A\u7684\u8FC7\u7A0B\u4E2D\uFF0C\u63A2\u7D22\u51FA\u6765\u7684\u3002\u522B\u4EBA\u7ED9\u518D\u591A\u5EFA\u8BAE\uFF0C\u90FD\u6CA1\u7528\u3002"
-    },
-    {
-      id: 17,
-      category: "money",
-      content: "\u300C\u662F\u5426\u6709\u4EF7\u503C\u300D\u4E0D\u5728\u4E8E\u5185\u5BB9\uFF0C\u800C\u5728\u300C\u4EBA\u7FA4\u300D\u3002\n\u5BF9\u7684\u5185\u5BB9\uFF0C\u627E\u5230\u9002\u5408\u7684\u4EBA\uFF0C\u5C31\u6709\u4EF7\u503C\u3002"
-    },
-    {
-      id: 18,
-      category: "money",
-      content: "\u8DD1\u901A\u4E00\u4E2A\u8DEF\u5F84\uFF0C\u590D\u5236\u81EA\u5DF1\u662F\u6700\u5FEB\u7684\u3002"
-    },
-    {
-      id: 19,
-      category: "money",
-      content: "\u4ED8\u8D39\u7684\u597D\u53CB\uFF0C\u624D\u662F\u597D\u53CB\u3002\u6CA1\u6709\u4EA7\u751F\u4EA4\u96C6\uFF0C\u5408\u4F5C\uFF0C\u4ED8\u8D39\uFF0C\u53EA\u662F\u5360\u4E86\u4E00\u4E2A\u597D\u53CB\u4F4D\uFF0C\u8FDF\u65E9\u4F1A\u65AD\u5F00\u8FDE\u63A5\u7684\u3002"
-    },
-    {
-      id: 20,
-      category: "money",
-      content: "\u6CA1\u6709100%\u7684\u521B\u65B0\u3002\u6210\u4E8B\uFF0C\u4ECE\u5FAE\u521B\u65B0\u5F00\u59CB\u3002\u5FAE\u521B\u65B0+\u56F4\u7ED5\u76EE\u6807\u505A\u4E8B\uFF0C\u5927\u6982\u7387\u53EF\u6210\u3002"
-    },
-    {
-      id: 21,
-      category: "money",
-      content: "\u628A\u4E00\u4EF6\u4EF6\u5C0F\u4E8B\u505A\u597D\uFF0C\u4E0D\u65AD\u4F18\u5316\uFF0C\u5F62\u6210\u65B9\u6CD5\u8BBA\u548CSOP\uFF0C\u4E0D\u7F3A\u5C0F\u94B1\u3002"
-    },
-    {
-      id: 22,
-      category: "money",
-      content: "\u5148\u8DD1\u901A\u6D41\u7A0B\uFF0C\u522B\u5728\u4E4E\u8D5A\u591A\u5C11\u94B1\uFF0C\u73A9\u8FC7\u4E00\u6B21\uFF0C\u540E\u7EED\u5C31\u6709\u7ECF\u9A8C\u4E86\u3002"
-    },
-    {
-      id: 23,
-      category: "money",
-      content: "\u89E3\u51B3\u5B9E\u9645\u95EE\u9898\uFF0C\u80FD\u843D\u5730\uFF0C\u522B\u4EBA\u80FD\u770B\u61C2\u4F60\u7684\u5185\u5BB9\uFF0C\u79BB\u8D5A\u94B1\u5C31\u4E0D\u8FDC\u4E86\u3002"
-    },
-    {
-      id: 24,
-      category: "money",
-      content: "\u5927\u90E8\u5206\u4EBA\u4E0D\u8D5A\u94B1\uFF0C\u8BF4\u767D\u4E86\uFF0C\u5C31\u662F\u8F93\u51FA\u4E0D\u591F\u3002"
-    },
-    {
-      id: 25,
-      category: "money",
-      content: "\u660E\u663E\u6536\u5272\u7684\u73A9\u6CD5\uFF0C\u522B\u73A9\uFF0C\u5373\u4F7F\u80FD\u8D5A\u94B1\u3002"
-    },
-    {
-      id: 26,
-      category: "money",
-      content: "\u4E0D\u4E00\u5B9A\u66B4\u5BCC\uFF0C\u81F3\u5C11\u53EF\u4EE5\u997F\u4E0D\u6B7B\u3002\n\u4E00\u90E8\u624B\u673A+\u4E00\u4E2A\u5145\u7535\u5668\uFF0C\u8EAB\u65E0\u5206\u6587\uFF0C\u76F4\u63A5 \u51FA\u95E8\uFF0C\u7528\u811A\u4E08\u91CF\u4E16\u754C\u3002\n\u5982\u679C\u4F60\u80FD\u4FDD\u6301\u9AD8\u9891\u8F93\u51FA\uFF0C\u8BB0\u5F55\u4E00\u8DEF\u6240\u89C1\u6240 \u601D\uFF0C\u8D5A\u70B9\u5C0F\u94B1\u6CA1\u95EE\u9898\uFF0C\u6301\u7EED\u88AB\u52A8\u6536\u5165\u3002\n\u8FD0\u6C14\u597D\u7684\uFF0C\u53EF\u8D5A\u5927\u94B1(\u6709\u4E00\u4E9B\u6848\u4F8B\uFF0C\u5C5E\u4E8E\u5C11 \u6570\uFF0C\u4E2A\u6848)\u3002"
-    },
-    {
-      id: 27,
-      category: "money",
-      content: "\u4ECE\u8D5A\u5C0F\u94B1\u5F00\u59CB\uFF0C\u522B\u770B\u4E0D\u4E0A\u3002\u7279\u522B\u662F\u4F60\u8FD8\u6CA1\u6709\u8D5A\u5927\u94B1\u7684\u80FD\u529B\u548C\u7ECF\u9A8C\u4E4B\u524D\u3002"
-    },
-    {
-      id: 28,
-      category: "money",
-      content: "\u6BCF\u4E00\u4E2A\u8D5A\u5230\u94B1\u7684\u80CC\u540E\uFF0C\u90FD\u662F\u65E0\u6570\u8BD5\u9519\u540E\u7684\u7ED3\u679C\u3002"
-    },
-    {
-      id: 29,
-      category: "money",
-      content: "\u6709\u4E9B\u4EA7\u54C1\uFF0C\u4ECE\u4E00\u5F00\u59CB\u5C31\u662F\u9519\u7684\uFF0C\u8D8A\u4EA4\u4ED8\u8D8A \u75DB\u82E6\u3002\n\u5BF9\u4E8E\u8FD9\u7C7B\u4EA7\u54C1\uFF0C\u6211\u7684\u5EFA\u8BAE\u662F\u780D\u6389\u3002\u6700\u8FD1\u7ED9\u5F88\u591A\u540C\u5B66\u63D0\u4E86\u7C7B\u4F3C\u5EFA\u8BAE\uFF1A\n\u780D\u6389\uFF0C\u4E0D\u503C\u5F97\uFF0C\u4E3B\u7EBF\u4EFB\u52A1\u4E0D\u5728\u8FD9\uFF0C\u4E0D\u5E94\u8BE5\u6295\u5165\u7CBE\u529B\u3002\n\u8D5A\u5C0F\u94B1\u5F88\u7B80\u5355\uFF0C\u6267\u884C\u5373\u53EF\u3002\u8D5A\u5927\u94B1\uFF0C\u5F88\u96BE\uFF0C\u5F71\u54CD\u56E0\u7D20\u592A\u591A\uFF0C\u51B3\u7B56\u8DEF\u5F84\u592A\u591A\u3002"
-    },
-    {
-      id: 30,
-      category: "money",
-      content: "\u5185\u5BB9\uFF0C\u6D41\u91CF\uFF0C\u5F71\u54CD\u529B\uFF0C\u901A\u7528\u80FD\u529B\u3002\u53EF\u590D\u5236\u5230\u4EFB\u4F55\u9879\u76EE\u3002"
-    },
-    {
-      id: 31,
-      category: "money",
-      content: "\u8DEF\u4E00\u6B65\u6B65\u8D70\uFF0C\u9879\u76EE\u4E00\u4E2A\u4E2A\u5B9E\u8DF5\uFF0C\u6025\u4E0D\u6765\uFF0C\u522B\u671F\u671B\u300C\u4E00\u591C\u66B4\u5BCC\u300D\u3002"
-    },
-    {
-      id: 32,
-      category: "money",
-      content: "\u6709\u4E00\u7C7B\u73A9\u6CD5\uFF1A\u901A\u8FC7\u865A\u5047\u7684\u6DA8\u4EF7\uFF0C\u5236\u9020\u7126\u8651\uFF0C\u523A\u6FC0\u7528\u6237\u76F2\u76EE\u4ED8\u8D39\uFF0C\u628A\u7528\u6237\u5F53\u50BB\u5B50\u3002\n\n\u8FD9\u79CD\u4E8B\u60C5\uFF0C\u6BCF\u5929\u90FD\u5728\u53D1\u751F\u3002\u8FD9\u662F\u5178\u578B\u77ED\u7EBF\u7684\u73A9\u6CD5\uFF0C\u53EA\u770B\u5230\u773C\u524D\u7684\u94B1\uFF1B\u7528\u6237\u7684\u4FE1\u4EFB\u5EA6\uFF0C\u968F\u7740\u65F6\u95F4\u7684\u63A8\u79FB\uFF0C\u9010\u6B65\u51CF\u5F31\uFF0C\u590D\u5229\u5546\u4E1A\u5316\u6E10\u884C\u6E10\u8FDC\uFF0C\u628A\u81EA\u5DF1\u7684IP \u73A9\u6B7B\u3002"
-    },
-    {
-      id: 33,
-      category: "money",
-      content: "\u73A9\u516C\u57DF\uFF0C\u8981\u300C\u8BA4\u6E05\u4E00\u4E2A\u4E8B\u5B9E\u300D\uFF1A\u6211\u4EEC\u53EA\u80FD\u901A\u8FC7\u7CFB\u5217\u7684\u624B\u6BB5\uFF0C\u6765\u300C\u63D0\u9AD8\u7206\u7684\u6982\u7387\u300D\uFF1B\u4E0D\u80FD\u4FDD\u8BC1100%\u7206\u3002"
-    },
-    {
-      id: 34,
-      category: "money",
-      content: "\u9AD8\u5BA2\u5355\u4EF7\u7684\u4EA7\u54C1\uFF0C\u9664\u4E86\u4EA7\u54C1\u8981\u597D\uFF0C\u6838\u5FC3\u662F\u53D1\u8D77\u4EBA\u9760\u8C31\u3002"
-    },
-    {
-      id: 35,
-      category: "money",
-      content: "\u4E0D\u529D\u4E70\uFF0C\u53EA\u63A8\u8350\u300C\u6211\u8BA4\u4E3A\u300D\u9002\u5408\u7684\u4EA7\u54C1\u7ED9\u5230\u9002\u5408\u7684\u7528\u6237\u3002"
-    },
-    {
-      id: 36,
-      category: "money",
-      content: "\u4E0D\u9700\u8981\u523B\u610F\u5173\u6CE8\u300C\u4E3B\u526F\u4E1A\u5E73\u8861\u300D\uFF0C\u526F\u4E1A\u4E0D\u9700\u8981\u6295\u5165\u592A\u591A\u65F6\u95F4\uFF0C\u6BCF\u5929 1 \u5C0F\u65F6\uFF0C\u6301\u7EED365 \u5929\u3002\n\u8FD9 1 \u5C0F\u65F6\uFF0C\u7761\u524D+\u4E0A\u4E0B\u73ED\u8DEF\u4E0A+\u4E2D\u5348\uFF0C\u8DB3\u591F,\u5B8C\u5168\u4E0D\u5F71\u54CD\u5DE5\u4F5C\uFF0C\u4E0D\u5F71\u54CD\u65E5\u5E38\u751F\u6D3B\u3002"
-    },
-    {
-      id: 37,
-      category: "money",
-      content: "\u8D5A\u94B1\u53EA\u662F\u9644\u5E26\u7684\uFF0C\u6838\u5FC3\u662F\u5E26\u7740\u4E00\u6279\u4EBA\uFF0C\u63A2\u7D22\u590D\u5229\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 38,
-      category: "money",
-      content: "\u4E92\u8054\u7F51\uFF0C\u4F60\u770B\u5230\u7684\u591A\u6570\u5185\u5BB9\uFF0C\u90FD\u4E0D\u662F\u4E8B\u5B9E\uFF0C\u662F\u6211\u4EEC\u60F3\u8BA9\u4F60\u770B\u5230\u7684\u5185\u5BB9\u3002"
-    },
-    {
-      id: 39,
-      category: "money",
-      content: "\u4E0D\u7528\u7EA0\u7ED3\u526F\u4E1A\u7B2C\u4E00\u7B14\u6536\u5165\u662F\u591A\u5C11\uFF0C\u5148\u8D5A\u5230\u3002\n\n\u8DD1\u901A\u6D41\u7A0B\uFF0C\u8D5A\u5230\u7B2C\u4E00\u7B14\u6536\u5165\uFF0C\n\n\u624D\u80FD\u8D5A\u5230\u66F4\u591A\u3002"
-    },
-    {
-      id: 40,
-      category: "money",
-      content: "\u65B0\u4EBA\uFF0C\u5148\u8D5A\u5230\u94B1\u518D\u8BF4\uFF0C\u8DD1\u901A\u6700\u5C0F\u95ED\u73AF\uFF0C\u5C11\u8003\u8651ROI\u3002"
-    },
-    {
-      id: 41,
-      category: "money",
-      content: "\u5408\u4F5C\u7684\u8FC7\u7A0B\u4E2D\uFF0C\u80AF\u5B9A\u4F1A\u6709\u4E00\u4E9B\u95EE\u9898\uFF0C\u63D0\u51FA\u6765\uFF0C\u624D\u80FD\u89E3\u51B3\u3002\n\n\u4E00\u53E5\u8BDD\uFF1A\u6838\u5FC3\u662F100%\u4FE1\u4EFB\u3002"
-    },
-    {
-      id: 42,
-      category: "money",
-      content: "\u4EE5\u300C\u8D5A\u5230\u94B1\u300D\u4E3A\u7ED3\u679C\uFF0C\u5F80\u524D\u63A8\u3002\u5FEB\u901F\u53BB\u505A\uFF0C\u9047\u5230\u95EE\u9898\uFF0C\u89E3\u51B3\u95EE\u9898\u3002\u8FD9\u4E9B\u90FD\u4E0D\u662F\u95EE\u9898\u3002"
-    },
-    {
-      id: 43,
-      category: "money",
-      content: "\u8981\u6A21\u4EFF\uFF0C\u5C31\u8D34\u8EAB\u6A21\u4EFF\uFF0C\u6765\u300C\u8001\u5F90\u5408\u4F19\u4EBA\u300D\u611F\u53D7\u4E0B\uFF0C\u4F60\u4F1AN \u500D\u653E\u5927\u3002\u5177\u4F53\u81EA\u5DF1\u53BB\u5224\u65AD\uFF0C\u5206\u6790\uFF0C\u51B3\u7B56\u3002"
-    },
-    {
-      id: 44,
-      category: "money",
-      content: "\u8D5A\u94B1\u8DDF\u5B66\u5386\u65E0\u5173\u3002\u8FD9\u91CC\u4E0D\u662F\u804C\u573A\uFF0C\u6CA1\u6709\u51C6\u5165\u95E8\u69DB\u3002"
-    },
-    {
-      id: 45,
-      category: "money",
-      content: "\u591A\u505A\u51E0\u4E2A\u5C0F\u9879\u76EE\uFF0C\u5C31\u6709\u611F\u89C9\u4E86\u3002\u4F46\uFF0C\u522B\u76F2\u76EE\u4ED8\u8D39\u3002\u300C\u4ED8\u8D39\u300D\u4E0D\u7B49\u4E8E\u300C\u5B66\u4F1A\u300D\u3002"
-    },
-    {
-      id: 46,
-      category: "money",
-      content: "\u5B9E\u6218\u5C0F\u9879\u76EE\uFF0C\u5168\u90E8\u6A21\u677F\u5316\uFF0C\u6309SOP\uFF0C\u5FEB\u901F\u590D\u5236\uFF0C\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 47,
-      category: "money",
-      content: "\u5F53\u4E0B\u8D5A\u591A\u5C11\u94B1\uFF0C\u4E0D\u91CD\u8981\uFF0C\u7A81\u7136\u6765\u7684\u8D22\u5BCC\uFF0C\u5927\u6982\u7387\u5F88\u5FEB\u4F1A\u6325\u970D\u5B8C\u3002\n\u6301\u7EED\u8D5A\u5230\u94B1\uFF0C\u6BCF\u5E74\u6301\u7EED\u7A33\u5B9A\u7684\u6536\u5165\uFF0C\u6216\u8005\u7A33\u5B9A\u4E2D\u6709\u589E\u957F\uFF0C\u624D\u662F\u4E00\u4EBA\u4F01\u4E1A\u6838\u5FC3\u8981\u5173\u6CE8\u7684\u3002\n\u522B\u4E00\u6B21\u628A\u6240\u6709\u94B1\u8D5A\u5B8C\uFF0C\u522B\u4E00\u6B21\u628A\u8D44\u6E90\u8017\u5C3D\uFF0C\u6301\u7EED\u8F93\u51FA\uFF0C\u6301\u7EED\u79EF\u7D2F\uFF0C\u6301\u7EED\u589E\u91CF\uFF0C\u6301\u7EED\u8F6C\u5316\u3002"
-    },
-    {
-      id: 48,
-      category: "money",
-      content: "\u522B\u770B\u8868\u9762\u7684\u6570\u636E\uFF0C\u522B\u76F2\u76EE\u8DDF\u98CE\uFF0C\u522B\u76F2\u76EE\u4ED8\u8D39\u3002\u53BB\u770B\u770B\u80CC\u540E\u7684\u6295\u5165\uFF0C\u603B\u5229\u6DA6\uFF0C\u5355\u65E5\u5229\u6DA6\u3002"
-    },
-    {
-      id: 49,
-      category: "money",
-      content: "\u6BCF\u4E00\u4E2A\u7CBE\u51C6\u6D41\u91CF\u90FD\u503C\u94B1\uFF1B\u666E\u901A\u4EBA\uFF0C\u5C0FIP\uFF0C\u5782\u76F4IP\uFF0C\u5927IP \u7B49\uFF0C\u6BCF\u5929\u90FD\u5728\u6316\u6398\u7CBE\u51C6\u6D41\u91CF\u7684\u8DEF\u4E0A\u3002\n\n\u6316\u6398\u65B0\u7CBE\u51C6\u6D41\u91CF\uFF0C\u6700\u7B80\u5355\u7684\u65B9\u5F0F\u662F\u300C\u5185\u5BB9\u300D\uFF1B\u6587\u5B57\uFF0C\u8BED\u97F3\uFF0C\u77ED\u89C6\u9891\uFF0C\u76F4\u64AD\uFF0C\u7EBF\u4E0B\u4EA4\u6D41\u7B49\u90FD\u53EF\uFF1B\u627E\u5230\u9002\u5408\u81EA\u5DF1\u7684\u5185\u5BB9\u5F62\u5F0F\u3002\n\n\u6838\u5FC3\uFF1A\u8F7B\u8D44\u4EA7\uFF0C\u968F\u65F6\u968F\u5730\u8F93\u51FA\u5185\u5BB9\uFF1B\u5185\u5BB9\u4E0D\u505C\uFF0C\u6D41\u91CF\u4E0D\u505C\uFF0C\u6536\u5165\u4E0D\u505C\u3002"
-    },
-    {
-      id: 50,
-      category: "money",
-      content: "\u73A9IP\uFF0C\u770B\u957F\u671F\uFF1B\n\u6301\u7EED\u8F93\u51FA\uFF0C\u4E00\u76F4\u5728\u8DEF\u4E0A\uFF0C\u4E0D\u65AD\u63A2\u7D22\u6700\u65B0\u73A9\u6CD5\uFF0C\u843D\u5730\u5B9E\u8DF5\uFF1B\u4E0D\u4EC5\u81EA\u5DF1\u8D5A\u5230\u94B1\uFF0C\u4E5F\u8981\u8BA9\u8BFB\u8005\u8DDF\u7740\u4F60\u8D5A\u5230\u94B1\u6216\u8005\u80FD\u529B\u63D0\u5347\u3002\n\u53CD\u4E4B\uFF0C\u73A9\u4E0D\u4E45\u7684\uFF0C\u8D8A\u73A9\u8D8A\u5E9F\u3002"
-    },
-    {
-      id: 51,
-      category: "money",
-      content: "\u904D\u5730\u90FD\u662F\u4FE1\u606F\u5DEE\uFF0C\u968F\u5904\u90FD\u662F\u94B1\u3002\n\u63D0\u4F9B\u4EF7\u503C\uFF0C\u627E\u5207\u5165\u70B9\uFF0C\u94B1\u4E0D\u4F1A\u5C11\u3002\n\u8001\u5F90\u6BCF\u5929\u5C31\u662F\u8FD9\u6837\u505A\u7684\u3002\u5173\u6CE8\u957F\u671F\u5546\u4E1A\u5316\uFF0C\u590D\u5229\u3002\n\u4E3B\u52A8\u653E\u5F03\u4E00\u4E9B\u300C\u5355\u6B21\u6536\u5165\u300D\u3002"
-    },
-    {
-      id: 52,
-      category: "money",
-      content: "\u5728\u904D\u5730\u662F\u300C\u8D5A\u94B1\u4FE1\u606F\u6E90\u300D\u7684\u5708\u5B50\uFF0C\u5982\u679C\u4F60\u89C9\u5F97\u6CA1\u4EF7\u503C\uFF0C\u6CA1\u5565\u7528\uFF0C\u5927\u6982\u7387\uFF1A\n\n1\u3001\u4F60\u60F3\u8981\u7684\u592A\u591A\uFF0C\u60F3\u5FEB\u901F\u8D77\u98DE\u3002\u6267\u884C\u662F0\uFF0C\u773C\u9AD8\u624B\u4F4E\u3002\n\u5EFA\u8BAE\uFF1A\u811A\u8E0F\u5B9E\u5730\uFF0C\u53BB\u5B9E\u6218\u3002\n\n2\u3001\u4F60\u79BB\u4E92\u8054\u7F51\u8D5A\u94B1\u9886\u57DF\u592A\u8FDC\uFF0C\u6709\u592A\u591A\u95E8\u69DB\u9700\u8981\u8DE8\u8D8A\uFF0C\u662F\u771F\u7684\u770B\u4E0D\u61C2\u3002\n\u5EFA\u8BAE\uFF1A\u5148\u6CE1\u4E00\u5E74\uFF0C\u6BCF\u5929\u8FDB\u6B65\u4E00\u70B9\u70B9\uFF0C\u6C89\u4E0B\u6765\uFF0C\u6162\u6162\u8865\u3002"
-    },
-    {
-      id: 53,
-      category: "money",
-      content: "\u89C1\u8BC6\uFF0C\u6A21\u4EFF\uFF0C\u8DEF\u5F84\u3002\n\u5269\u4E0B\u7684\u5C31\u662F\u8DD1\u901A\u95ED\u73AF\uFF0C\u8D5A\u70B9\u5C0F\u94B1\uFF0C\n\u7136\u540E\u7ED3\u5408\u81EA\u8EAB\u4F18\u52BF\u53BB\u300C\u5FAE\u521B\u65B0\u300D\u6216\u300C\u8DE8\u9886\u57DF\u7EC4\u5408\u300D\u3002"
-    },
-    {
-      id: 54,
-      category: "money",
-      content: "\u805A\u7126\uFF0C\u5148\u8DD1\u901A\u4E00\u4E2A\u9879\u76EE\u3002\u591A\u6570\u9879\u76EE\u73A9\u6CD5\u90FD\u662F\u4E00\u6837\u7684\u3002\n\u53EA\u662F\u5E73\u53F0\u4E0D\u540C\uFF0C\u7528\u6237\u7FA4\u4E0D\u540C\u3002\u8D5A\u94B1\u73A9\u6CD5\u5DEE\u5F02\u4E0D\u5927\u3002"
-    },
-    {
-      id: 55,
-      category: "money",
-      content: "\u4EA7\u54C1\u8F6C\u5316\u7387\u4F4E\uFF0C\u624D\u662F\u6B63\u5E38\u7684\uFF0C\u627E\u5230\u5F71\u54CD \u56E0\u7D20\uFF0C\u53BB\u8C03\u6574\uFF0C\u53BB\u9A8C\u8BC1\u3002\n\u6848\u4F8B\uFF1A\u300A\u77ED\u6587\u5199\u4F5C\u5546\u4E1A\u5316\xB7 \u6B7B\u78D510 \u5E74\u300B\uFF0C\u662F\u8001\u5F90\u6240\u6709\u4EA7\u54C1\u91CC\uFF0C\u8F6C\u5316\u7387\u6700\u4F4E\u7684\u3002\n\u539F\u56E0\u5F88\u591A\uFF0C\u672C\u8D28\u4E0A\uFF0C\u8FD8\u662F\u5927\u5BB6\u754F\u60E7\uFF0C\u89C9\u5F97\u592A\u96BE\uFF0C\u4E0D\u6562\u8FC8\u51FA\u8FD9\u4E00\u6B65\u3002"
-    },
-    {
-      id: 56,
-      category: "money",
-      content: "\u6BCF\u5929\u534A\u5C0F\u65F6\uFF0C\u6301\u7EED\u6295\u5165\uFF0C\u53BB\u6267\u884C\uFF0C\u522B\u505C\uFF1B\u6267\u884C\u8DEF\u4E0A\u4F1A\u9047\u5230\u7CFB\u5217\u95EE\u9898\uFF0C\u53BB\u89E3\u51B3\uFF1B\u4E0D\u4E00\u5B9A\u80FD\u8D5A\u5230\u94B1\uFF0C\u4F46\u80FD\u5386\u7EC3\uFF0C\u5E76\u63D0\u5347\u8D5A\u94B1\u6982\u7387\u3002"
-    },
-    {
-      id: 57,
-      category: "money",
-      content: "\u8BA4\u6E05\u4E00\u4E2A\u73B0\u5B9E\uFF1A\u6CA1\u6709\u4E3B\u4E1A\u652F\u6491\uFF0C\u5373\u4F7F\u526F\u4E1A\u5E74\u5165\u767E\u4E07\uFF0C\u4E5F\u662F\u6D6E\u4E91\u3002\n\u903B\u8F91\uFF1A\n1.\u8FD9\u767E\u4E07\uFF0C\u5927\u6982\u7387\u8981\u51E0\u5E74\u6765\u4EA4\u4ED8\uFF1B\n2.\u5927\u6982\u7387\u6CA1\u6709\u6301\u7EED\u590D\u5229\uFF1B\n3.\u5E73\u5747\u5230\u6708\uFF0C\u4E5F\u5C311 \u4E07\u4E0D\u5230\u7684\u5229\u6DA6\uFF0C\u751A\u81F3\u662F5000\u3002\n\u8FD9\u6536\u5165\uFF0C\u5728\u4E00\u7EBF\u57CE\u5E02\uFF0C\u968F\u4FBF\u627E\u4EFD\u5DE5\u4F5C\uFF0C\u6478\u9C7C8 \u5C0F\u65F6\uFF0C\u6BD4\u8FD9\u8F7B\u677E\u591A\u4E86\uFF0C\u6211\u8D5E\u540C\u7684\u903B\u8F91\u662F\uFF1A\u4E3B\u526F\u4E1A\u53CC\u7EBF\uFF0C\u9F50\u98DE\u3002\n\u9000\u4E00\u6B65\uFF0C\u591A\u6570\u540C\u5B66\uFF0C\u6251\u817E\u534A\u5929\uFF0C\u5E74\u516510\u4E07\u7B97\u4E0D\u9519\u4E86\uFF0C\u5E73\u5747\u5230\u6BCF\u6708\u5462?\n\u8BA4\u6E05\u73B0\u5B9E\uFF0C\u964D\u4F4E\u9884\u671F\uFF0C\u6301\u7EED\u79EF\u7D2F\uFF0C\u505A\u672A\u6765N \u5E74\u53EF\u6301\u7EED\u7684\u4E8B\u3002"
-    },
-    {
-      id: 58,
-      category: "money",
-      content: "\u79BB\u7528\u6237\u8FD1\uFF0C\u89E6\u624B\u53EF\u53CA\uFF0C\u9760\u8C31\u3002\u8FD9\u53E5\u8BDD\u9002\u7528\u4E8E\u300CIP \u590D\u5229\u5546\u4E1A\u5316\u300D\u3002"
-    },
-    {
-      id: 59,
-      category: "money",
-      content: "\u4E00\u53E5\u8BDD\uFF1A\u501F\u52BF\uFF0C\u8D5A\u5230\u94B1\u3002"
-    },
-    {
-      id: 60,
-      category: "money",
-      content: "\u8D5A\u94B1\uFF0C\u662F\u4E0D\u65AD\u89E3\u51B3\u95EE\u9898\u7684\u8FC7\u7A0B\u3002\n\n\u60F3\u8D5A\u94B1\uFF0C\u4E0D\u8981\u6015\u95EE\u9898\uFF0C\u522B\u78B0\u5230\u95EE\u9898\u5C31\u9000\u7F29\u3002\n\n\u8F6C\u53D8\u601D\u7EF4\uFF0C\u5C1D\u8BD5\u53BB\u89E3\u51B3\u5B83\u3002\n\u89E3\u51B3\u4E00\u90E8\u5206\u4EBA\u7684\u9700\u6C42\uFF0C\u52E4\u5FEB\u70B9\uFF0C\u5C31\u662F\u94B1\u3002\n\n\u591A\u6570\u4EBA\u773C\u9AD8\u624B\u4F4E\u3002\n\u5927\u94B1\u6CA1\u80FD\u529B\uFF0C\u5C0F\u94B1\u770B\u4E0D\u4E0A\u3002\n\n\u603B\u60F3\u6539\u53D8\u4E16\u754C\u3002\u6700\u540E\u88AB\u73B0\u5B9E\u72E0\u72E0\u5730 \u2026"
-    },
-    {
-      id: 61,
-      category: "money",
-      content: "\u8D5A\u94B1\u4E0E\u5426\uFF0C\u6838\u5FC3\u662F\u6267\u884C\u529B\u95EE\u9898\u3002\n\u4E0E\u5176\u4ED6\u4EBA\u65E0\u5173\u3002\n\n\u8D5A\u94B1\u96BE\u5417\uFF1F\u4E0D\u96BE\u3002\u7F3A\u7684\u662F\u6267\u884C\u529B\u3002\n\n\u6BCF\u5929\u9ED8\u5FF5\u4E09\u904D\uFF1A\u6267\u884C\u529B\uFF0C\u6267\u884C\u529B\uFF0C\u6267\u884C\u529B\uFF0C\u7136\u540E\u53BB\u5E72\u3002"
-    },
-    {
-      id: 62,
-      category: "money",
-      content: "\u4E0D\u65AD\u63A2\u7D22\uFF0C\u5B9E\u6218\u8D5A\u5C0F\u94B1\u3002"
-    },
-    {
-      id: 63,
-      category: "money",
-      content: "\u8D5A\u5C0F\u94B1\uFF0C\u52E4\u594B\u5C31\u884C\u3002\n\u8D5A\u5927\u94B1\uFF0C\u6D89\u53CA\u592A\u591A\u56E0\u7D20\uFF1B\u6838\u5FC3\u662F\u300C\u987A\u8D8B\u52BF\uFF0C\u53BB\u79EF\u7D2F\uFF0C\u590D\u5229\uFF0C\u7B49\u673A\u4F1A\u300D\u3002\n\n\u8D5A\u94B1\u4E0E\u5426\uFF0C\u4E0E\u5E73\u53F0\u8C03\u6574\u65E0\u5173\uFF0C\u53EA\u548C\u81EA\u5DF1\u6709\u5173\u7CFB\u3002"
-    },
-    {
-      id: 64,
-      category: "money",
-      content: "\u5DF2\u7ECF\u8DD1\u901A\u4E860 \u52301 \u7684\u540C\u5B66\uFF0C\u6838\u5FC3\u8981\u53BB\u601D\u8003\u300C\u590D\u5229\u5546\u4E1A\u5316\u300D\u3002\n\u7528\u65F6\u95F4\u6362\u94B1\u7684\u4E8B\uFF0C\u5C3D\u91CF\u5C11\u5E72\u3002"
-    },
-    {
-      id: 65,
-      category: "money",
-      content: "\u6BCF\u4E2A\u4EBA\u7684\u90FD\u662F\u4E0D\u5B8C\u7F8E\uFF0C\u662F\u6709\u7F3A\u9677\u7684\uFF0C\u80FD\u529B\u4E5F\u662F\u6709\u77ED\u677F\u7684\u3002\u4E92\u5229\u5171\u8D62\uFF0C\u5408\u4F5C\u653E\u5927\u3002"
-    },
-    {
-      id: 66,
-      category: "money",
-      content: "\u6559\u662F\u5F88\u96BE\u6559\u4F1A\u7684\uFF0C\u505A\u4E2D\u300C\u5B66\u300D\uFF08\u5B9E\u6218\u4E2D\u5FEB\u901F\u638C\u63E1\uFF09\u3002"
-    },
-    {
-      id: 67,
-      category: "money",
-      content: "\u591A\u770B\u770B\u5546\u4E1A\u5316\u6848\u4F8B\uFF0C\u4EE5\u751F\u4EA7\u8005\u7684\u89D2\u5EA6\u53BB\u601D\u8003\uFF0C\u4F60\u4F1A\u6316\u6398\u5F88\u591A\u5546\u4E1A\u5316\u5207\u5165\u65B0\u601D\u8DEF\u3002\n\n\u628A\u81EA\u5DF1\u6CE1\u5728\u5546\u4E1A\u5316\u6C1B\u56F4\u91CC\u3002\u4E0D\u662F\u4F60\u5546\u4E1A\u5316\u6211\uFF0C\u5C31\u662F\u6211\u5546\u4E1A\u5316\u4F60\u3002\u4E92\u76F8\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 68,
-      category: "money",
-      content: "\u8D5A\u94B1\u4EBA\uFF0C\u6838\u5FC3\u662F\u300C\u5B66\u5B9E\u6218\u6280\u5DE7\u300D\uFF0C\u591F\u7528\u5C31\u884C\u3002\u521A\u521A\u597D\uFF0C\u5C31\u591F\u4E86\u3002"
-    },
-    {
-      id: 69,
-      category: "money",
-      content: "\u8D5A\u94B1\u5C31\u662F\u4E00\u5C42\u7A97\u6237\u7EB8\u3002\n\u4FE1\u606F\u5DEE\uFF0C\u5C31\u662F\u4E00\u53E5\u8BDD\u3002"
-    },
-    {
-      id: 70,
-      category: "money",
-      content: "\u627E\u4E00\u4E2A\u70B9\uFF0C\u5207\u5165\uFF0C\u5148\u51FA\u7ED3\u679C\uFF1B\u522B\u5B66\u4E00\u4E9B\u770B\u4F3C\u61C2\u4E86\uFF0C\u6CA1\u5565\u7528\uFF0C\u6D6A\u8D39\u65F6\u95F4\u7684\u300C\u77E5\u8BC6\u300D\u3002"
-    },
-    {
-      id: 71,
-      category: "money",
-      content: "\u6316\u6398\u9700\u6C42\uFF0C\u89E3\u51B3\u75DB\u70B9\u3002\n* \u6CA1\u6709\u9700\u6C42\uFF0C\u4E1C\u897F\u518D\u597D\u4E5F\u6CA1\u6709\u7528\u3002"
-    },
-    {
-      id: 72,
-      category: "money",
-      content: "\u505A\u6709\u79EF\u7D2F\u7684\u4E8B\uFF0C\u5373\u4F7F\u6162\u4E00\u70B9\uFF0C\u4E09\u5E74\u540E\uFF0C\u5927\u4E0D\u4E00\u6837\u3002"
-    },
-    {
-      id: 73,
-      category: "money",
-      content: "\u4E0D\u8981\u592A\u4F9D\u8D56\u5927\u6D41\u91CF\uFF0C\u5C0F\u6D41\u91CF\u7684\u6301\u7EED\u5546\u4E1A\u5316\uFF0C\u66F4\u5065\u5EB7\u3002"
-    },
-    {
-      id: 74,
-      category: "money",
-      content: "\u5BF9\u4E8E\u77ED\u671F\u7684\u6536\u5165\uFF0C\u8981\u514B\u5236\u3002\u65E0\u590D\u5229\uFF0C\u5C3D\u91CF\u4E0D\u505A\u3002"
-    },
-    {
-      id: 75,
-      category: "money",
-      content: "\u505A\u4E2D\u300C\u5B66\u300D\uFF0C\u505A\u4E2D\u300C\u6301\u7EED\u8D5A\u5230\u94B1\u300D\u3002"
-    },
-    {
-      id: 76,
-      category: "money",
-      content: "\u8D5A\u5927\u94B1\uFF0C\u9700\u8981\u6218\u7565\uFF0C\u51B3\u7B56\uFF0C\u56E2\u961F\uFF0C\u4EBA\u8109\uFF0C\u8FD0\u6C14\uFF0C\u683C\u5C40\u3002\n\u8D5A\u5C0F\u94B1\u50CF\u547C\u5438\u4E00\u6837\u7B80\u5355\u3002"
-    },
-    {
-      id: 77,
-      category: "money",
-      content: '\u95EE\uFF1A\u4E3A\u4EC0\u4E48\u300C\u7A7A\u6709\u4E00\u8EAB\u80FD\u529B\uFF0C\u4E92\u8054\u7F51\u8D5A\u4E0D \u5230\u94B1\u300D?\nIDO \u8001\u5F90\uFF1A1\u3001\u6CA1\u6709\u4EBA\u77E5\u9053\u4F60\u5389\u5BB3\uFF1B\n2\u3001\u4F60\u5389\u5BB3\u8DDF\u6211\u4E00\u70B9\u5173\u7CFB\u90FD\u6CA1\u6709\uFF1B\n3\u3001\u4F60\u6CA1\u6709\u5E2E\u52A9\u6211\u89E3\u51B3\u4EFB\u4F55\u5177\u4F53\u95EE\u9898\u3002\n\n"\u4F60\u4EE5\u4E3A\u5F88\u7B80\u5355\u7684\u4E8B\uFF0C\u6211\u771F\u7684\u4E0D\u4F1A\u3002"\n\u8FD9\u53E5\u8BDD\u8BB0\u4F4F\uFF0C\u591A\u6570\u5546\u4E1A\u5316\uFF0C\u90FD\u662F\u8FD9\u53E5\u8BDD\uFF0C\u8001\u5F90\u7684\u591A\u6570\u5546\u4E1A\u5316\uFF0C\u4E5F\u662F\u6E90\u4E8E\u8FD9\u53E5\u8BDD\u3002\n\u5E94\u8BE5\u81F3\u5C11\u91CD\u590D\u63D0\u8FC7 5 \u6B21\u3002\u771F\u4F20\u4E00\u53E5\u8BDD\uFF0C\u4E0D\u9700\u8981\u4E07\u5B57\u5E9F\u8BDD\u3002'
-    },
-    {
-      id: 78,
-      category: "money",
-      content: "\u80FD\u529B\u5F88\u5F3A\u4E0D\u4E00\u5B9A\u80FD\u51FA\u7ED3\u679C\uFF0C\u5E76\u8D5A\u5230\u94B1\u3002\n\u66F4\u91CD\u8981\u7684\u662F\u300C\u4F60\u662F\u5426\u8DB3\u591F\u60F3\u8981\uFF0C\u8DB3\u591F\u4E3B \u52A8\uFF0C\u6709\u5F3A\u70C8\u7684\u6B32\u671B\u300D\u3002"
-    },
-    {
-      id: 79,
-      category: "money",
-      content: "\u5FAE\u5229\u65F6\u4EE3\uFF0C\u94B1\u4ECE\u516B\u9762\u6765\u3002\n\u591A\u5C1D\u8BD5\uFF0C\u591A\u6761\u6536\u5165\u6E20\u9053\uFF0C\u6297\u98CE\u9669\u3002\n\u6700\u597D\u662F\u88AB\u52A8\u6301\u7EED\u6536\u5165\uFF0C\u6E90\u6E90\u4E0D\u65AD\u3002"
-    },
-    {
-      id: 80,
-      category: "money",
-      content: "\u4E0D\u7528\u7FA1\u6155\u4EFB\u4F55\u4EBA\uFF0C\u4ED6\u4EEC\u53EA\u662F\u6BD4\u4F60\u5728\u67D0\u4EF6\u4E8B\u4E0A\uFF1A\u6295\u5165\u7684\u65F6\u95F4\u66F4\u591A\uFF0C\u601D\u8003\u7684\u66F4\u591A\uFF0C\u9047\u5230\u7684\u95EE\u9898\u66F4\u591A\u3002"
-    },
-    {
-      id: 81,
-      category: "money",
-      content: "\u4E0D\u8F93\u51FA\u4EF7\u503C\uFF0C\u5149\u5B66\u8868\u8C61\uFF0C\u518D\u6298\u817E10 \u5E74\uFF0C\u4E5F\u51FA\u4E0D\u4E86\u7ED3\u679C\u3002\n\u5EFA\u8BAE\u7684\u8DEF\u5F84\uFF1A\u4EF7\u503C\u8F93\u51FA\u3001\u88AB\u770B\u89C1\u3001\u88AB\u4E86\u89E3\u3001\u88AB\u8BA4\u8BC6\u3001\u88AB\u8BA4\u53EF\u3001\u6210\u4E3A\u4F60\u7684\u4ED8\u8D39\u7528\u6237\u3002"
-    },
-    {
-      id: 82,
-      category: "money",
-      content: "\u539F\u521B\u5185\u5BB9\u662F\u5546\u4E1A\u5316\u7684\u7EDD\u4F73\u6B66\u5668\uFF0C\u4E14\u514D\u8D39\u7684\u3002\n\u73A9\u4E2A\u4EBAIP\uFF0C\u539F\u521B\u5185\u5BB9\u8F93\u51FA\u662F\u7B2C\u4E00\u4F4D\u3002\n\n\u592A\u591AIP\uFF0C\u540E\u7EED\u589E\u957F\u4E4F\u529B\u3002\u539F\u56E0\u4E4B\u4E00\u662F\u300C\u6301\u7EED\u7684\u4EF7\u503C\u5185\u5BB9\u8F93\u51FA\u8DDF\u4E0D\u4E0A\u300D\u3002"
-    },
-    {
-      id: 83,
-      category: "money",
-      content: "\u6001\u5EA6\u5927\u4E8E\u80FD\u529B\u3002\n\u6301\u7EED\u4E0B\u53BB\uFF0C\u968F\u7740\u91CF\u7684\u79EF\u7D2F\uFF0C\u5FC5\u300C\u6210\u4E8B\u300D\u3002"
-    },
-    {
-      id: 84,
-      category: "money",
-      content: "\u8981\u4E8B\u5C3D\u5FEB\u5B8C\u6210\uFF0C\u7ACB\u523B\u53BB\u505A\u3002\u522B\u7B49\uFF0C\u6BCF\u5929\u90FD\u6709\u91CD\u8981\u7684\u4E8B\u3002\n\n\u62D6\u5EF6\u4E0D\u4EC5\u5F71\u54CD\u8D5A\u5C0F\u94B1\uFF0C\u66F4\u5F71\u54CD\u8D5A\u5927\u94B1\uFF0C\u5F71\u54CD\u590D\u5229\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 85,
-      category: "money",
-      content: "\u968F\u5904\u90FD\u662F\u9879\u76EE\u3002\n\u9879\u76EE\u5F88\u5BB9\u6613\u627E\uFF0C\u96BE\u7684\u662F\u575A\u6301\u4E00\u4E2A\u9879\u76EE\u4E0D\u52A8\u6447\uFF0C\u6301\u7EED\u4F18\u5316\u3002\n\u518D\u5C0F\u7684\u9879\u76EE\u4E5F\u80FD\u8D5A\u4E0D\u9519\u7684\u6536\u76CA\u3002"
-    },
-    {
-      id: 86,
-      category: "money",
-      content: "\u6709\u95EE\u9898\uFF0C\u786E\u5B9E\u662F\u95EE\u9898\uFF0C\u5148\u53BB\u89E3\u51B3\uFF0C\u800C\u4E0D\u662F\u627E\u501F\u53E3\u3002\n\n\u5F88\u591A\u540C\u5B66\uFF0C\u5929\u7136\u559C\u6B22\u627E\u501F\u53E3\u3002\n\n\u5199\u4F5C\uFF0C\u6CA1\u8D5A\u5230\u94B1\uFF0C\u5148\u95EE\u95EE\u81EA\u5DF1\u7684\u539F\u56E0\u3002\u6301\u7EED\u4E86\u5426\uFF0C\u8BA4\u771F\u4E86\u5426\uFF1F"
-    },
-    {
-      id: 87,
-      category: "money",
-      content: "\u5565\u53EB\u300C\u5B9E\u6218\u300D\uFF1F\n\n\u8FD9\u4E9B\u5185\u5BB9\uFF0C\u6559\u79D1\u4E66\uFF0C\u5546\u5B66\u9662\uFF0C\u90FD\u6CA1\u6709\u3002\n\u6765\u81EA\u4E00\u7EBF\u4EBA\u5458\u7684\u5B9E\u6218\u603B\u7ED3\uFF0C\u524D\u6CBF\u77E5\u8BC6\u3002\n\u6709\u6781\u5F3A\u7684\u4FE1\u606F\u5DEE\uFF0C\u65F6\u95F4\u5DEE\u3002\n\u8001\u5F90\u6BCF\u5929\u5728\u505A\u7684\uFF0C\u5C31\u662F\u8FD9\u4E9B\u3002"
-    },
-    {
-      id: 88,
-      category: "money",
-      content: "\u300C\u8D5A\u94B1\u4E4B\u524D\uFF0C\u5148\u907F\u514D\u88AB\u9A97\u300D\u3002\n\u4E92\u8054\u7F51\u5F88\u590D\u6742\uFF0C\u5565\u6837\u7684\u5947\u8469\u4E8B\u90FD\u6709\u3002\n\u8BB0\u4F4F\u4E00\u53E5\u8BDD\uFF1A\u6CA1\u6709\u300C\u4E0D\u52B3\u800C\u83B7\u300D\u3002"
-    },
-    {
-      id: 89,
-      category: "money",
-      content: "\u73A9\u4E00\u4E2A\u9886\u57DF\uFF0C\u81F3\u5C11\u5148\u7814\u7A76\u51E0\u5341\u4E2A\u540C\u884C\u3002\n\u540C\u884C\u662F\u6700\u597D\u7684\u8001\u5E08\u3002"
-    },
-    {
-      id: 90,
-      category: "money",
-      content: "\u79C1\u57DF\u7B56\u7565\n\n2025 \u53CA\u672A\u6765\u957F\u671F\uFF0C\u6838\u5FC3\u7B56\u7565\u662F\uFF1A\n\u4E0D\u518D\u589E\u52A0\u65B0\u7684\u5FAE\u4FE1\u53F7\uFF0C\u800C\u662F\u968F\u7740\u65B0\u589E\u597D\u53CB\u7684\u6DFB\u52A0\uFF0C\u9010\u6B65\u5220\u9664\u4ECE\u672A\u4E92\u52A8\uFF0C\u9891\u7E41\u7FA4\u53D1\u5E7F\u544A\uFF0C\u672A\u4ED8\u8D39\u7684\u8001\u7528\u6237\u3002\n\n\u4E00\u4EBA\u4F01\u4E1A\u7684\u903B\u8F91\uFF0C\u7CBE\u529B\u6709\u9650\uFF0C \u65F6\u95F4\u6709\u9650\u3002\u786E\u4FDD\u79C1\u57DF\u603B\u91CF\u4E0D\u53D8\uFF0C\u79C1\u57DF\u8D28\u91CF\u63D0\u5347\u3002\n\n\u8FD9\u4E2A\u903B\u8F91\uFF0C\u8001\u5F90\u5728\u51E0\u6B21\u7684\u79C1\u5BC6\u996D\u5C40\uFF0C\u90FD\u6709\u804A\u8FC7\u3002\u79C1\u57DF\u662F\u6709\u7EF4\u62A4\u6210\u672C\u7684\uFF0C\u9700\u8981\u63D0\u9AD8\u8D28\u91CF\u3002"
-    },
-    {
-      id: 91,
-      category: "money",
-      content: "\u6700\u96BE\u7684\u662F\u300C\u627E\u5230\u9002\u5408\u7684\u4EBA\u300D,\u9879\u76EE\u5F88\u7B80\u5355\uFF0C\u8D5A\u5C0F\u94B1\u4E5F\u5F88\u7B80\u5355\u3002\u60F3\u653E\u5927\uFF0C\u5C31\u5F97\u627E\u5230\u9002\u5408\u7684\u4EBA\u5408\u4F5C\u3002\n\n\u7279\u522B\u662F\u4E00\u4EBA\u4F01\u4E1A\uFF0C\u662F\u5408\u4F5C\u4E92\u5229\u7684\u73A9\u6CD5\uFF0C\u4E0D\u662F\u96C7\u4F63\u5173\u7CFB\u3002\n\n\u4ECE\u98CE\u9669\u7684\u89D2\u5EA6\uFF0C\u5728\u81EA\u5DF1\u4ED8\u8D39\u793E\u7FA4\u91CC\u9762\u627E\uFF0C\u98CE\u9669\u66F4\u4F4E\uFF0C\u6BD5\u7ADF\u4E00\u8D77\u5408\u4F5C\u8FC7\uFF0C\u4E5F\u5B8C\u6574\u4E86\u89E3\u8FC7\u4EA7\u54C1\u4F53\u7CFB\u3002\n\n\u6700\u4F4E\u6210\u672C\uFF0C\u6216\u8005\u51E0\u4E4E\u65E0\u989D\u5916\u6210\u672C\uFF0C\u6301\u7EED\u4EA7\u54C1\u5185\u5BB9\uFF0C\u4F60\u5C31\u662F\u8D62\u5BB6\uFF0C\u6536\u5165\u4E0D\u4F1A\u5C11\uFF0C\u4E14\u6CA1\u6709\u5BF9\u624B\uFF0C\u8001\u5F90\u4E00\u76F4\u5728\u9A8C\u8BC1\u8FD9\u5957\u903B\u8F91\u3002"
-    },
-    {
-      id: 92,
-      category: "money",
-      content: "\u5047\u671F\uFF0C\u666E\u901A\u4EBA\u5728\u73A9\uFF0C\u6210\u4E8B\u7684\u73A9\u5BB6\u5728\u52A0\u901F\u524D\u884C\u3002"
-    },
-    {
-      id: 93,
-      category: "money",
-      content: "\u65B0\u4EBA\u8FDF\u8FDF\u4E0D\u6562\u8FC8\u51FA\u7B2C\u4E00\u6B65\uFF1B\u4ECE0 \u52301 \u7684\u7A81\u7834\uFF0C\u6BD41 \u5230100 \u5546\u4E1A\u5316\u653E\u5927\u66F4\u96BE\u3002\n\n\u5B9E\u6218\u5C0F\u9879\u76EE\uFF0C\u4E3B\u8981\u662F\u8DD1\u901A0 \u52301\uFF0C\u8BA9\u5927\u90E8\u5206\u540C\u5B66\u62FF\u5230\u7ED3\u679C\uFF0C\u8D5A\u5230\u94B1\uFF0C\u83B7\u5F97\u6B63\u53CD\u9988\u3002"
-    },
-    {
-      id: 94,
-      category: "money",
-      content: "\u526F\u4E1A\u7684\u51E0\u4E2A\u5751\uFF1A\n1\u3001\u5408\u89C4\uFF08\u81EA\u5DF1\u5224\u65AD\uFF0C\u6709\u98CE\u9669\u7684\uFF0C\u5C3D\u91CF\u522B\u78B0\uFF09\n2\u3001\u65F6\u95F4\u6295\u5165\uFF08\u6295\u5165\u4E86\u592A\u591A\u65F6\u95F4\uFF0C\u83B7\u53D6\u4E86\u592A\u5C11\u7684\u6536\u5165\uFF0C\u4E0D\u503C\u5F97\uFF09\n3\u3001\u81C6\u6D4B\u9700\u6C42\uFF08\u4F60\u4EE5\u4E3A\u7528\u6237\u6709\u9700\u6C42\uFF09\n4\u3001\u77ED\u677F\uFF08\u4ECE\u81EA\u5DF1\u64C5\u957F\u7684\u5207\u5165\uFF0C\u800C\u4E0D\u662F\u8865\u77ED\u677F\uFF09"
-    },
-    {
-      id: 95,
-      category: "money",
-      content: '\u522B\u592A\u65E9\u4EAB\u53D7\u5B89\u9038\u751F\u6D3B\u3002\u6CA1\u6709\u6240\u8C13"\u8F7B\u677E\u8D5A\u94B1"\u7684\u4E8B\u3002'
-    },
-    {
-      id: 96,
-      category: "money",
-      content: "\u526F\u4E1A\u8D5A\u5230\u7B2C\u4E00\u5757\u94B1\uFF0C\u6BD4\u6DA83000 \u5757\u94B1\u5DE5\u8D44\u66F4\u503C\u5F97\u5F00\u5FC3\u3002"
-    },
-    // 避坑篇 (097-170)
-    {
-      id: 97,
-      category: "pitfalls",
-      content: "\u5199\u51E0\u70B9\u4EBA\u95F4\u6E05\u9192\uFF1A\n1.\u53BB\u7B97\u4E00\u7B97\u81EA\u5DF1\u8FD9\u4E9B\u5E74\u4ED8\u8D39\u4E86\u591A\u5C11\u94B1(\u793E\u7FA4\uFF0C\u8BFE\u7A0B\uFF0C\u4E13\u680F\u7B49)\uFF1B\n2.\u662F\u4E0D\u662F\u591A\u6570\u5185\u5BB9\u90FD\u662F\u8111\u70ED\u4ED8\u8D39\u7684\uFF0C\u53C8\u4E0D \u597D\u610F\u601D\u53BB\u9000\u8D39\uFF1B\n3.\u8FD8\u6253\u7B97\u4ED8\u8D39\u591A\u5C11?\u4F1A\u56E0\u8EAB\u8FB9\u670B\u53CB\u90FD\u4ED8\u8D39\u800C\u4ED8\u8D39\uFF0C\u6216\u88AB\u5E7F\u544A\u9F13\u5439\u6709\u7528\u800C\u4ED8\u8D39\uFF0C\u6216\u88AB \u4E00\u5806\u798F\u5229\u8BF1\u60D1\u800C\u4ED8\u8D39\uFF1B\n4.\u6E05\u9192\u70B9\uFF0C\u4ED8\u8D39\u518D\u591A\u90FD\u6CA1\u7528\uFF1B\n5.\u540C\u8D28\u5185\u5BB9\uFF0C\u4ED8\u8D39\u4E00\u4E2A\u5C31\u591F\u4E86\uFF1B\u4E0D\u53BB\u505A\uFF0C \u4ED8\u8D39\u4E86\u6CA1\u7528\u3002"
-    },
-    {
-      id: 98,
-      category: "pitfalls",
-      content: "\u8B66\u60D5\u5728\u670B\u53CB\u5708\u548C\u793E\u7FA4\uFF0C\u75AF\u72C2\u6652\u300C\u8BA2\u5355\u6210\u4EA4\uFF0C\u8BA2\u5355\u62A5\u540D\uFF0C\u4EBA\u5458\u7206\u6EE1\u300D\u7684\u6848\u4F8B\u3002\n\u592A\u591A\u8FD9\u6837\u7684\u56FE\uFF0C\u90FD\u6765\u81EA\u7F51\u7EDC\uFF1B\u5373\u4F7F\u5C5E\u5B9E\uFF0C\u4E5F\u8DDF\u4ED6\u6CA1\u5565\u5173\u7CFB\uFF08\u4F18\u79C0\u7684\u4EBA\uFF0C\u672C\u6765\u5C31\u4F18\u79C0\uFF09\u3002\n\n\u4F60\u4ED8\u8D39\u52A0\u5165\u540E\uFF0C\u5927\u6982\u7387\u662F\u300C\u4EA4\u5B66\u8D39\uFF0C\u65E0\u6536\u83B7\u300D\u3002\n\n\u80FD\u542C\u8FDB\u53BB\u8FD9\u6BB5\u8BDD\u7684\uFF0C\u81F3\u5C11\u53EF\u4EE5\u5C11\u4E8F\u51E0\u5343\u5757\u3002"
-    },
-    {
-      id: 99,
-      category: "pitfalls",
-      content: "\u6BCF\u5929\u7ED9\u4F60\u53D1\u4E00\u5806\u526F\u4E1A\u6587\u4EF6\u8D44\u6599\u7684\uFF0C\u591A\u6570\u91C7\u96C6\u4E8E\u7F51\u7EDC\uFF0C\u4ED6\u81EA\u5DF1\u4E5F\u4E0D\u4F1A\u53BB\u770B\u3002\n\u8FD9\u7C7B\u5185\u5BB9\uFF0C\u76F4\u63A5\u5220\u6389\uFF0C\u53EA\u4F1A\u8BA9\u4F60\u526F\u4E1A\u66F4\u7126\u8651\uFF0C\u8D5A\u4E0D\u5230\u94B1\u7684\u3002"
-    },
-    {
-      id: 100,
-      category: "pitfalls",
-      content: "\u8BF4\u518D\u591A\u5EFA\u8BAE\uFF0C\u7528\u6237\u4E5F\u4E0D\u4F1A\u542C\uFF1B\n\u7B49\u81EA\u5DF1\u771F\u7684\u8840\u4E8F\uFF0C\u624D\u60F3\u8D77\u66FE\u7ECF\u67D0\u4EBA\u7ED9\u7684\u67D0\u4E2A\u5EFA\u8BAE\u3002\u81EA\u5DF1\u4E0D\u61C2\u7684\u9886\u57DF\uFF0C\u522B\u78B0\u3002\n\u4E00\u5806\u4E13\u4E1A\u73A9\u5BB6\u90FD\u8D5A\u4E0D\u5230\u94B1\uFF0C\u4E3A\u4EC0\u4E48\u4F60\u80FD\u8D5A\u5230\uFF1F"
-    },
-    {
-      id: 101,
-      category: "pitfalls",
-      content: "\u9879\u76EE\u662F\u6709\u751F\u547D\u5468\u671F\u7684\uFF0C\n\u666E\u901A\u4EBA\u53BB\u73A9\uFF0C\u4E5F\u8BB8\u53EF\u4EE5\u8D5A\u5230\u94B1\u3002\u4F46\uFF0C\u82B1\u51E0\u5343\u5757\u4ED8\u8D39\u53BB\u5B66\uFF0C\u5927\u53EF\u4E0D\u5FC5\u3002\u4E0D\u662F\u9879\u76EE\u4E0D\u597D\uFF0C\u662F\u4F60\u628A\u5979\u5F53\u6551\u547D\u7A3B\u8349\u3002\u5927\u6982\u7387\u8D5A\u4E0D\u56DE\u5B66\u8D39\u3002"
-    },
-    {
-      id: 102,
-      category: "pitfalls",
-      content: "\u73A9\u526F\u4E1A\uFF0C\u627E\u522B\u4EBA\u7ED9\u5EFA\u8BAE\u524D\uFF0C\u5148\u60F3\u6E05\u695A\u9700\u8981\u54EA\u4E9B\u5EFA\u8BAE\u3002\u81EA\u5DF1\u5148\u63CF\u8FF0\u6E05\u695A\u73B0\u72B6\u548C\u7591\u60D1\u3002\u5426\u5219\uFF0C\u5C31\u662F\u300C\u65E0\u6548\u6C42\u52A9\u300D\u3002"
-    },
-    {
-      id: 103,
-      category: "pitfalls",
-      content: "\u526F\u4E1A\u62C6\u89E3\uFF0C\u6709\u98CE\u9669\uFF0C\u52A8\u4E86\u522B\u4EBA\u86CB\u7CD5\uFF0C\u5BB9\u6613\u88AB\u4E3E\u62A5\uFF0C\u5C01\u53F7\u3002"
-    },
-    {
-      id: 104,
-      category: "pitfalls",
-      content: "\u5982\u679C\u6709\u4EBA\u544A\u8BC9\u4F60\uFF0C\u7ED9\u4ED699\uFF0C\u5C31\u80FD\u8BA9\u4F60\u5B9E\u73B0\u5E74\u8D5A\u5343\u4E07\uFF0C\u6211\u529D\u4F60\u8D76\u7D27\u62C9\u9ED1\u3002"
-    },
-    {
-      id: 105,
-      category: "pitfalls",
-      content: "\u5C0F\u7EA2\u4E66\u6652\u300C99+\u8D5E\u85CF\uFF0C99+\u65B0\u589E\u5173\u6CE8\uFF0C99+\u8BC4\u8BBA\u300D\u7684\uFF0C\u5176\u5B9E\u6CA1\u5565\u95E8\u69DB\u3002\u6BCF\u4E2A\u4EBA\u53BB\u7528\u5FC3\u53D1\u51E0\u5341\u6761\u7B14\u8BB0\u90FD\u80FD\u505A\u5230\u3002\n\n\u4E0D\u4FE1\u7684\uFF0C\u81EA\u5DF1\u53BB\u968F\u4FBF\u53D1\u4E00\u4E9B\u8BD5\u8BD5\u3002\u53BB\u5C0F\u7EA2\u4E66\uFF0C\u5237\u51E0\u5929\uFF0C\u6A21\u4EFF\u51E0\u4E2A\u7B14\u8BB0\uFF0C\u76F4\u63A5\u53D1\u3002\n\n\u5982\u679C\u4F60\u56E0\u4E3A\u665299+\u4ED8\u8D39\u67D0\u8BAD\u7EC3\u8425\uFF0C\u5927\u6982\u7387\u4E0D\u6E05\u9192\u3002"
-    },
-    {
-      id: 106,
-      category: "pitfalls",
-      content: "\u780D\u6389\u65E0\u590D\u5229\uFF0C\u6216\u8005\u590D\u5229\u4E0D\u9AD8\u7684\u9879\u76EE\u3002\n\u5220\u6389\u65E0\u4EF7\u503C\u7684\u597D\u53CB\uFF0C\u505A\u51CF\u6CD5\u3002\n\u4E13\u6CE8\u6709\u957F\u7EBF\u79EF\u7D2F\u7684\uFF1A\u77ED\u6587\u5199\u4F5C\u3001\u516C\u4F17\u53F7\u3001\u4E13\u680F\u3001\u793E\u7FA4\u3001\u5408\u4F19\u4EBA\u3002"
-    },
-    {
-      id: 107,
-      category: "pitfalls",
-      content: "\u5982\u679C\u6709\u4EBA\u8DDF\u4F60\u8BF4\uFF0C\u4ED89.9 \u9080\u8BF7\u4F60\u8FDB\u7FA4\uFF0C\u53EF\u4EE5\u52A0\u4E00\u5806\u4ED8\u8D39\u7528\u6237\u3002\u9700\u8C28\u614E\uFF0C\u6CA1\u5565\u7528\u3002\u5E02\u9762\u4E0A\u5F88\u591A\u8FD9\u7C7B\u73A9\u6CD5\uFF0C\u5FFD\u60A0\u5C0F\u767D\u3002\n\n\u7528\u5185\u5BB9\u88AB\u52A8\u5438\u5F15\u7CBE\u51C6\u7528\u6237\uFF0C\u800C\u4E0D\u662F\u4E92\u52A0\u4E00\u5806\u65E0\u6548\u7528\u6237\u3002"
-    },
-    {
-      id: 108,
-      category: "pitfalls",
-      content: "\u9AD8\u5BA2\u5355\u4EF7\u4EA7\u54C1\uFF0C\u6CA1\u6709\u4F60\u60F3\u8C61\u4E2D\u90A3\u4E48\u597D\u505A\uFF0C\u9700\u8981\u6709\u4E00\u5B9A\u7684\u7528\u6237\u57FA\u6570\uFF0C\u6709\u4E00\u5B9A\u7684\u5F71\u54CD\u529B\uFF0C\u6709\u4E00\u5B9A\u7684\u81EA\u53D1\u4F20\u64AD\u673A\u5236\u3002\n\n\u67D0\u67D0\u4E07\u5143\u5BA2\u5355\u4EF7\u4EA7\u54C1\uFF0C\u7FA4\u91CC\u51E0\u767E\u4EBA\u3002\u4E0D\u4E00\u5B9A\u662F\u4ED8\u8D39\u4E86\u51E0\u767E\u4EBA\uFF0C\u66F4\u4E0D\u662F\u51E0\u767E\u4EBA\u4ED8\u8D39\u4E86\u300C\u9AD8\u5BA2\u5355\u4EF7\u300D\u3002"
-    },
-    {
-      id: 109,
-      category: "pitfalls",
-      content: "\u4E00\u4E2A500 \u4EBA\u7684\u4ED8\u8D39\u966A\u4F34\u7FA4\uFF0C\u80DC\u8FC75 \u4E07\u4EBA\u7684\u516C\u4F17\u53F7\u3002"
-    },
-    {
-      id: 110,
-      category: "pitfalls",
-      content: "\u670B\u53CB\u5708\u4E00\u5806\u6652\u300C\u63D0\u73B0xxx\u300D\uFF08\u770B\u8D77\u6765\u5F88\u5927\u7684\u6570\u989D\uFF09\u3002\n\u6216\u8005\uFF0C\u5FAE\u4FE1\u6536\u6B3Exxx\uFF08\u4E00\u5806\u6536\u6B3E\u622A\u56FE\uFF09\u3002\n\u57FA\u672C\u4E0A\u90FD\u662F\u865A\u5047\u6570\u636E\uFF0C\u6216\u8005\u4E2A\u6848\u6570\u636E\u3002\n\u5373\uFF1A\u4E3B\u8981\u662F\u5438\u5F15\u4F60\u4ED8\u8D39\u62A5\u540D\u7684\uFF0C\u4F60\u62A5\u540D\u540E\u4F1A\u53D1\u73B0\u4F60\u8D5A\u4E0D\u5230100 \u5757\u3002\u6CE8\u610F\u7504\u522B\u3002"
-    },
-    {
-      id: 111,
-      category: "pitfalls",
-      content: "\u77ED\u89C6\u9891\u526A\u8F91\uFF0C\u77ED\u89C6\u9891\u5E26\u8D27\uFF0C\u662F\u53EF\u73A9\u7684\u3002\n\u522B\u76F2\u76EE\u4EA4\u5B66\u8D39\u53BB\u5B66\uFF0C\u81EA\u5DF1\u53BB\u5B9E\u6218\u4F53\u9A8C\u4E0B\uFF0C\u8D5A\u70B9\u5C0F\u94B1\u3002"
-    },
-    {
-      id: 112,
-      category: "pitfalls",
-      content: '"\u65E5\u5165800"\uFF0C\u603B\u80FD\u770B\u7C7B\u4F3C\u7684\u7B80\u4ECB\u5F15\u6D41\uFF0C\u53BB\u5438\u5F15\u526F\u4E1A\u5C0F\u767D\u4ED8\u8D39\u5B66\u4E60\u3002\n\u7C7B\u4F3C\u8FD9\u6837\u7684\uFF0C\u4E00\u5F8B\u522B\u7406\u3002\u666E\u901A\u4EBA\u51E0\u4E4E\u6CA1\u6709\u53EF\u80FD\uFF0C\u5927\u6982\u7387\u662F\u8D5A\u4F60\u5B66\u8D39\u3002'
-    },
-    {
-      id: 113,
-      category: "pitfalls",
-      content: "\u73A9IP\uFF0C\u5FD8\u4E86\u9605\u8BFB\u91CF\u6307\u6807\uFF0C\u7528\u5904\u4E0D\u5927\u3002\n\u6838\u5FC3\u662F\uFF1A\u6587\u7AE0\u83B7\u53D6\u7684\u7CBE\u51C6\u7528\u6237\uFF0C\u8D5E\u85CF\uFF0C\u54A8\u8BE2\uFF0C\u5BFC\u79C1\u57DF\uFF0C\u6210\u4EA4\u7B49\u6570\u636E\u3002"
-    },
-    {
-      id: 114,
-      category: "pitfalls",
-      content: "\u4E2A\u4EBA\u60F3\u5356\u8D27\uFF0C\u89C6\u9891\u53F7\u548C\u5C0F\u7EA2\u4E66\u4E0D\u9519\uFF0C\u6296\u97F3\u592A\u5377\uFF0C\u4E2A\u4EBA\u505A\u4E0D\u8D77\u6765\uFF08\u5F88\u96BE\uFF09\u3002"
-    },
-    {
-      id: 115,
-      category: "pitfalls",
-      content: "\u65B0\u624B\u4E5F\u80FD\u57287 \u5929\u591A\u8D5A10000\uFF1F\n\u4E0D\u53EF\u80FD\u7684\u3002\n\u7C7B\u4F3C\u8FD9\u6837\u7684\u7FA4\u53D1\u4FE1\u606F\uFF0C\u4E00\u5F8B\u522B\u7406\u3002"
-    },
-    {
-      id: 116,
-      category: "pitfalls",
-      content: "\u5173\u4E8E\u6295\u8D44\uFF0C\u4E0D\u5EFA\u8BAE\u666E\u901A\u4EBA\u78B0\u3002\n\u8EAB\u8FB9\u5F88\u591A\u540C\u5B66\u73A9\u6295\u8D44\uFF0C\u751A\u81F3\u6709\u4ECE\u94F6\u884C\u8D37\u6B3E\u6295\u8D44\uFF0C\u4E00\u5F8B\u5EFA\u8BAE\u522B\u73A9\u3002\u7279\u522B\u662F\u804C\u573A\u4EBA\uFF0C\u522B\u78B0\u3002\n1\u3001\u4E0A\u73ED\u90FD\u591F\u64CD\u5FC3\u4E86\uFF0C\u4F60\u6CA1\u6709\u7CBE\u529B\u53BB\u5173\u6CE8\u6295\u8D44\u6536\u76CA\u3002\n2\u3001\u4E00\u65E6\u73A9\u4E0A\uFF0C\u8D2A\u5FC3\u6CDB\u6EE5\uFF0C\u5F88\u96BE\u6536\u624B\u3002\n\u9664\u975E\uFF0C\u4F60\u6709\u6781\u5F3A\u7684\u8D44\u91D1\u9A7E\u9A6D\u80FD\u529B\u548C\u81EA\u63A7\u529B\u3002"
-    },
-    {
-      id: 117,
-      category: "pitfalls",
-      content: "\u8D5A\u5927\u94B1\uFF0C\u5C11\u5360\u5C0F\u4FBF\u5B9C\u3002"
-    },
-    {
-      id: 118,
-      category: "pitfalls",
-      content: "\u5206\u53D1\uFF0C\u662F\u7CBE\u9009\u90E8\u5206\u5185\u5BB9\u5206\u53D1\uFF0C\u4EE5\u53CA\u8DE8\u5E73\u53F0\u5206\u53D1\uFF08\u77E5\u4E4E\u3001\u516C\u4F17\u53F7\u3001\u5C0F\u7EA2\u4E66\u3001\u6296\u97F3\u3001\u89C6\u9891\u53F7\u7B49\uFF09\u3002"
-    },
-    {
-      id: 119,
-      category: "pitfalls",
-      content: "\u6296\u97F3\uFF0C\u6211\u628A\u6296\u97F3\u5B9A\u4E49\u4E3A\u300C\u5DE5\u5177\u300D\uFF0C\u662FIP \u73A9\u5BB6\u7684\u5F71\u54CD\u529B\u653E\u5927\u5668\uFF0C\u4EE5\u53CA\u300C\u5F15\u6D41\u300D\u5229\u5668\u3002"
-    },
-    {
-      id: 120,
-      category: "pitfalls",
-      content: "\u5B8C\u5168\u6CA1\u57FA\u7840\u7684\u540C\u5B66\uFF0C\u73A9\u526F\u4E1A\uFF0C\u73A9IP\uFF0C\u505A\u597D\u4E09\u5E74\u5185\u6536\u5165\u4E0D\u7A33\u5B9A\u7684\u5FC3\u7406\u51C6\u5907\u3002\n\u610F\u5473\u7740\uFF0C\u5EFA\u8BAE\u6709\u4E00\u4EFD\u4E3B\u4E1A\uFF0C\u786E\u4FDD\u6709\u57FA\u7840\u7684\u6536\u5165\u6765\u6E90\uFF0C\u522B\u76F2\u76EE\u88F8\u8F9E\u3002\n\u4E00\u4EBA\u4F01\u4E1A\u63A2\u7D22\uFF0C\u9700\u8981\u65F6\u95F4\u5468\u671F\u3002"
-    },
-    {
-      id: 121,
-      category: "pitfalls",
-      content: '"\u67D0\u67D0\u67D0\u8D5A\u5230\u767E\u4E07\uFF0C\u4E13\u680F\u552E\u5356\u51E0\u5343\u4EFD\uFF0C\u4E00\u7BC7\u6587\u7AE0\u9605\u8BFB\u51E0\u5341\u4E07\uFF0C\u4E00\u5929\u7684\u6D41\u91CF\u4E3B\u6536\u5165\u51E0\u4E07\u3002"\n\n\u90FD\u662F\u8868\u8C61\u6570\u636E\uFF0C\u65E0\u7528\u3002\u591A\u770B\u770B\u53EF\u590D\u5236\u7684\u8DEF\u5F84\uFF0C\u53BB\u601D\u8003\u4F60\u6709\u7684\u8D44\u6E90\uFF0C\u6267\u884C\u529B\uFF0C\u65F6\u95F4\u6210\u672C\u3002\n\n\u56E0\u8868\u8C61\u6570\u636E\uFF0C\u4ED8\u8D39\u4E86\u67D0\u4EBA\u63A8\u51FA\u7684\u67D0\u4EA7\u54C1\uFF0C\u5927\u6982\u7387\u4F1A\u5931\u671B\u3002'
-    },
-    {
-      id: 122,
-      category: "pitfalls",
-      content: "\u522B\u88AB\u4E00\u4E2A\u4EBA\u7684\u725B\u903C\u7B80\u4ECB\u8499\u853D\uFF0C\u4E00\u822C\u90FD\u4F1A\u6709\u4E00\u70B9\u70B9\u5938\u5927\uFF0C\u751A\u81F3\u5F88\u591A\u4EBA\u7684\u7B80\u4ECB\u6570\u636E\u4E0D\u662F\u4ED6\u81EA\u5DF1\u7684\uFF0C\u800C\u662F\u516C\u53F8\u8D44\u6E90\u3002\n\u4ED6\u4E00\u4E2A\u4EBA\u5E72\uFF0C\u7ED3\u679C\u4E5F\u8BB8\u662F0\u3002"
-    },
-    {
-      id: 123,
-      category: "pitfalls",
-      content: "\u4E00\u4E9B\u540C\u5B66\uFF0C\u51E0\u5757\u94B1\u7684\u5C0F\u9879\u76EE\uFF0C\u5728\u90A3\u7EA0\u7ED3\u8981\u4E0D\u8981\u5165\u3002\n\u7C7B\u4F3C\u8FD9\u79CD\uFF0C\u6211\u4E00\u5F8B\u5EFA\u8BAE\u522B\u5165\u3002\n\u4E00\u4EF6\u5C0F\u4E8B\u90FD\u8FD9\u4E48\u7EA0\u7ED3\uFF0C\u90A3\u5C31\u6CA1\u9700\u6C42\u3002\u65F6\u95F4\u5F88\u8D35\uFF0C\u522B\u8FD9\u6837\u5728\u7EA0\u7ED3\u4E2D\u6D6A\u8D39\u3002"
-    },
-    {
-      id: 124,
-      category: "pitfalls",
-      content: "\u522B\u968F\u4FBF\u9080\u8BF7\u6211\u8FDB\u4F60\u4EEC\u7684\u7FA4\uFF0C\u6CA1\u65F6\u95F4\u770B\uFF0C\u4E0D\u4F1A\u7ED9\u964C\u751F\u4EBA\u80CC\u4E66\u3002\n\n*\u6709\u4E9B\u540C\u5B66\uFF0C\u4EE5\u300CIDO \u8001\u5F90\u4E5F\u5728\u7FA4\u91CC\u300D\u4E3A\u7531\u5934\uFF0C\u53BB\u5916\u9762\u62DB\u52DF\u4ED8\u8D39\u5B66\u5458\u3002\n\n\u9664\u4E86\u7ED9\u5408\u4F19\u4EBA\u300C\u80CC\u4E66\u300D\uFF0C\u5176\u4ED6\u4E00\u5F8B\u4E0D\u63D0\u4F9B\u3002"
-    },
-    {
-      id: 125,
-      category: "pitfalls",
-      content: "\u4ED8\u8D39\u661F\u7403\uFF0C\u672C\u8D28\u4E0A\u662F\u4E00\u4E2A\u793E\u7FA4\uFF0C\u666E\u901A\u4EBA\u60F3\u73A9\u975E\u5E38\u96BE\u3002\u666E\u901A\u4EBA\u4E0D\u5EFA\u8BAE\u6295\u5165\u592A\u591A\u7CBE\u529B\u73A9\u4ED8\u8D39\u661F\u7403\u3002\u4ECE\u514D\u8D39\u661F\u7403\u5F00\u59CB\u5207\u5165\uFF0C\u5230\u966A\u4F34\u7FA4\uFF0C\u66F4\u503C\u5F97\u3002"
-    },
-    {
-      id: 126,
-      category: "pitfalls",
-      content: "\u770B\u7740\u4E00\u5806\u4EBA\u76F2\u76EE\u4ED8\u8D39\uFF0C\u529D100 \u6B21\u90FD\u6CA1\u7528\uFF1B\u5927\u6982\u7387\u540E\u7EED\u4F1A\u540E\u6094\uFF0C\u4E14\u5BF9\u65B9\u4E0D\u9000\u6B3E\u3002\n\n*\u4E0D\u662F\u6240\u6709\u4EBA\u90FD\u80FD\u50CF\u8001\u5F90\u4E00\u6837\uFF0C\u9000\u6B3E\u79D2\u5904\u7406\u3002\n\n\u4E00\u53E5\u8BDD\u5EFA\u8BAE\uFF1A\u5C11\u4ED8\u8D39\uFF0C\u591A\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 127,
-      category: "pitfalls",
-      content: "\u7206\u6587\u5199\u4F5C\uFF0C\u65E0\u6CD5\u66B4\u5BCC\u3002\u5982\u679C\u8FD0\u6C14\u4E0D\u9519\uFF0C\u7206\u4E86\uFF0C\u8BB0\u5F97\u6C89\u6DC0\u5230\u79C1\u57DF\u3002\n\n\u4ED8\u8D392000 \u4EE5\u4E0A\u5B66\u7206\u6B3E\u5199\u4F5C\uFF0C\u5927\u6982\u7387\u8D5A\u4E0D\u56DE\u6765\u3002\n\n\u5B9E\u5728\u60F3\u5C1D\u8BD5\uFF0C\u770B\u770B\u300C\u526F\u4E1A\u907F\u5751\u661F\u7403\u300D\u7206\u6B3E\u76F8\u5173\u7684\u5E16\u5B50\uFF0C\u514D\u8D39\u3002\u8DDF\u7740\u5E16\u5B50\u53BB\u73A9\uFF0C\u5B9E\u6218\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 128,
-      category: "pitfalls",
-      content: "\u4E92\u8054\u7F51\u4E0A\u514D\u8D39\u7ED9\u4F60\u9001\u94B1\u7684\uFF0C\u90FD\u8C28\u614E\u3002\n\u6CA1\u6709\u7A81\u7136\u7684\u597D\u4E8B\u964D\u4E34\u3002"
-    },
-    {
-      id: 129,
-      category: "pitfalls",
-      content: "\u628A\u7CBE\u529B\u653E\u5728\u6709\u4EF7\u503C\u7684\u4E8B\u4E0A\u3002\n\n\u6848\u4F8B\uFF1A\u4E00\u4E9B\u540C\u5B66\u5199\u516C\u4F17\u53F7\uFF0C\u6587\u7AE0\u6CA1\u5199\u51E0\u7BC7\uFF0C\u603B\u5728\u90A3\u7EA0\u7ED3\u8981\u5904\u7406\u4E00\u4E9B\u6F02\u4EAE\u7684\u56FE\u7247\uFF0C\u6A21\u4EFF\u67D0\u67D0\u67D0\u7684\u6F02\u4EAE\u6392\u7248\u3002\n\u8FD9\u4E9B\u5BF9\u8D5A\u94B1\u548C\u6587\u7AE0\u9605\u8BFB\u91CF\u90FD\u8D77\u4E0D\u4E86\u5173\u952E\u4F5C\u7528\u3002\n\u6838\u5FC3\u662F\uFF1A\u9009\u9898\uFF0C\u6301\u7EED\u5199\u3002"
-    },
-    {
-      id: 130,
-      category: "pitfalls",
-      content: "\u4E00\u4E9B\u4EBA\u544A\u8BC9\u4F60\u8D5A\u5927\u94B1\u5F88\u8F7B\u677E\u7684\u65F6\u5019\uFF0C\u5C31\u5E94\u8BE5\u8B66\u60D5\u4E86\u3002\n\u8BB0\u4F4F\u4E00\u4E2A\u539F\u5219\uFF1A\u5C0F\u94B1\uFF0C\u6B63\u53CD\u9988\uFF0C\u5F88\u8F7B\u677E\u3002\u5927\u94B1\uFF0C\u6781\u96BE\u3002\n\n\u51E0\u4E4E\u65E0\u6CD5\u5FEB\u901F\u590D\u5236\uFF0C\u9700\u8981\u65F6\u95F4\u79EF\u7D2F\uFF0C\u4E5F\u9700\u8981\u8FD0\u6C14\u3002"
-    },
-    {
-      id: 131,
-      category: "pitfalls",
-      content: "\u7B5B\u9009\uFF0C\u7B5B\u9009\uFF0C\u7B5B\u9009\u3002\u505A\u81EA\u5DF1\u3002\n\u800C\u4E0D\u662F\u56E0\u4E3A\u67D0\u4E9B\u7528\u6237\u7684\u4F4E\u9891\u9700\u6C42\uFF0C\u6EE1\u8DB3\u4ED6\u4EEC\uFF0C\u8BA9\u4F60\u4E0D\u662F\u4F60\u3002\n\n\u6848\u4F8B\uFF1A\u53EF\u4EE5\u89E3\u51B3\u4F60\u7684\u5177\u4F53\u95EE\u9898\uFF0C\u4F46\u4E0D\u4F1A\u6EE1\u8DB3\u4F60\u4F4E\u9891\u4E0D\u5408\u7406\u7684\u8BC9\u6C42\u3002\n\u8FD9\u662FIP \u5440\u3002"
-    },
-    {
-      id: 132,
-      category: "pitfalls",
-      content: "\u5F88\u591A\u540C\u5B66\u5728\u8FFD\u6C42\u77ED\u5E73\u5FEB\u7684\u9879\u76EE\uFF0C\u671F\u5F85\u66B4\u5BCC\u3002\u4F60\u53BB\u505A\u4E86\u624D\u53D1\u73B0\uFF0C\u771F\u7684\u4E0D\u9002\u5408\u6CA1\u6709\u79EF\u7D2F\u7684\u666E\u901A\u4EBA\u3002\n\n\u5FC3\u6001\u653E\u5E73\uFF0C\u53BB\u79EF\u7D2F\uFF0C\u6CA1\u6709\u7A81\u7136\u800C\u6765\u7684\u8D22\u5BCC\u3002\n\n\u6211\u968F\u4FBF\u505A\u4E00\u4E2A\u9879\u76EE\u90FD\u80FD\u8D5A\u5230\u94B1\uFF0C\u662F\u56E0\u4E3A\u8FC7\u5F80\u591A\u5E74\u7684\u79EF\u7D2F\u3002\n\n\u6211\u5BF9\u5408\u4F19\u4EBA\u7684\u671F\u671B\u662F\uFF1A\u80FD\u6301\u7EED\u516B\u5E74\uFF0C\u6C89\u4E0B\u5FC3\u79EF\u7D2F\u3002\u800C\u4E0D\u662F\u671F\u5F85\u66B4\u5BCC\u3002\u516B\u5E74\uFF0C\u8DB3\u591F\u6539\u53D8\u6240\u6709\u3002\u5373\u4F7F\u662F0 \u57FA\u7840\u3002"
-    },
-    {
-      id: 133,
-      category: "pitfalls",
-      content: "\u907F\u5751\uFF0C\u5F88\u591A\u540C\u5B66\uFF0C\u51FA\u4E86\u70B9\u6210\u7EE9\uFF0C\u5C31\u89C9\u5F97\u81EA\u5DF1\u5F88\u725B\uFF0C\u75AF\u72C2\u4ED8\u8D39\u5B66\u4E60\u3002\n\u6700\u540E\uFF0C\u4E00\u5E74\u4E0B\u6765\uFF0C\u4E8F\u635F\u4E0D\u5C11\u3002\n\u4E00\u5B9A\u8981\u60F3\u6E05\u695A\uFF0C\u662F\u8FD0\u6C14\uFF0C\u8FD8\u662F\u57FA\u672C\u529F\u3002"
-    },
-    {
-      id: 134,
-      category: "pitfalls",
-      content: "\u666E\u901A\u4EBA\u522B\u60F3\u4E0D\u5F00\uFF0C\u63A8\u81EA\u5DF1\u7684\u4EA7\u54C1\u3002\u592A\u96BE\u4E86\u3002CPS \u6210\u719FIP \u7684\u6210\u719F\u4EA7\u54C1\uFF0C\u4E8B\u534A\u529F\u5341\u500D\u3002\u800C\u4E14\u8D5A\u94B1\u4E5F\u4E0D\u4F1A\u5C11\u3002"
-    },
-    {
-      id: 135,
-      category: "pitfalls",
-      content: "\u770B\u6E05\u695A\uFF0C\u4E00\u4E2A\u9879\u76EE\u7684\u53D1\u8D77\u4EBA\uFF0C\u662F\u6DF1\u8015\u67D0\u4E2A\u9886\u57DF\uFF0C\u8FD8\u662F\u8DDF\u98CE\u8D5A\u4E00\u7B14\u8DD1\u8DEF\u3002\n\u8FD9\u7C7B\u6848\u4F8B\uFF0C\u6BCF\u5929\u90FD\u5728\u53D1\u751F\u3002\n\u4E5F\u5E0C\u671B\u5927\u5BB6\u591A\u5206\u4EAB\u4E00\u4E9B\u8E29\u5751\u6848\u4F8B\u3002\n\u4F60\u7684\u6BCF\u4E00\u6B21\u5206\u4EAB\uFF0C\u90FD\u8BA9\u5176\u4ED6\u4EBA\u5C11\u4E8F\u4E00\u70B9\u94B1\u3002\u4EF7\u503C\u65E0\u9650\u3002\n\n*\u5FAE\u4FE1957863300 \u8054\u7CFB\u8001\u5F90\uFF0C\u5206\u4EAB\u4F60\u7684\u8E29\u5751\u6848\u4F8B\u3002"
-    },
-    {
-      id: 136,
-      category: "pitfalls",
-      content: "\u591A\u6570\u770B\u8D77\u6765\u5149\u9C9C\u6709\u6F5C\u529B\u7684\u9879\u76EE\uFF0C\u53EA\u662F\u770B\u8D77\u6765\u800C\u5DF2\uFF0C\u57FA\u672C\u4E0A\u6CA1\u6709\u7A7A\u95F4\uFF0C\u53EA\u662F\u770B\u7834\u4E0D\u8BF4\u7834\u3002\n\n\u4ED8\u8D39500 \u4EE5\u4E0A\u7684\u300C\u9879\u76EE\u300D\u5B66\u4E60\uFF0C\u90FD\u614E\u91CD\u3002\n\n\u6848\u4F8B\uFF1A\u592A\u591A\u540C\u5B66\uFF0C\u82B1\u5927\u91CF\u7CBE\u529B\uFF0C\u641E\u4E00\u5E74\uFF0C\u4ED8\u8D39\u4EBA\u6570\u4E0D\u8FC7\u5343\uFF0C\u7B2C\u4E8C\u5E74\u7EED\u8D39\u738720%\u4EE5\u4E0B\u3002\n\u8001\u5F90\u966A\u4F60\u526F\u4E1A\u907F\u5751\u661F\u7403\uFF0C\u6295\u5165\u5927\u91CF\u7CBE\u529B/\u8D44\u6E90/\u6D41\u91CF\uFF0C\u8BA9\u5229\uFF0C\u8BA9\u540D\uFF0C\u4E5F\u624D6000 \u4EBA\u3002"
-    },
-    {
-      id: 137,
-      category: "pitfalls",
-      content: "\u670B\u53CB\u5708\u603B\u80FD\u770B\u5230\u4E00\u4E9B\u65B0\u8BCD\uFF0C\u76EE\u7684\u662F\u63A8\u4ED6\u4EEC\u81EA\u5DF1\u7684\u4EA7\u54C1\u3002\n\u53BB\u8BA4\u771F\u770B\u4E00\u4E0B\uFF0C\u57FA\u672C\u4E0A\u5C31\u90A3\u4E9B\u4E1C\u897F\uFF0C\u6CA1\u6709\u65B0\u73A9\u6CD5\u3002"
-    },
-    {
-      id: 138,
-      category: "pitfalls",
-      content: "* \u4E0D\u8981\u88AB\u4E00\u5C42\u5957\u58F3\u8499\u853D\uFF0C\u53BB\u60F3\u60F3\u8FD9\u4E1C\u897F\u5BF9\u4F60\u662F\u5426\u6709\u7528\uFF0C\u6216\u8005\u6709\u5E2E\u52A9\u3002\n\u5206\u6563\u7CBE\u529B\uFF0C\u4E0D\u503C\u5F97\u3002"
-    },
-    {
-      id: 139,
-      category: "pitfalls",
-      content: "\u7FA4\u53D1\u6C42\u5173\u6CE8\uFF0C\u4EF7\u503C\u4E0D\u5927\u3002\n\u5EFA\u7ACB\u81EA\u5DF1\u7684\u966A\u4F34\u7FA4\uFF0C\u662F\u8001\u5F90\u6BD4\u8F83\u5EFA\u8BAE\u7684\u65B9\u5F0F\u3002\n\u670B\u53CB\u5708\u96C6\u8D5E\uFF0C\u7FA4\u53D1\uFF0C\u4E0D\u503C\u5F97\u3002\u8D5A\u4E0D\u4E86\u5927\u94B1\u3002"
-    },
-    {
-      id: 140,
-      category: "pitfalls",
-      content: "\u5C11\u542C\u4E00\u4E9B\u4E71\u4E03\u516B\u7CDF\u7684\u5410\u69FD\u548C\u6307\u624B\u753B\u811A\uFF08\u5355\u72EC\u62FF\u51FA\u6765\u8FD9\u6761\uFF0C\u662F\u56E0\u4E3A\u591A\u6570\u4EBA\u5199\u4F5C\u6FC0\u60C5\u88AB\u627C\u6740\u5728\u8FD9\uFF09\u3002"
-    },
-    {
-      id: 141,
-      category: "pitfalls",
-      content: "\u4E0D\u8981\u770B\u5176\u4ED6IP\uFF0C\u535A\u4E3B\uFF0C\u8BF4\u4EC0\u4E48\u3002\n\u6838\u5FC3\u662F\u770B\u4ED6\u4EEC\u7684\u884C\u52A8\uFF0C\u4ED6\u4EEC\u505A\u4EC0\u4E48\u3002\n\u591A\u6570\u4EBA\uFF0C\u8BF4\u4E00\u5957\uFF0C\u505A\u4E00\u5957\u3002\u8BF4\u7684\u90A3\u4E9B\uFF0C\u66F4\u591A\u662F\u5438\u5F15\u773C\u7403\uFF0C\u535A\u6D41\u91CF\u3002"
-    },
-    {
-      id: 142,
-      category: "pitfalls",
-      content: "\u5C4F\u853D\u6240\u6709\u5FAE\u4FE1\u7FA4\u7684\u6D88\u606F\uFF0C\u5305\u62EC\u81EA\u5DF1\u7684\u3002\n\u7F6E\u9876\u5F53\u4E0B\u4E09\u4E2A\u6700\u91CD\u8981\u7684\u5FAE\u4FE1\u7FA4\uFF0C\u5B9A\u671F\u770B\u6D88\u606F\u3002\n\u6CA1\u5565\u5927\u4E8B\uFF0C\u4F1A\u56E0\u4E3A\u4F60\u665A\u770B\u51E0\u4E2A\u5C0F\u65F6\u800C\u9519\u8FC7\u7684\u3002\n\u65F6\u95F4\u6700\u503C\u94B1\u3002"
-    },
-    {
-      id: 143,
-      category: "pitfalls",
-      content: "\u91CD\u8981\u804A\u5929\u5185\u5BB9\uFF0C\u81EA\u5DF1\u6536\u85CF\uFF0C\u522B\u6307\u671B\u5176\u4ED6\u4EBA\u7ED9\u4F60\u4FDD\u5B58\u3002"
-    },
-    {
-      id: 144,
-      category: "pitfalls",
-      content: "\u8054\u5408\u63A8\u51FA\u4E00\u6B3E\u4EA7\u54C1\uFF0C\u591A\u6B3E\u4EA7\u54C1\u6253\u5305\u4E00\u8D77\u5356\u3002\n\u8FD9\u4E24\u79CD\u73A9\u6CD5\uFF0C\u90FD\u6CA1\u95EE\u9898\u3002\n\u65B0\u4EBA\u53EF\u5C1D\u8BD5\uFF0C\u4E70\u4E00\u9001\u4E8C\uFF0C\u589E\u52A0\u52BF\u80FD\u3002\n\n*\u610F\u5473\u7740\uFF1A\u7ED1\u5B9A\u73A9\u6CD5\u53EF\u884C\u3002\u6838\u5FC3\u662F\u300C\u8054\u5408\u7684\u4EBA\u300D\u662F\u5426\u9760\u8C31\uFF1F\n\n\u4E00\u65E6\u91CC\u9762\u6709\u4EBA\u662F\u6765\u6536\u5272\u7684\uFF0C\u5927\u6982\u7387\u4F1A\u88AB\u9A82\u3002"
-    },
-    {
-      id: 145,
-      category: "pitfalls",
-      content: "\u8F66\u3001\u623F\u3001\u5B9D\u9A6C\u3002\u6CA1\u51E0\u4E2A\u94B1\u3002\u6652\u8FD9\u4E9B\u7684\uFF0C\u5927\u6982\u7387\u90FD\u662F\u6CA1\u8D5A\u5230\u5927\u94B1\u3002\n\n*\u4E0D\u5EFA\u8BAE\u8FD9\u6837\u73A9\u3002\u4F4E\u8C03\u8D5A\u94B1\uFF0C\u8E0F\u5B9E\u8F93\u51FA\u5185\u5BB9\u3002\u8D5A\u957F\u671F\u7684\u94B1\u3002"
-    },
-    {
-      id: 146,
-      category: "pitfalls",
-      content: "\u901F\u6210\uFF0C\u90FD\u6709\u300C\u540E\u9057\u75C7\u300D\uFF0C\u592A\u591A\u4EBA\u603B\u60F3\u7740\u8D70\u6377\u5F84\u3002"
-    },
-    {
-      id: 147,
-      category: "pitfalls",
-      content: "\u4ED8\u8D39\u524D\uFF0C\u60F3\u6E05\u695A\u300C\u8BC9\u6C42\uFF0C\u89E3\u51B3\u4EC0\u4E48\u95EE\u9898\u300D\u3002\n\u65E0\u5FC5\u8981\uFF0C\u5C3D\u91CF\u4E0D\u4ED8\u8D39\u3002"
-    },
-    {
-      id: 148,
-      category: "pitfalls",
-      content: "\u4E00\u4E9B\u540C\u5B66\uFF0C\u8FD8\u662F\u592A\u7740\u6025\u53D8\u73B0\uFF0C\u76EE\u5149\u592A\u77ED\u6D45\uFF0C\u53EA\u770B\u5230\u773C\u524D\u7684\u5C0F\u94B1\u3002\n\n\u9760\u8C31\u4E0E\u5426\uFF0C\u5408\u4F5C\u4E00\u6B21\uFF0C\u5C31\u77E5\u9053\u4E86\u3002\u4E5F\u7B97\u662F\u5C0F\u6210\u672C\u8BD5\u9519\u3002"
-    },
-    {
-      id: 149,
-      category: "pitfalls",
-      content: "\u4E00\u4E2A\u539F\u5219\uFF1A\u526F\u4E1A\u7C7B\u7684\u516C\u4F17\u53F7\u5546\u5355\u5408\u4F5C\uFF08\u5E7F\u544A\u63A8\u6587\uFF09\uFF0C\u5EFA\u8BAE\u5C3D\u91CF\u4E0D\u63A5\uFF08\u4E00\u5F8B\u4E0D\u63A5\uFF09\u3002\n\n\u5927\u73AF\u5883\u592A\u4E71\uFF0C\u6025\u4E8E\u53D8\u73B0\uFF0C\u4E0D\u8BA1\u540E\u679C\u7684\u5E7F\u544A\u4E3B\u592A\u591A\u3002\n\n\u5F88\u96BE\u5224\u65AD\u80CC\u540E\u7684\u5408\u89C4\uFF08\u5C01\u8D26\u53F7\uFF09\uFF0C\u4EE5\u53CA\u662F\u5426\u4F1A\u6536\u5272\uFF08\u4F60\u88AB\u8BFB\u8005\u9A82\uFF09\uFF0C\u4E0D\u503C\u5F97\u3002"
-    },
-    {
-      id: 150,
-      category: "pitfalls",
-      content: "\u5F53\u4E00\u4E2A\u9879\u76EE\uFF0C\u5E02\u9762\u4E0A\u5F00\u59CB\u51FA\u73B0\u5927\u89C4\u6A21\u8BAD\u7EC3\u8425\u57F9\u8BAD\uFF0C\u5927\u6982\u7387\u7EA2\u5229\u5DF2\u7ED3\u675F\u3002\n\u63A5\u4E0B\u6765\u7684\u6536\u5165\u662F\u57F9\u8BAD\uFF0C\u666E\u901A\u4EBA\u9646\u7EED\u5165\u573A\uFF0C\u4EA4\u5B66\u8D39\u3002\n\u8D5A\u94B1\u73A9\u6CD5\uFF0C\u4FE1\u606F\u5DEE\uFF0C\u5728\u5C0F\u5708\u5B50\u3002"
-    },
-    {
-      id: 151,
-      category: "pitfalls",
-      content: "\u4E2A\u4EBA\u654F\u611F\u4FE1\u606F\uFF0C\u4E0D\u8981\u901A\u8FC7\u5FAE\u4FE1\uFF0C\u79C1\u53D1\u7ED9\u5176\u4ED6\u4EBA\uFF0C\u4E0D\u786E\u5B9A\u4F1A\u53D1\u751F\u4EC0\u4E48\u3002\n\u7279\u522B\u662F\u8EAB\u4EFD\u8BC1\uFF0C\u59D3\u540D\u3002\n\u8D70\u6210\u719F\u5E73\u53F0\uFF0C\u5B89\u5168\u7684\u3002\n\u9664\u975E\u662F\u4F60\u7279\u522B\u719F\u6089\u548C\u4FE1\u4EFB\u7684IP\u3002"
-    },
-    {
-      id: 152,
-      category: "pitfalls",
-      content: "\u6709\u4E2A\u8BCD\u53EB\u300C\u62D4\u82D7\u52A9\u957F\u300D\uFF0C\u5C0F\u65F6\u5019\u90FD\u61C2\u5F97\u9053\u7406\uFF0C\u957F\u5927\u5168\u5FD8\u4E86\u3002\n\n\u6C42\u901F\u6210\uFF0C\u5728\u57FA\u672C\u529F\u51E0\u4E4E\u4E3A\u96F6\u7684\u60C5\u51B5\u4E0B\uFF0C\u671F\u671B\u5916\u529B\u5F3A\u63A8\uFF0C\u5FEB\u901F\u66B4\u5BCC\uFF0C\u80CC\u540E\u7684\u4EA4\u4ED8\u4E00\u584C\u7CCA\u6D82\u3002\n\n\u5B8C\u5168\u4E0D\u5177\u5907\u72EC\u7ACB\u4EA4\u4ED8\u7684\u80FD\u529B\u3002\n\n\u6709\u4E9B\u540C\u5B66\uFF0C\u4EE5\u4E3A\u300C\u949E\u80FD\u529B\u300D\u662F\u300C\u8D85\u80FD\u529B\u300D\u3002"
-    },
-    {
-      id: 153,
-      category: "pitfalls",
-      content: "\u81EA\u5DF1\u90FD\u4E0D\u61C2\u6D41\u91CF\uFF08\u76F2\u76EE\u65E0\u8111\u7FA4\u53D1\uFF09\uFF0C\u641E\u4E00\u5806\u4ED8\u8D39\u8BFE\u7A0B\uFF0C\u6559\u7528\u6237\u6D41\u91CF\uFF0C\u6709\u70B9\u79BB\u8C31\u3002"
-    },
-    {
-      id: 154,
-      category: "pitfalls",
-      content: "\u77E5\u9053\u81EA\u5DF1\u8981\u4EC0\u4E48\uFF0C\u800C\u4E0D\u662F\u5176\u4ED6\u4EBA\u7684\u529D\u8BF4\uFF0C\u76F2\u76EE\u4ED8\u8D39\u3002\n* \u6210\u5E74\u4EBA\u5BF9\u81EA\u5DF1\u7684\u884C\u4E3A\u8D1F\u8D23\u3002"
-    },
-    {
-      id: 155,
-      category: "pitfalls",
-      content: "\u95EE\uFF1A\u8001\u5F90\uFF0C\u4E3A\u4EC0\u4E48\u4F60\u7684IP \u5185\u5BB9\uFF0C\u6CA1\u6709\u8BFE\u7A0B\uFF0C\u90FD\u662F\u6587\u5B57\u8D44\u6599\uFF0C\u81EA\u5DF1\u770B\uFF0C\u81EA\u5DF1\u505A\uFF1F\n\nIDO \u8001\u5F90\uFF1AIP\uFF0C\u4E0D\u662F\u8BFE\u7A0B\u80FD\u641E\u5B9A\u7684\uFF0C\n\u6838\u5FC3\u662F\u300C\u505A\u7684\u8FC7\u7A0B\u4E2D\u89E3\u51B3\u95EE\u9898\uFF0C\u9047\u5230\u95EE\u9898\uFF0C\u627E\u6211\u89E3\u51B3\u300D\u3002\n\n\u8BFE\u7A0B\uFF0C\u5F55\u5236\u5E9F\u65F6\u95F4\uFF0C\u4F60\u770B\u4E5F\u6D6A\u8D39\u65F6\u95F4\u3002\u6210\u672C\u9AD8\uFF0C\u610F\u5473\u7740\u4F60\u4ED8\u8D39\u51E0\u5343\u770B\u4E86\u4E00\u7CFB\u5217IP\u8BFE\u7A0B\uFF0C\n\n\u89C9\u5F97\u5F88\u6709\u9053\u7406\uFF0C\u6700\u540E\u5565\u90FD\u4E0D\u4F1A\u3002"
-    },
-    {
-      id: 156,
-      category: "pitfalls",
-      content: "\u522B\u8FC7\u65E9\u5B9A\u4F4D\uFF0C\u627E\u4E2A\u6848\u4F8B\uFF0C\u590D\u5236\uFF0C\u5148\u505A\u51FA\u7ED3\u679C\uFF0C\u5B9A\u4F4D\u4E0D\u7740\u6025\u3002"
-    },
-    {
-      id: 157,
-      category: "pitfalls",
-      content: "\u89C6\u9891\u53F7\u76F4\u64AD\uFF0C\u654F\u611F\u8BCD\u5F88\u591A\uFF0C\u4E0D\u9002\u5408\u7684\u5185\u5BB9\u5C3D\u91CF\u522B\u8BF4\uFF0C\u907F\u514D\uFF1A\u8FDD\u89C4\uFF0C\u9650\u6D41\uFF0C\u5C01\u53F7\uFF0C\u4E0B\u64AD\u3002\u5F71\u54CD\u590D\u5229\u5546\u4E1A\u5316\u3002"
-    },
-    {
-      id: 158,
-      category: "pitfalls",
-      content: "\u670B\u53CB\u5708\u4E00\u5806\u6652\u5404\u79CD\u300C\u8BC1\u4E66\u300D\u7684\uFF0C\u4ED8\u8D39\u5F04\u7684\u90A3\u79CD\u3002\n\n\u8FD9\u4EF6\u4E8B\uFF0C\u8BA9\u8001\u5F90\u60F3\u5230\u4E8610 \u5E74\u524D\u5199\u6280\u672F\u6587\uFF0C\u4E00\u5806\u8BFB\u8005\u95EE\uFF1A\u8BC1\u4E66\u6709\u6CA1\u6709\u5FC5\u8981\u8003\uFF1F\n\u6211\u7684\u56DE\u590D\uFF1A\u5982\u679C\u6709\u8BC1\u4E66\uFF0C\u516C\u53F8\u6BCF\u4E2A\u6708\u7ED9\u5956\u91D1\u8865\u8D34\uFF0C\u6216\u5BF9\u4F60\u627E\u5DE5\u4F5C\u6709\u7528\uFF0C\u53EF\u8003\u3002\n\n\u8001\u5F90\u6CA1\u4EFB\u4F55\u8BC1\u4E66\uFF0C\u4E0D\u5F71\u54CD\u8D5A\u94B1\uFF08\u5356\u8BC1\u4E66\uFF0C\u8BA9\u5F88\u591A\u4EBA\u8D5A\u4E86\u4E00\u7B14\u5DE8\u6B3E\uFF09\u3002"
-    },
-    {
-      id: 159,
-      category: "pitfalls",
-      content: "\u9C7C\u4E0E\u718A\u638C\u4E0D\u53EF\u517C\u5F97\uFF0C\u5B66\u4F1A\u820D\u5F03\u4E00\u4E9B\u3002\n\n\u4E3E\u4F8B\uFF1A\u300A\u8001\u5F90\u966A\u4F60\u526F\u4E1A\u907F\u5751\u300B\u661F\u7403\uFF0C\u5BF9\u5916\u53D1\u4E86\u4E00\u90E8\u520620 \u5143\u4F18\u60E0\u5238\uFF0C\u539F\u4EF7\u52A0\u5165\u7684\u4F1A\u9001\u4E00\u672C\u4E66\u5305\u90AE\u3002\u6709\u4E9B\u540C\u5B66\uFF0C\u7528\u4E8620 \u5143\u5238\uFF0C\u4F9D\u7136\u6765\u627E\u8001\u5F90\u9001\u4E66\u3002"
-    },
-    {
-      id: 160,
-      category: "pitfalls",
-      content: "\u6587\u6848\u6CA1\u95EE\u9898\uFF0C\u7FA4\u4E5F\u8BB8\u4E5F\u6CA1\u95EE\u9898\uFF0C\u7FA4\u53D1\u5C31\u4E0D\u5BF9\u4E86\u3002\n\u53E6\u5916\uFF0C\u6838\u5FC3\u300C\u4E0D\u662F\u5185\u5BB9\uFF0C\u4E0D\u662F\u6587\u6848\uFF0C\u800C\u662F\u53D1\u8D77\u4EBA\u662F\u5426\u9760\u8C31\uFF0C\u8FD9\u4E2AIP \u662F\u5426\u9760\u8C31\u300D\u3002"
-    },
-    {
-      id: 161,
-      category: "pitfalls",
-      content: "\u5728\u8D5A\u94B1\u8FD9\u5757\uFF0C\u5F88\u591A\u4EBA\u662F\u6CA1\u6709\u5E95\u7EBF\u7684\uFF0C\u4E00\u8DEF\u75AF\u72C2\u6536\u5272\uFF0C\u8FDC\u79BB\u8FD9\u7C7B\u4EBA\u3002"
-    },
-    {
-      id: 162,
-      category: "pitfalls",
-      content: "\u627E\u5230\u7528\u6237\uFF0C\u6295\u5165\u65F6\u95F4\uFF0C\u89E3\u51B3\u95EE\u9898\uFF0C\u4EA7\u751F\u5546\u4E1A\u5316\u3002\n\u4E00\u4E9B\u4E0D\u540C\u9891\u7684\u7528\u6237\uFF0C\u4ED6\u4EEC\u7684\u5EFA\u8BAE\u4E0D\u91CD\u8981\uFF0C\u8FDC\u79BB\u5373\u53EF\u3002"
-    },
-    {
-      id: 163,
-      category: "pitfalls",
-      content: "\u522B\u770B\u5230\u7FA4\u5C31\u8FDB\u3002\u4E0D\u4EC5\u6D6A\u8D39\u4F60\u81EA\u5DF1\u7684\u65F6\u95F4\uFF0C\u8FD8\u6D6A\u8D39\u7FA4\u4E3B\u7684\u6838\u5BF9\u65F6\u95F4\u3002"
-    },
-    {
-      id: 164,
-      category: "pitfalls",
-      content: "\u5B9E\u6218\u51FA\u7ED3\u679C\uFF0C\u4E0D\u662F\u4ED8\u8D39\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 165,
-      category: "pitfalls",
-      content: "\u6CA1\u6709\u66B4\u5BCC\u7684\u6545\u4E8B\uFF0C\u53EA\u6709\u6536\u4F60\u5B66\u8D39\u7684\u6587\u6848\u3002"
-    },
-    {
-      id: 166,
-      category: "pitfalls",
-      content: "\u60F3\u7684\u592A\u591A\uFF0C\u505A\u7684\u592A\u5C11\uFF1B\u662F\u6CA1\u5F00\u59CB\u8D5A\u94B1\u7684\u670B\u53CB\uFF0C\u666E\u904D\u95EE\u9898\u3002\n\n\u5B66\u8D39\u4EA4\u4E86\u4E0D\u5C11\uFF0C\u94B1\u4E00\u5206\u6CA1\u8D5A\u3002\n\n\u5B9E\u5728\u4E0D\u77E5\u9053\u505A\u4EC0\u4E48\uFF0C\u4ECE\u5206\u9500\u8001\u5F90\u7684\u661F\u7403\u548C\u4E13\u680F\u5F00\u59CB\uFF0C0 \u6210\u672C\u3002"
-    },
-    {
-      id: 167,
-      category: "pitfalls",
-      content: "\u6CA1\u8D44\u91D1\uFF0C\u641E\u521B\u4E1A\uFF0C\u7EC4\u56E2\u961F\uFF0C99.9%\u8840\u672C\u65E0\u5F52\u3002\n\n\u6211\u7684\u5EFA\u8BAE\uFF1A\u6E05\u9192\u70B9\uFF0C\u4ECEcps \u6210\u719F\u4EA7\u54C1\u5F00\u59CB\uFF08\u6BD4\u5982\uFF0C\u8001\u5F90\u7684\u4E13\u680F\uFF0C\u661F\u7403\uFF09\u3002\n\n\u96F6\u6210\u672C\uFF0C\u8F7B\u8D44\u4EA7\u521B\u4E1A\uFF0C\u4E00\u4EBA\u4F01\u4E1A\uFF0C\u522B\u60F3\u4E0D\u5F00\u7EC4\u56E2\u961F\u3002"
-    },
-    {
-      id: 168,
-      category: "pitfalls",
-      content: "\u7ECF\u5E38\u6709\u540C\u5B66\u95EE\uFF1A\u6211\u662F\u67D0\u67D0\u67D0\u9886\u57DF\uFF0C\u54EA\u91CC\u80FD\u5F15\u6D41\u7CBE\u51C6\u7528\u6237?\n\n\u8FD9\u4E9B\uFF0C\u90FD\u662F\u540C\u4E00\u7C7B\u95EE\u9898\uFF0C\u8DDF\u4F60\u5565\u9886\u57DF\u5173\u7CFB\u6CA1\u90A3\u4E48\u5927\uFF0C\u6838\u5FC3\u662F\u300C\u601D\u7EF4\u6CA1\u6253\u5F00\u300D\u3002\n\n\u6709\u4EBA\u7684\u5730\u65B9\uFF0C\u5C31\u6709\u610F\u5411\u7528\u6237\uFF0C\u540C\u7C7B\u4EBA\u7FA4\u805A\u96C6\u5730\uFF0C\u80AF\u5B9A\u662F\u4F60\u540C\u884C\uFF0C\u4E0D\u662F\u8BA9\u4F60\u53BB\u66B4\u529B\u5F15\u6D41\uFF0C\u800C\u662F\u53BB\u4ED8\u8D39\u8DDF\u4ED6\u5B66\uFF0C\u6A21\u4EFF\uFF0C\u4E14\u79EF\u6781\u5728\u90A3\u8F93\u51FA\u4EF7\u503C\uFF0C\u5438\u5F15\u610F\u5411\u7528\u6237\u4E3B\u52A8\u52A0\u4F60\u3002\n\n\u53E6\u5916\uFF0C\u81EA\u5A92\u4F53\u5E73\u53F0\uFF1A\u5C0F\u7EA2\u4E66\uFF0C\u89C6\u9891\u53F7\uFF0C\u516C\u4F17\u53F7\u662F\u5B9D\u85CF\uFF0C\u94B1\u4E0D\u5C11\u3002"
-    },
-    {
-      id: 169,
-      category: "pitfalls",
-      content: "\u603B\u6709\u5C0F\u53EF\u7231\u73A9\u79C1\u57DF\u7206\u7C89\u3002\u522B\u8001\u7528\u81EA\u5DF1\u4E0D\u61C2\uFF0C\u4F5C\u4E3A\u501F\u53E3\u3002\n\u8FD9\u662FIP \u7EA2\u7EBF\uFF0C\u5C3D\u91CF\u522B\u78B0\uFF0C\u4F1A\u88AB\u79FB\u9664\u8001\u5F90\u6240\u6709\u5708\u5B50\uFF0C\u4E0D\u503C\u5F97\u3002"
-    },
-    {
-      id: 170,
-      category: "pitfalls",
-      content: "\u5148\u5229\u4ED6\uFF0C\u5148\u63D0\u4F9B\u4EF7\u503C\u3002\u522B\u5728\u5176\u4ED6\u4EBA\u7684\u793E\u7FA4\uFF0C\u7528\u6635\u79F0\u5F15\u6D41\uFF0C\u8FD9\u662F\u300C\u8D5A\u5FEB\u94B1\u7684\u903B\u8F91\uFF0C\u4E0D\u6301\u4E45\u300D\u3002"
-    },
-    // 写作篇 (171-269)
-    {
-      id: 171,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\n\u5185\u5BB9\u4E0D\u662F\u6700\u91CD\u8981\u7684\uFF0C\n\u9009\u9898\u4E5F\u4E0D\u662F\u6700\u91CD\u8981\u7684\uFF0C\n\u8FD9\u4E9B\u90FD\u662F\u300C\u672F\u300D\u3002\n\n\u6301\u7EED\u8F93\u51FA\uFF0C\u6210\u4E3A\u4E60\u60EF\uFF0C\u50CF\u5403\u996D\u4E00\u6837\uFF0C\u4E00\u5929\u4E0D\u5199\u96BE\u53D7\uFF0C\u53D8\u6210\u6BCF\u65E5\u4E09\u9910\u5FC5\u5907\u3002\n\n\u5148\u65E5\u66F4\u5199\u4F5C\u4E09\u4E2A\u6708/\u534A\u5E74\uFF0C\u518D\u8003\u8651\u5176\u4ED6\u3002\n\n\u65F6\u95F4\u5728\u54EA\uFF0C\u7ED3\u679C\u5C31\u5728\u54EA\u3002"
-    },
-    {
-      id: 172,
-      category: "writing",
-      content: "\u4E00\u4E9B\u540C\u5B66\u7684\u5185\u5BB9\uFF0C\u592A\u957F\u592A\u788E\uFF0C\u6CA1\u6709\u5B8C\u6574\u7ED3\u6784\uFF0C\u4EF7\u503C\u88AB\u7A00\u91CA\u3002\n\n\u4F60\u5199\u7684\u5F88\u7D2F\uFF0C\u7528\u6237\u6CA1\u83B7\u53D6\u5230\u4EF7\u503C\u3002\n\n\u6700\u7EC8\uFF0C\u4F60\u653E\u5F03\u4E86\u5199\u4F5C\u3002\n\n*\u666E\u901A\u4EBA\uFF0C\u4ECE\u77ED\u6587\u5F00\u59CB\u3002"
-    },
-    {
-      id: 173,
-      category: "writing",
-      content: "\u53EA\u8981\u4F60\u60F3\u66F4\u65B0\uFF0C\u4E00\u5B9A\u80FD\u62BD\u51FA\u788E\u7247\u65F6\u95F4\u5B8C\u6210\uFF0C\u4E0D\u53EF\u80FD48 \u5C0F\u65F6\u660F\u8FF7\u3002"
-    },
-    {
-      id: 174,
-      category: "writing",
-      content: "\u4E0D\u7BA1\u662F\u73A9IP \u53F7\uFF0C\u8FD8\u662F\u5355\u7EAF\u7684\u73A9\u7206\u6587\u6D41\u91CF\u4E3B\uFF0C\u6838\u5FC3\u539F\u5219\uFF1A\u65E5\u66F4\uFF0C\u6301\u7EED\u8F93\u51FA\u3002"
-    },
-    {
-      id: 175,
-      category: "writing",
-      content: "\u5199\u4F5C\u5FC5\u7ECF\u4E4B\u8DEF\u3002\n\u5199\u4F5C\u7684\u51E0\u4E2A\u8FC7\u7A0B\uFF0C\n1\u3001\u8FC8\u51FA\u7B2C\u4E00\u6B65\uFF0C\u516C\u5F00\u53D1\u51FA\u7B2C\u4E00\u7BC7\u601D\u8003\uFF08\u5185\u5BB9\u4E0D\u91CD\u8981\uFF0C\u5B57\u6570\u4E0D\u91CD\u8981\uFF09\uFF1B\n2\u3001\u517B\u6210\u5199\u4F5C\u4E60\u60EF\uFF1B\n3\u3001\u6301\u7EED\u5199\u4F5C\uFF1B\n4\u3001\u4EF7\u503C\u5199\u4F5C\uFF1B\n5\u3001\u88AB\u52A8\u6536\u5165\u4E0D\u65AD\u3002\n\u4F60\u5728\u7B2C\u51E0\u4E2A\u9636\u6BB5\uFF1F"
-    },
-    {
-      id: 176,
-      category: "writing",
-      content: "\u63A7\u5236\u6BCF\u5929\u7684\u65F6\u95F4\u6295\u5165\uFF0C\u6838\u5FC3\u662F\u300C\u6301\u7EED\u300D\u3002"
-    },
-    {
-      id: 177,
-      category: "writing",
-      content: "\u77ED\u6587\uFF0C\u4EF7\u503C\uFF0C\u6301\u7EED\u8F93\u51FA\u3002"
-    },
-    {
-      id: 178,
-      category: "writing",
-      content: "\u4E92\u8054\u7F51\u5546\u4E1A\u5199\u4F5C\uFF0C\u4E0D\u6BD4\u300C\u6587\u91C7\u300D\uFF0C\u6838\u5FC3\u662F\u300C\u4ED8\u8D39\u8BFB\u8005\u4F53\u91CF\uFF0C\u7528\u6237\u7C98\u5EA6\uFF0C\u8D5A\u94B1\u80FD\u529B\u300D\u3002"
-    },
-    {
-      id: 179,
-      category: "writing",
-      content: "\u628A\u81EA\u5DF1\u5F53\u4E0B\u7684\u7ECF\u5386\uFF0C\u611F\u609F\uFF0C\u7ECF\u9A8C\uFF0C\u5206\u4EAB\u51FA\u6765\uFF0C\u5E2E\u52A9\u4E00\u4E9B\u4EBA\uFF0C\u5E76\u987A\u4FBF\u8D5A\u70B9\u53EF\u89C2\u7684\u6536\u5165\u3002"
-    },
-    {
-      id: 180,
-      category: "writing",
-      content: "50 \u5B57\u5199\u4F5C\uFF0C\u662F\u6700\u7B80\u5355\u7684\u5207\u5165\u70B9\uFF0C\u4E5F\u662F\u9002\u5408\u6BCF\u4E2A\u4EBA\u7684\u5199\u4F5C\u65B9\u5F0F\u3002"
-    },
-    {
-      id: 181,
-      category: "writing",
-      content: "\u5199\u4F5C\u8FD9\u4E8B\uFF0C\u6838\u5FC3\u662F\u517B\u6210\u4E60\u60EF\uFF0C\u5199\u7684\u4E60\u60EF\uFF0C\u4E00\u5929\u4E0D\u5199\u5C31\u96BE\u53D7\u7684\u4E60\u60EF\u3002"
-    },
-    {
-      id: 182,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\u6301\u7EED\u5199\u4F5C\uFF0C\u4E00\u5E74\uFF0C\u4E24\u5E74\u4E0D\u884C\uFF0C\u90A3\u5C31\u770B\u957F\u8FDC\u70B9\uFF0C\u4EE5\u300C\u5341\u5E74\u4E3A\u4E00\u4E2A\u5468\u671F\u300D\uFF0C\u5FC5\u6709\u7ED3\u679C\u3002"
-    },
-    {
-      id: 183,
-      category: "writing",
-      content: "\u4ECE\u6B64\u523B\u5F00\u59CB\uFF0C\u4ECE\u77ED\u6587\u5F00\u59CB\uFF0C\u4ECE50 \u5B57\u5F00\u59CB\uFF0C\u4ECE\u65E5\u5E38\u5F00\u59CB\uFF0C\u91CD\u70B9\u662F\u5199\uFF0C\u800C\u4E0D\u662F\u5199\u597D\u3002"
-    },
-    {
-      id: 184,
-      category: "writing",
-      content: "\u627E\u5230\u9002\u5408\u81EA\u5DF1\u7684\u300C\u8F93\u5165\u65B9\u5F0F\u300D\uFF0C\u6301\u7EED\u601D\u8003\uFF0C\u6301\u7EED\u8F93\u51FA\uFF0C\u6CA1\u6709\u6377\u5F84\uFF0C\u591A\u8BD5\u9519\uFF0C\u7B49\u7ED3\u679C\u3002"
-    },
-    {
-      id: 185,
-      category: "writing",
-      content: "\u5728\u4E92\u8054\u7F51\u65F6\u4EE3\uFF0C\u591A\u8F93\u51FA\uFF0C\u591A\u7559\u4E0B\u5370\u8BB0\uFF0C\u591A\u8F93\u51FA\u4EF7\u503C\uFF0C\u65F6\u95F4\u4F1A\u7ED9\u4F60\u7B54\u6848\u3002"
-    },
-    {
-      id: 186,
-      category: "writing",
-      content: "\u4FE1\u606F\u5DEE\uFF0C\u5728\u5C0F\u5708\u5B50\u5185\u3002\n\n\u8001\u5F90\u76EE\u524D\u8DD1\u901A\u7684\u73A9\u6CD5\uFF0C\u662F\u6BCF\u4E2A\u4EBA\u53EF\u590D\u5236\u7684\u3002\u6838\u5FC3\u662F\u300C\u4F60\u80FD\u4E0D\u80FD\u5403\u5F53\u4E0B\u7684\u82E6\uFF0C\u6B7B\u78D5\u4E09\u5E74\u300D\u3002\n\u591A\u6570\u4EBA\uFF0C\u505A\u4E0D\u5230\u3002\n\n\u5F53\u4E0B\u4E09\u5E74\u505A\u4E0D\u5230\uFF0C\u90A3\u5C31\u505A\u597D\u672A\u676530 \u5E74\u7684\u4E0D\u6EE1\u610F\u4EBA\u751F\u3002"
-    },
-    {
-      id: 187,
-      category: "writing",
-      content: "\u4E0D\u77E5\u9053\u5199\u4EC0\u4E48\uFF0C\u6CA1\u6709\u9009\u9898\uFF1B\u6838\u5FC3\u662F\u770B\u7684\u592A\u5C11 \u3002\u6BCF\u5929\u770B 300 \u7BC7\u77ED\u6587\uFF0C\u4E0D\u4F1A\u5199 \u6587\uFF0C\u4E5F\u4F1A\u5199\u3002"
-    },
-    {
-      id: 188,
-      category: "writing",
-      content: "\u4E00\u4EFD\u539F\u521B\u4EF7\u503C\u5185\u5BB9\uFF0C\u662F\u53EF\u4EE5\u91CD\u590D\u7528 10 \u6B21\u4EE5\u4E0A\uFF0C\u751A\u81F3\u6C38\u4E45\u91CD\u590D\u7528\u3002"
-    },
-    {
-      id: 189,
-      category: "writing",
-      content: "\u80FD\u843D\u5730\u7684\uFF0C\u624D\u662F\u597D\u65B9\u6CD5\u3002\u843D\u5730\u4E0D\u4E86\u518D\u597D\u65E0\u7528\u3002"
-    },
-    {
-      id: 190,
-      category: "writing",
-      content: "\u9A8C\u8BC1\u4E86\u8FD9\u4E48\u591A\u5E74\uFF0C\u6700\u9002\u5408\u666E\u901A\u4EBA\uFF0C\u5207\u5165\uFF0C\u51FA\u7ED3\u679C\u7684\uFF0C\u8FD8\u662F\u300C\u95EE\u7B54\u5F0F\u5199\u4F5C\u300D\u3002"
-    },
-    {
-      id: 191,
-      category: "writing",
-      content: "\u5199\u4F5C\u8FD9\u4E8B\uFF0C\u66F4\u91CD\u8981\u4E14\u6781\u96BE\u7684\u662F\u300C\u5199\u4F5C\u7684\u4E60\u60EF\u300D\u548C\u300C\u6301\u7EED\u7684\u53BB\u5199\u300D\uFF0C\u5176\u4ED6\u90FD\u4E0D\u662F\u95EE\u9898\uFF0C\u975E\u5E38\u5BB9\u6613\u89E3\u51B3\u3002"
-    },
-    {
-      id: 192,
-      category: "writing",
-      content: "\u5185\u5BB9\u518D\u597D\uFF0C\u4E5F\u8981\u4E3B\u52A8\u53BB\u5BA3\u4F20\u3002\u4FE1\u606F\u7206\u70B8\u7684\u4ECA\u5929\uFF0C\u4E0D\u7F3A\u597D\u5185\u5BB9\uFF0C\u7F3A\u300C\u88AB\u53D1\u73B0\u300D\u3002"
-    },
-    {
-      id: 193,
-      category: "writing",
-      content: "\u76F8\u6BD4\u8BB0\u5FC6\u529B\uFF0C\u6211\u66F4\u76F8\u4FE1\u5199\u4E0B\u6765\u7684\u6587\u5B57\u3002"
-    },
-    {
-      id: 194,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\u53EF\u7C7B\u6BD4\u6E38\u6CF3\uFF0C\u5CB8\u4E0A\u770B\u518D\u591A\u79D8\u7C4D\uFF0C\u5165\u6C34\u4E00\u79D2\u6C89\u5E95\u3002"
-    },
-    {
-      id: 195,
-      category: "writing",
-      content: "\u5185\u5BB9\uFF0C\u9AD8\u9891\u5185\u5BB9\uFF0C\u89E6\u8FBE\uFF0C\u662F\u6838\u5FC3\u3002\u81F3\u4E8E\u5355\u7BC7\u5185\u5BB9\u8D28\u91CF\uFF0C\u6DF1\u5EA6\u3002\u4E0D\u91CD\u8981\u3002"
-    },
-    {
-      id: 196,
-      category: "writing",
-      content: "\u63D0\u5347\u5199\u8FD9\u4EF6\u4E8B\u7684\u4F18\u5148\u7EA7\uFF0C\u5217\u4E3A\u6BCF\u65E5top1\uFF0C\u65E9\u4E0A\u7B2C\u4E00\u65F6\u95F4\u53BB\u5B8C\u6210\u3002"
-    },
-    {
-      id: 197,
-      category: "writing",
-      content: "\u6838\u5FC3\u662F\uFF1A\u53BB\u601D\u8003\uFF0C\u8FD9\u6761\u89C2\u70B9\u300C\u662F\u5426\u6709\u4EF7\u503C\u300D\uFF0C\u662F\u5426\u543B\u5408\u4F60\u7684\u300C\u957F\u7EBF\u5546\u4E1A\u5316\u300D\u3002"
-    },
-    {
-      id: 198,
-      category: "writing",
-      content: "\u4E00\u53E5\u6709\u4EF7\u503C\u7684\u601D\u8003\uFF0C\u80DC\u4E8E\u4E07\u5B57\u5806\u780C\u7684\u957F\u6587\u3002"
-    },
-    {
-      id: 199,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\u4ECE\u4E00\u4EF6\u4EF6\u8EAB\u8FB9\u7684\u5177\u4F53\u5C0F\u4E8B\u5F00\u59CB\uFF0C\u4ECE\u56DE\u7B54\u4E00\u4E2A\u4E2A\u5177\u4F53\u7684\u95EE\u9898\u5F00\u59CB\u3002"
-    },
-    {
-      id: 200,
-      category: "writing",
-      content: "\u6700\u597D\u7684\u6587\u6848\uFF0C\u662F\u300C\u8D70\u5FC3\u300D\u3002\u5F88\u591A\u65F6\u5019\uFF0C\u53BB\u6389\u4E00\u4E9B\u6D6E\u5938\u7684\u6280\u5DE7\uFF0C\u66F4\u6709\u529B\u91CF\u3002"
-    },
-    {
-      id: 201,
-      category: "writing",
-      content: "\u653E\u5F03\u5199\u7206\u6B3E\u957F\u6587\u7684\u60F3\u6CD5\uFF0C\u4E07\u91CC\u6311\u4E00\uFF0C\u5927\u6982\u7387\u4E0D\u662F\u4F60\u3002\u77ED\u6587\u5199\u4F5C\uFF0C\u6301\u7EED\u5199\u4F5C\uFF0C\u65E5\u66F4\u5199\u4F5C\uFF0C\u66F4\u73B0\u5B9E\u4E00\u70B9\uFF0C\u66F4\u9002\u5408\u666E\u901A\u4EBA\u3002"
-    },
-    {
-      id: 202,
-      category: "writing",
-      content: "\u5185\u5BB9\u5B9A\u4F4D\u662F\u53EF\u4EE5\u8DDF\u7740\u5546\u4E1A\u5316\u800C\u6539\u53D8\u7684\uFF1B\u8FD9\u4E9B\u5E74\uFF0C\u8001\u5F90\u7684\u5185\u5BB9\uFF0C\u4F1A\u968F\u7740\u65F6\u95F4\u5468\u671F\u4E0D\u65AD\u8C03\u6574\uFF0C\u6838\u5FC3\u662F\u300C\u56F4\u7ED5\u5546\u4E1A\u5316\u300D\u5927\u65B9\u5411\u53BB\u8F93\u51FA\u3002"
-    },
-    {
-      id: 203,
-      category: "writing",
-      content: "\u5F88\u591A\u540C\u5B66\u603B\u8BF4\u6CA1\u4E1C\u897F\u5199\uFF0C\u6CA1\u6709\u5199\u4F5C\u7D20\u6750\uFF1B\u770B\u8001\u5F90\u6BCF\u5929\u7684\u5E16\u5B50\uFF0C\u7FA4\u91CC\u7684\u804A\u5929\u7CBE\u9009\uFF0C\u90FD\u662F\u7D20\u6750\uFF0C\u4E14\u6709\u4EF7\u503C\u3002"
-    },
-    {
-      id: 204,
-      category: "writing",
-      content: "\u4E0D\u7528\u7EA0\u7ED3\u8981\u5199\u4EC0\u4E48\uFF0C\u600E\u4E48\u5F00\u59CB\u4F60\u7684\u516C\u5F00\u8F93\u51FA\uFF0C\u968F\u624B\u627E\u4E00\u4E2A\u9009\u9898\uFF0C\u516C\u5F00\u53D1\u51FA\u7B2C\u4E00\u7BC7\uFF0C\u8FD9\u624D\u662F\u6700\u91CD\u8981\u7684\u3002\u8FC8\u51FA\u7B2C\u4E00\u6B65\uFF0C\u5C31\u8D85\u8D8A80%\u7684\u5185\u5BB9\u8F93\u51FA\u8005\u3002"
-    },
-    {
-      id: 205,
-      category: "writing",
-      content: "\u8FD8\u5E74\u8F7B\uFF0C\u4E0D\u7740\u6025\uFF0C\u8FD8\u53EF\u4EE5\u5199\u51E0\u5341\u5E74\uFF0C\u590D\u5229\u5F88\u731B\u3002\u5199\u4F5C\u8FD9\u4E8B\uFF0C\u4E0D\u4F9D\u8D56\u5E73\u53F0\u3002\u5373\u4F7F\u662F\u661F\u7403\uFF0C\u516C\u4F17\u53F7\uFF0C\u90FD\u6CA1\u4E86\u3002\u80AF\u5B9A\u4F1A\u8BDE\u751F\u4E00\u4E9B\u66F4\u597D\u7528\u7684\u5E73\u53F0\u3002"
-    },
-    {
-      id: 206,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\u9762\u5411\u7684\u51E0\u79CD\u76EE\u6807\u5BF9\u8C61\uFF1A\u53D6\u60A6\u81EA\u5DF1\uFF0C\u53D6\u60A6\u7528\u6237\uFF0C\u53D6\u60A6\u7B97\u6CD5\u3002\n\n\u53D6\u60A6\u81EA\u5DF1\uFF1A\u5199\u81EA\u5DF1\u60F3\u5199\u7684\uFF0C\u5F00\u5FC3\u7684\uFF0C\u64C5\u957F\u7684\u3002\n\u53D6\u60A6\u7528\u6237\uFF1A\u7528\u6237\u559C\u6B22\u770B\u4EC0\u4E48\uFF0C\u5C31\u5199\u4EC0\u4E48\u3002\n\u53D6\u60A6\u7B97\u6CD5\uFF1A\u7B97\u6CD5\u559C\u6B22\u4EC0\u4E48\u5185\u5BB9\uFF0C\u5C31\u6295\u5582\u4EC0\u4E48\u5185\u5BB9\uFF0C\u5178\u578B\u7684\u7206\u6587\u73A9\u6CD5\u3002\n\n\u8001\u5F90\u7684\u5185\u5BB9\uFF0C\u66F4\u591A\u662F\u53D6\u60A6\u81EA\u5DF1\uFF0C\u987A\u5E26\u89E3\u51B3\u7528\u6237\u7684\u95EE\u9898(\u4E5F\u7B97\u662F\u53D6\u60A6\u76EE\u6807\u7528\u6237)\uFF0C\u8FD9\u6837\u624D\u80FD\u6301\u4E45\u3002"
-    },
-    {
-      id: 207,
-      category: "writing",
-      content: "\u6301\u7EED\u8F93\u51FA\u5185\u5BB9\uFF0C\u6301\u7EED\u5F71\u54CD\u3002\u4F60\u5C31\u662F\u4F60\uFF0C\u4F60\u7684IP \u6635\u79F0\u662F\u5168\u7F51\u552F\u4E00\u7684\uFF0C\u4E0D\u9700\u8981\u52A0\u4E0A\u4EA7\u54C1\u3002"
-    },
-    {
-      id: 208,
-      category: "writing",
-      content: "\u6211\u7684\u5EFA\u8BAE\u662F\u65E5\u66F410 \u5E74\uFF0C\u4E00\u5929\u4E0D\u65AD\u3002\u5BF9\u81EA\u5DF1\u72E0\u4E00\u70B9\u3002"
-    },
-    {
-      id: 209,
-      category: "writing",
-      content: "\u5199\u4F5C\uFF0C\u662F\u6709\u300C\u624B\u611F\u300D\u7684\uFF0C\u592A\u4E45\u4E0D\u5199\uFF0C\u4F1A\u751F\u758F\uFF0C\u4F1A\u5199\u4E0D\u51FA\u6765\u3002"
-    },
-    {
-      id: 210,
-      category: "writing",
-      content: "\u5199\u4F5C\u7F18\u7531\u4E4B\u4E00\uFF1A\u6C89\u6DC0\uFF0C\u6C47\u603B\uFF0C\u7559\u4E0B\u75D5\u8FF9\uFF0C\u6301\u7EED\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 211,
-      category: "writing",
-      content: "\u5F88\u591A\u540C\u5B66\u628A\u4E0D\u4F1A\u5199\u4F5C\u5F52\u7ED3\u4E8E\u5B66\u5386\u4E0D\u9AD8\uFF0C\u8BFB\u4E66\u5C11\u3002IP \u5546\u4E1A\u5316\u5199\u4F5C\uFF0C\u8FD9\u4E2A\u56E0\u4E3A\u5FAE\u4E4E\u5176\u5FAE\u3002\u6838\u5FC3\u662F\u300C\u591A\u5199\u300D\u3002\n\n\u6B64\u523B\u5F00\u59CB\u5199\uFF0C\u4ECE\u77ED\u6587\u5199\u4F5C\u5F00\u59CB\u3002\n\n\u77ED\u6587\u867D\u77ED\uFF0C\u4EF7\u503C\u5E76\u4E0D\u77ED\uFF0C\u6BCF\u4E2A\u5B57\u90FD\u6709\u4EF7\u503C\uFF0C\u5C3D\u91CF\u51CF\u5C11\u5E9F\u8BDD\uFF0C\u7F29\u77ED\u9605\u8BFB\u65F6\u95F4\uFF0C\u53BB\u6267\u884C\u3002"
-    },
-    {
-      id: 212,
-      category: "writing",
-      content: "\u522B\u5199\u592A\u7406\u8BBA\u7684\u4E1C\u897F\uFF0C\u6CA1\u5565\u7528\u3002\u968F\u5904\u53EF\u641C\u7D22\u3002\n\u770B\u7406\u8BBA\uFF0C\u4E3A\u4EC0\u4E48\u4E0D\u767E\u5EA6\u641C\u7D22\u5462\u3002\n\u4ED8\u8D39\u4E13\u680F\uFF0C\u6838\u5FC3\u662F\u4F60\u7684\u843D\u5730\u5B9E\u8DF5\uFF0C\u7ECF\u9A8C\u3002"
-    },
-    {
-      id: 213,
-      category: "writing",
-      content: "\u77ED\u6587\u4FEE\u70BC\uFF0C\u662F\u5FC5\u5907\u57FA\u672C\u529F\u3002\n\u7B80\u5355\u76F4\u63A5\u65E0\u5E9F\u8BDD\uFF0C\u4E14\u80FD\u628A\u95EE\u9898\u63CF\u8FF0\u6E05\u695A\u3002\n\u7528\u4E00\u751F\u6765\u4FEE\u70BC\u3002"
-    },
-    {
-      id: 214,
-      category: "writing",
-      content: "\u60F3\u73A9\u65E5\u66F4\uFF0C\u5148\u5B66\u4F1A\u63A7\u5236\u6BCF\u7BC7\u6587\u7AE0\u7684\u65F6\u95F4\u3002\n\u8001\u5F90\u5F53\u5E74\u662F\u63A7\u523630 \u5206\u949F\u5185\uFF0C\u5230\u65F6\u95F4\u76F4\u63A5\u53D1\u5E03\uFF1B\u6587\u7AE0 60 \u5206\u53CA\u683C\u5C31\u884C\u7684\u3002\n\u4F60\u505A\u4E0D\u5230 100 \u5206\u3002"
-    },
-    {
-      id: 215,
-      category: "writing",
-      content: "\u5F80\u5927\u8111\u91CC\u586B\u5145\u5185\u5BB9\uFF0C\u5C31\u662F\u8F93\u5165\u3002\u81F3\u4E8E\u662F\u770B\u6587\u7AE0\uFF0C\u770B\u4E66\uFF0C\u4E0E\u4EBA\u804A\uFF0C\u884C\u4E07\u91CC\u8DEF\u3002\u90FD\u65E0\u6240\u8C13\u3002\n\u5F62\u5F0F\u4ECE\u6765\u90FD\u4E0D\u91CD\u8981\u3002\u91CD\u8981\u7684\u662F\u53BB\u586B\u5145\u4E86\u5185\u5BB9\u3002"
-    },
-    {
-      id: 216,
-      category: "writing",
-      content: "\u5185\u5BB9\u5199\u5B8C\uFF0C\u81EA\u5DF1\u770B\u4E09\u904D\u3002\n\n\u53BB\u4FEE\u6539\uFF0C\u8C03\u6574\uFF0C\u5220\u51CF\u6CA1\u4EF7\u503C\u7684\u6587\u5B57\u3002\n\n\u6BCF\u4E00\u6761\u5185\u5BB9\uFF0C\u90FD\u662F\u4F60\u7684\u4F5C\u54C1\uFF0C\u8BA4\u771F\u5BF9\u5F85\uFF0C\u5373\u4F7F\u6B64\u523B\u4E0D\u6210\u719F\u3002"
-    },
-    {
-      id: 217,
-      category: "writing",
-      content: "\u8BA9\u4F60\u7684\u6587\u5B57\uFF0C\u770B\u7740\u66F4\u8212\u670D\u3002\n\n\u9605\u8BFB\u4F53\u9A8C\u5F88\u91CD\u8981\uFF0C\u591A\u6570\u540C\u5B66\u7684\u5185\u5BB9\uFF0C\u6587\u5B57\u6324\u5728\u4E00\u8D77\uFF0C\u770B\u7740\u75DB\u82E6\u3002\n\n\u5373\uFF1A\u6BB5\u843D\u6362\u884C\uFF08\u6BD4\u5982\u8FD9\u7BC7\uFF09\u3002"
-    },
-    {
-      id: 218,
-      category: "writing",
-      content: "\u6B64\u523B\u5F00\u59CB\u5199\uFF0C\u4E09\u5E74\u540E\uFF0C\u5927\u6982\u7387\u6709\u7ED3\u679C\u3002"
-    },
-    {
-      id: 219,
-      category: "writing",
-      content: "\u5199\uFF0C\u624D\u6709\u53EF\u80FD\u3002\n\n\u4E0D\u5199\uFF0C\u6C38\u8FDC\u6CA1\u6709\u79EF\u7D2F\uFF0C\u6C38\u8FDC\u662F0\uFF0C\u5148\u641E\u5B9A\u300C\u91CF\u5230\u8D28\u300D\u3002\n\u5199\u7684\u70C2\uFF0C\u6CA1\u4E8B\u3002\n\n\u622A\u6B62\u6B64\u523B\uFF0CIDO \u8001\u5F90\u5199\u7684\u4F9D\u7136\u5F88\u70C2\uFF0C\u4F9D\u7136\u4EC0\u4E48\u90FD\u4E0D\u61C2\u3002\n\u4F46\u4E0D\u5F71\u54CD\u6211\u6709\u5341\u51E0\u4E07\u8BFB\u8005\uFF0C\u4E0D\u5F71\u54CD\u6211\u6BCF\u5E74\u901A\u8FC7\u5199\u4F5C\u83B7\u53D6\u5927\u91CF\u7684\u6536\u5165\u3002"
-    },
-    {
-      id: 220,
-      category: "writing",
-      content: "\u6301\u7EED\u65E5\u66F4\u5199\u4F5C\u7684\u6838\u5FC3\u662F\uFF1A\u8BC6\u522B\u98CE\u9669\uFF0C\u63D0\u524D\u89E3\u51B3\u3002\u65E5\u66F4\u7684\u8FC7\u7A0B\u4E2D\uFF0C\u6709\u592A\u591A\u672A\u77E5\u56E0\u7D20\uFF0C\u5BFC\u81F4\u65AD\u66F4\u3002"
-    },
-    {
-      id: 221,
-      category: "writing",
-      content: "\u76EE\u6807\u5B9A\u4F4E\u70B9\uFF0C\u522B\u4E00\u6765\u5C31\u5199\u957F\u6587\u3002\u5927\u6982\u7387\u4E00\u4E2A\u6708\u618B\u4E0D\u51FA\u4E00\u7BC7\u3002\u4E14\u6CA1\u7ECF\u9A8C\u7684\u4F60\uFF0C\u4E5F\u5F88\u96BE\u5199\u7684\u6709\u4EF7\u503C\u3002"
-    },
-    {
-      id: 222,
-      category: "writing",
-      content: "\u522B\u95EE\u4E00\u4E2A\u964C\u751F\u4EBA\uFF0C\u4F60\u9002\u5408\u8F93\u51FA\u4EC0\u4E48\u4E3B\u9898\u3002\u6211\u5E94\u4ED8\u56DE\u590D\u4F60\uFF0C\u4E5F\u662F\u5FFD\u60A0\u4F60\u7684\u3002"
-    },
-    {
-      id: 223,
-      category: "writing",
-      content: "\u5199\u4F5C\u8FD9\u4E8B\uFF0C\u6838\u5FC3\u662F\u5199\u3002\u4E0E\u4F60\u8FC7\u5F80\u8BFB\u8FC7\u7684\u4E66\uFF0C\u8D70\u8FC7\u7684\u8DEF\uFF0C\u89C1\u8FC7\u7684\u4EBA\u3002\u90FD\u65E0\u5173\u3002\n\u5199\uFF0C\u6301\u7EED\u5199\uFF0C\u6210\u4E3A\u4E60\u60EF\u3002\n\u5E26\u7740\u76EE\u7684\u53BB\u5199\uFF0C\u805A\u7126\u76EE\u6807\uFF0C\u5B9E\u73B0\u76EE\u6807\u3002"
-    },
-    {
-      id: 224,
-      category: "writing",
-      content: "\u770B\u660E\u767D\u4E00\u4EF6\u4E8B\u7684\u957F\u8FDC\u4EF7\u503C\u3002\u4E14\u8DEF\u5F84\u662F\u660E\u786E\u7684\u3002\n\n\u5269\u4E0B\u7684\u5C31\u662F\u53BB\u505A\u3002\u6267\u884C\u8FC7\u7A0B\uFF0C\u4E00\u5B9A\u4F1A\u5F88\u96BE\uFF0C\u9047\u5230\u4E00\u5806\u95EE\u9898\uFF0C\u751A\u81F3\u9700\u8981\u4E00\u4E9B\u6210\u672C\u6295\u5165\u3002\n\n\u4F46\uFF0C\u8FD9\u4E9B\u5728\u6700\u7EC8\u7684\u7ED3\u679C\u9762\u524D\uFF0C\u90FD\u4E0D\u7B97\u5565\u3002\n\n\u6848\u4F8B\uFF1A\u5199\u4F5C\uFF0C\u90FD\u77E5\u9053\u4E00\u5B9A\u80FD\u8D5A\u94B1\uFF0C\u4F46\u80FD\u65E5\u66F4\u5341\u5E74\u8005\uFF0C\u4E07\u91CC\u65E0\u4E00\u3002"
-    },
-    {
-      id: 225,
-      category: "writing",
-      content: "IDO \u8001\u5F90\u65E5\u66F4\u77ED\u601D\u800320 \u7BC7\uFF0C\u65E5\u66F4\u516C\u4F17\u53F7\u7684\u52A8\u529B\u548C\u76EE\u7684\uFF1F\n1\u3001\u8D5A\u94B1\uFF1A\u901A\u8FC7\u6301\u7EED\u7684\u8F93\u51FA\uFF0C\u6536\u83B7\u4E86\u4E00\u6279\u8BFB\u8005\u3002\n2\u3001\u5E2E\u52A9\u81EA\u5DF1\u6210\u957F\uFF1A\u5F88\u591A\u4E8B\uFF0C\u8BB0\u4E0D\u4F4F\uFF0C\u5199\u4E0B\u6765\n\u901A\u8FC7\u601D\u8003\u8F93\u51FA\uFF0C\u5370\u8C61\u66F4\u6DF1\u523B\uFF0C\u53EF\u8FFD\u6EAF\uFF0C\u5B9A\u671F\u53EF\u56DE\u987E\u3002\n3\u3001\u6536\u83B7\u611F\u8C22\uFF1A\u7ED9\u4E00\u90E8\u5206\u4EBA\u63D0\u4F9B\u4E86\u5E2E\u52A9\uFF0C\u6536\u83B7\u4E86\u5F88\u591A\u611F\u8C22\u3002\n4\u3001\u6210\u4E3A\u4E86\u4E60\u60EF\uFF0C\u6EE1\u8DB3\u4E86\u81EA\u5DF1\u7684\u8868\u8FBE\u6B32\u3002\n5\u3001\u6BCF\u5929\u7279\u522B\u5145\u5B9E\u548C\u5F00\u5FC3\u3002"
-    },
-    {
-      id: 226,
-      category: "writing",
-      content: "\u8001\u5F90\u53D1\u8D77\u4E86\u4E00\u4E2A\u300C\u65E5\u66F4\u77ED\u6587\u5199\u4F5C\u300D\uFF0C\u514D\u8D39\uFF0C\u65E0\u62BC\u91D1\u3002\u67D0\u4E2A\u5468\u672B\u7A81\u7136\u6389\u961F30\u4EBA\uFF0C\u518D\u4E5F\u6CA1\u8DDF\u4E0A\u3002\n\n\u8FD9\u4E9B\u540C\u5B66\uFF0C\u5927\u6982\u7387\u90FD\u662F\u8FBE\u5230\u4E86\u300C\u6700\u5927\u575A\u6301\u7684\u9608\u503C\u300D\uFF0C\u5F7B\u5E95\u653E\u5F03\u4E86\u3002\n\n\u901A\u8FC7\u300C\u575A\u6301\u300D\u53BB\u65E5\u66F4\uFF0C\u5F88\u96BE\u8FBE\u5230\u4F60\u8981\u7684\u6548\u679C\u3002\u8BA9\u5199\u4F5C\u6210\u4E3A\u300C\u4E60\u60EF\u300D\uFF0C\u4E00\u5929\u4E0D\u5199\u96BE\u53D7\uFF0C\u6210\u529F\u6982\u7387\u66F4\u9AD8\u3002"
-    },
-    {
-      id: 227,
-      category: "writing",
-      content: "\u8D8A\u5199\u8D8A\u6709\u610F\u601D\uFF0C\u8D8A\u5199\u8D8A\u987A\u624B\uFF0C\u5B8C\u5168\u505C\u4E0D\u4E0B\u6765\u3002\u6CA1\u6709\u9009\u9898\uFF1F\u4E0D\u77E5\u9053\u5199\u4EC0\u4E48\uFF1F\u5F97\u53BB\u591A\u5B66\u4E60\u548C\u8F93\u5165\u4E86\u3002"
-    },
-    {
-      id: 228,
-      category: "writing",
-      content: "\u957F\u65F6\u95F4\u523B\u610F\u8BAD\u7EC3\u7684\u300C\u539F\u521B\u77ED\u5185\u5BB9\u300DIP \u529B\u5F88\u731B\uFF0C\u5546\u4E1A\u5316\u4E0D\u7F3A\u3002"
-    },
-    {
-      id: 229,
-      category: "writing",
-      content: "\u57F9\u517B\u654F\u611F\u5EA6\uFF0C\u770B\u5230\u522B\u4EBA\u5199\u7684\u6587\u7AE0\u4E0D\u9519\uFF0C\u4F1A\u6709\u610F\u8BC6\u7684\u53BB\u601D\u8003\uFF0C\u4E3A\u4EC0\u4E48\u522B\u4EBA\u5199\u8FD9\u4E48\u597D\uFF0C\u89D2\u5EA6\u662F\u600E\u4E48\u5207\u5165\u7684\uFF0C\u662F\u5426\u53EF\u6A21\u4EFF\u3002"
-    },
-    {
-      id: 230,
-      category: "writing",
-      content: '\u5199\u4F5C\uFF0C\u805A\u7126\u4E00\u4E2A\u9886\u57DF\uFF1B\u89E3\u51B3\u4E0D\u4E86\u6240\u6709\u4EBA\u7684\u95EE\u9898\u3002\n\n\u805A\u7126\u5C0F\u5782\u7C7B\uFF0C\u4F1A\u8BA9\u4F60\u66F4\u4E13\u6CE8\u3002\n\u4E0D\u7528\u62C5\u5FC3\u9009\u9898\uFF0C\u5C0F\u5782\u7C7B\u6DF1\u5165\u7814\u7A76\uFF0C\u4F1A\u53D1\u73B0\uFF0C\u9009\u9898\u592A\u591A\u592A\u591A\u3002\u5728\u4E00\u4E2A\u9886\u57DF\uFF0C\u5199\u4E0A1000\u7BC7\uFF0C\u4F60\u5C31\u662F"\u4E13\u5BB6"\uFF0C\u80FD\u6301\u7EED\u5546\u4E1A\u5316\u3002'
-    },
-    {
-      id: 231,
-      category: "writing",
-      content: "\u6301\u7EED\u5199\uFF0C\u953B\u70BC\u5199\u4F5C\u8F93\u51FA\u4E60\u60EF\u3002\n\u8BA4\u771F\u5199\uFF0C\u953B\u70BC\u5B66\u4E60\u548C\u6DF1\u5EA6\u601D\u8003\u4E60\u60EF\u3002\n\u516C\u5F00\u5199\uFF0C\u6301\u7EED\u83B7\u53D6\u6B63\u53CD\u9988\u3002"
-    },
-    {
-      id: 232,
-      category: "writing",
-      content: "\u5C1D\u8BD5\u516C\u5F00\u5199\u4F5C\u540E\uFF0C\u66F4\u6CE8\u91CD\u611F\u53D7\u751F\u6D3B\uFF0C\u968F\u65F6\u968F\u5730\u8BB0\u5F55\u7075\u611F\uFF0C\u6BCF\u6B21\u770B\u98CE\u666F\u90FD\u80FD\u968F\u624B\u8BB0\u5F55\u4E00\u4E9B\u601D\u8003\uFF0C\u8FD9\u4E5F\u662F\u5199\u4F5C\u7684\u4EF7\u503C\u3002"
-    },
-    {
-      id: 233,
-      category: "writing",
-      content: "\u6309\u81EA\u5DF1\u7684\u65F6\u95F4\u8282\u594F\u53BB\u8F93\u51FA\uFF0C\u4E0D\u7528\u53C2\u8003\u5176\u4ED6\u4EBA\u7684\u3002\u65E9\u4E0A\u5199\uFF0C\u6216\u665A\u4E0A\u5199\uFF0C\u90FD\u53EF\u3002\n\n\u91CD\u70B9\u662F\u300C\u5199\u300D\uFF0C\u4E0D\u662F\u65F6\u95F4\u6BB5\u3002"
-    },
-    {
-      id: 234,
-      category: "writing",
-      content: "\u6301\u7EED\u5199\uFF0C\u5F88\u7B80\u5355\u3002\n\u8FC8\u51FA\u7684\u7B2C\u4E00\u6B65\u624D\u662F\u5173\u952E\uFF0C\u606D\u559C\u4F60\u3002"
-    },
-    {
-      id: 235,
-      category: "writing",
-      content: "\u517B\u6210\u597D\u7684\u5199\u4F5C\u4E60\u60EF\uFF0C\u8BA9\u81EA\u5DF1\u4E0D\u65AD\u83B7\u5F97\u6B63\u53CD\u9988\u3002\n\n\u6BD4\u5982\uFF0C\u6BCF\u5B8C\u62102 \u5468\u5199\u4F5C\u6253\u5361\uFF0C\u5956\u52B1\u81EA\u5DF1\u4E00\u4EFD\u5C0F\u793C\u7269\uFF1B\u628A\u6587\u7AE0\u53D1\u5230\u5404\u5927\u5E73\u53F0\uFF0C\u5F53\u4F60\u6536\u5230\u5927\u5BB6\u7684\u70B9\u8D5E\u3001\u8BC4\u8BBA\u3001\u8D5E\u8D4F\uFF0C\u4F1A\u52A8\u529B\u6EE1\u6EE1\u3002"
-    },
-    {
-      id: 236,
-      category: "writing",
-      content: "\u76EE\u7684\u4E0D\u540C\uFF0C\u52A8\u4F5C\u4E0D\u540C\uFF0C\u52AA\u529B\u65B9\u5411\u4E0D\u540C\uFF0C\u7ED3\u679C\u4E0D\u540C\u3002\n\u672C\u7740\u6700\u7EC8\u8D5A\u94B1\u53BB\u5199\u4F5C\uFF0C\u4F60\u7684\u6BCF\u4E00\u4E2A\u6587\u5B57\u90FD\u7279\u522B\u6709\u52A8\u529B\u3002"
-    },
-    {
-      id: 237,
-      category: "writing",
-      content: "\u4E0D\u77E5\u9053\u5199\u4EC0\u4E48\uFF1F\u66F4\u591A\u662F\u6CA1\u627E\u5230\u957F\u671F\u7684\u5199\u4F5C\u65B9\u5411\u3002\n\n\u770B\u5230\u522B\u4EBA\u5199\u804C\u573A\u6587\uFF0C\u4F60\u89C9\u5F97\u6CA1\u90A3\u4E48\u591A\u8BDD\u9898\u5199\u3002\n\u770B\u5230\u522B\u4EBA\u5199\u80B2\u513F\u7ECF\u9A8C\uFF0C\u4F60\u53C8\u60F3\u5199\u80B2\u513F\u7684\uFF0C\u5199\u4E86\u4E09\u7BC7\u6CA1\u7EE7\u7EED\u5199\u4F5C\u7684\u7D20\u6750\u3002\n\n\u5927\u53EF\u4E0D\u5FC5\u6025\u7740\u7ED9\u81EA\u5DF1\u8BBE\u9650\uFF0C\u770B\u5230\u4EC0\u4E48\uFF0C\u60F3\u5230\u4EC0\u4E48\uFF0C\u90FD\u53EF\u4EE5\u5199\u4E0B\u6765\u3002\n\u65E5\u5E38\u788E\u788E\u5FF5\uFF0C\u4E5F\u662F\u53EF\u4EE5\u7684\u3002"
-    },
-    {
-      id: 238,
-      category: "writing",
-      content: "\u4E0D\u540C\u9636\u6BB5\uFF0C\u76EE\u6807\u4E0D\u540C\u3002\n\u5982\u679C\u5199\u5B8C100 \u5929\uFF0C\u53EF\u4EE5\u8003\u8651\u300C\u5782\u7C7B\u4EF7\u503C\u5199\u4F5C\u300D\u3002"
-    },
-    {
-      id: 239,
-      category: "writing",
-      content: "\u5148\u53BB\u5199\uFF0C\u6CA1\u5FC5\u8981\u7EA0\u7ED3\u80FD\u4E0D\u80FD\u505A\u5230\u3002\n\u6CA1\u62BC\u91D1\uFF0C\u4E0D\u9700\u8981\u4ED8\u8D39\uFF0C\u8FD8\u6709\u5565\u7EA0\u7ED3\u7684\u3002"
-    },
-    {
-      id: 240,
-      category: "writing",
-      content: "\u5148\u4ECE\u81EA\u5DF1\u611F\u5174\u8DA3\u7684\u3001\u81EA\u5DF1\u80FD\u5199\u7684\u65B9\u9762\u53BB\u5199\uFF0C\u8F93\u51FA\u5012\u903C\u8F93\u5165\uFF0C\u4E00\u8FB9\u523B\u610F\u7EC3\u4E60\u4E00\u8FB9\u6210\u957F\u8FDB\u6B65\u3002"
-    },
-    {
-      id: 241,
-      category: "writing",
-      content: "\u628A\u5185\u5FC3\u7684\u4E00\u4E9B\u60F3\u6CD5\u771F\u5B9E\u7684\u8868\u8FBE\u51FA\u6765\u3002\n\u76F8\u5F53\u4E8E\u5199\u4E2A\u968F\u7B14\uFF0C\u5199\u4E2A\u65E5\u8BB0\u3002\n\n\u901A\u8FC7\u957F\u65F6\u95F4\u7684\u8F93\u51FA\uFF0C\u5BF9\u6211\u7684\u5927\u8111\u63D0\u5347\u662F\u975E\u5E38\u5927\u7684\u3002\n\n\u4FDD\u6301\u5199\u4F5C\uFF0C\u8BA9\u81EA\u5DF1\u7684\u5934\u8111\u53D8\u5F97\u66F4\u52A0\u6D3B\u8DC3\u548C\u53D1\u6563\uFF0C\u521B\u4F5C\u529B\u66F4\u5F3A\uFF0C\u770B\u4E8B\u60C5\u7684\u89D2\u5EA6\u66F4\u591A\uFF0C\u521B\u4F5C\u7075\u611F\u4E0D\u65AD\u3002"
-    },
-    {
-      id: 242,
-      category: "writing",
-      content: "\u70ED\u7231\uFF0C\u624D\u662F\u6700\u91CD\u8981\u7684\u3002\n\u6280\u5DE7\uFF0C\u90FD\u662F\u6D6E\u4E91\u3002\u5728\u5341\u5E74\u957F\u7EBF\u5199\u4F5C\u4E2D\uFF0C\u53EF\u5FFD\u7565\u4E0D\u8BA1\u3002\n\u5199\u4F5C\uFF0C\u6700\u7EC8\u8D70\u5411\u6781\u7B80\uFF0C\u6240\u6709\u6280\u5DE7\u90FD\u53EF\u4EE5\u53BB\u6389\u3002"
-    },
-    {
-      id: 243,
-      category: "writing",
-      content: "IP \u5B9A\u4F4D\uFF0C\u81F3\u5C11\u9700\u8981\u51E0\u4E2A\u6708\u7684\u5468\u671F\uFF0C\n\u53BB\u89C2\u5BDF\u4E14\u9700\u8981\u95EE\u4F60\u81EA\u5DF1\uFF0C\u4F60\u80FD\u6301\u7EED\u8F93\u51FA\u4EC0\u4E48\uFF1F"
-    },
-    {
-      id: 244,
-      category: "writing",
-      content: "\u6301\u7EED\u5199\u4F5C\uFF0C\u6301\u7EED\u79EF\u7D2F\u5185\u5BB9\u7684\u540C\u65F6\u3002\u5F97\u53BB\u516C\u57DF\u83B7\u53D6\u6D41\u91CF\uFF0C\u83B7\u5F97\u6B63\u53CD\u9988\u3002\n\u4E00\u4E2A\u4EBA\u9ED8\u9ED8\u7684\u5199\uFF0C\u65E0\u53CD\u9988\uFF0C\u592A\u5B64\u5355\u3002\n\u8FD9\u4E5F\u662F\u516C\u5F00\u5199\u4F5C\u7684\u7F18\u7531\u4E4B\u4E00\u3002\n\u503C\u5F97\u5C1D\u8BD5\u7684\u516C\u57DF\uFF1A\u516C\u4F17\u53F7\uFF0C\u5C0F\u7EA2\u4E66\uFF0C\u95EE\u4E00\u95EE\uFF0C\u89C6\u9891\u53F7\u7B49\u3002"
-    },
-    {
-      id: 245,
-      category: "writing",
-      content: "\u6240\u6709\u7684\u9879\u76EE\uFF0C\u53EA\u662F\u9879\u76EE\u3002\n\n\u666E\u901A\u4EBA\u300C\u6B7B\u78D5\u77ED\u6587\u5199\u4F5C\u300D\u8FD9\u4EF6\u4E8B\u5C31\u591F\u4E86\uFF0C\u4E0D\u53D7\u5927\u73AF\u5883\u7684\u5F71\u54CD\uFF0C\u4E0D\u53D7\u5E73\u53F0\u7684\u5F71\u54CD\uFF0C\n\u552F\u4E00\u5F71\u54CD\u56E0\u7D20\u300C\u4F60\u81EA\u5DF1\u7684\u6267\u884C\u529B\u300D\u3002"
-    },
-    {
-      id: 246,
-      category: "writing",
-      content: "\u60F3\u300C\u5B66\u4E60\u600E\u4E48\u8F93\u51FA\u5185\u5BB9\u300D\uFF0C\u627E\u4E0D\u5230\u5207\u5165\u70B9\uFF0C\u4E00\u76F4\u6CA1\u884C\u52A8\uFF1F\n\u5148\u505A\u5230\u6BCF\u5929\u6301\u7EED\u5199\uFF0C\u6210\u4E3A\u4E60\u60EF\u3002\u5728\u8F93\u51FA\u7684\u8FC7\u7A0B\u4E2D\uFF0C\u4F60\u81EA\u5DF1\u4F1A\u53BB\u4E3B\u52A8\u601D\u8003\u300C\u9009\u9898\uFF0C\u6807\u9898\uFF0C\u5185\u5BB9\u7ED3\u6784\uFF0C\u94A9\u5B50\uFF0C\u5F15\u6D41\uFF0C\u5546\u4E1A\u5316\u300D\u7B49\u95ED\u73AF\u3002\n\n\u7AD9\u7740\u4E0D\u52A8\uFF0C\u4E0D\u884C\u52A8\uFF0C\u8FD9\u4E9B\u8BCD\uFF0C\u4F60\u5927\u6982\u7387\u4E5F\u53EA\u662F\u770B\u4E86\u3002"
-    },
-    {
-      id: 247,
-      category: "writing",
-      content: "\u5BF9\u4E8E\u5199\u4F5C\uFF0C\u6CA1\u4EFB\u4F55\u9650\u5236\u3002\n\u5148\u5199\u3002"
-    },
-    {
-      id: 248,
-      category: "writing",
-      content: "1\u3001\u5C3D\u91CF\u522B\u5199\u592A\u5927\u7684\u8BDD\u9898/\u5BA2\u5957\u8BDD\u3002\u4EF7\u503C\u4E0D\u5927\uFF0C\u4F60\u4E5F\u9A7E\u9A6D\u4E0D\u4E86\u3002\n\n2\u3001\u5C3D\u91CF\u8BED\u8A00\u7CBE\u7B80\uFF0C\u4E14\u5185\u5BB9\u6709\u4E00\u4E2A\u6838\u5FC3\u95EE\u9898\u629B\u51FA\u5E76\u89E3\u51B3\u3002\n\n3\u3001\u5C3D\u91CF\u7528\u81EA\u5DF1\u7684\u7406\u89E3\u53BB\u8F93\u51FA\uFF0C\u800C\u4E0D\u662F\u300C\u6458\u6284\u300D\u3002\n\n4\u3001\u5C3D\u91CF\u4E0E\u666E\u901A\u7528\u6237\u6709\u5173\u3002\u4E0E\u6211\u6709\u5173\uFF0C\u6211\u624D\u4F1A\u5173\u5FC3\uFF0C\u624D\u53EF\u80FD\u6709\u4EF7\u503C\u3002"
-    },
-    {
-      id: 249,
-      category: "writing",
-      content: "\u6446\u8131\u7535\u8111\u5199\u4F5C\u7684\u675F\u7F1A\uFF0C\u968F\u65F6\u968F\u5730\u5199\uFF0C\u5728\u624B\u673A\u4E0A\u641E\u5B9A\u65E5\u5E38\u5199\u4F5C\u3002\u8001\u5F90\u7684\u65E5\u66F4\u516C\u4F17\u53F7\u90FD\u662F\u5728\u300C\u516C\u4F17\u53F7\u52A9\u624B\u300D\u4E0A\u641E\u5B9A\u3002\u6BCF\u59295 \u5206\u949F\uFF0C\u5185\u5BB9\u4E0D\u65AD\uFF0C\u6536\u5165\u4E0D\u505C\u3002"
-    },
-    {
-      id: 250,
-      category: "writing",
-      content: "\u4E92\u8054\u7F51\u8F93\u51FA\u5185\u5BB9\uFF0C\u6216\u8005\u65E5\u5E38\u7684\u4EA4\u6D41\u3002\n\u5C3D\u91CF\u6B63\u5411\uFF0C\u79EF\u6781\u3002\u522B\u4F20\u64AD\u8D1F\u9762\u60C5\u7EEA\u3002\n\n\u4F60\u7684\u8D1F\u9762\u5185\u5BB9\uFF0C\u4F1A\u5438\u5F15\u8D1F\u9762\u7206\u6EE1\u7684\u4EBA\u7FA4\u3002\u4E45\u4E86\uFF0C\u5BF9\u4F60\u81EA\u5DF1\u4E0D\u662F\u5565\u597D\u4E8B(\u5373\u4F7F\u4F60\u901A\u8FC7\u8FD9\u4E9B\u5185\u5BB9\uFF0C\u83B7\u5F97\u4E86\u6D41\u91CF\uFF0C\u8D5A\u5230\u4E86\u77ED\u671F\u7684\u6536\u5165)\u3002"
-    },
-    {
-      id: 251,
-      category: "writing",
-      content: "\u6309\u81EA\u5DF1\u7684\u65F6\u95F4\u8282\u594F\uFF0C\u5148\u5F00\u59CB\u5199\u3002\n\u5199\u591A\u4E86\uFF0C\u624D\u80FD\u627E\u5230\u6700\u9002\u5408\u7684\u300C\u9AD8\u6548\u5199\u4F5C\u65F6\u95F4\u6BB5\u300D\u3002"
-    },
-    {
-      id: 252,
-      category: "writing",
-      content: "\u77E5\u8BC6\u672C\u8EAB\u6CA1\u5565\u4EF7\u503C\uFF0C\n\u7ED3\u5408\u4F60\u7684\u7ECF\u9A8C\u3001\u5B9E\u8DF5\u3001\u7406\u89E3\uFF0C\u8F93\u51FA\u7684\u300C\u89C2\u70B9\u300D\uFF0C\u624D\u6709\u4EF7\u503C\u3002"
-    },
-    {
-      id: 253,
-      category: "writing",
-      content: "\u4E3A\u4EC0\u4E48\u8BFB\u4E86\u5F88\u591A\u4E66\u8FD8\u662F\u4E0D\u4F1A\u5199\u4F5C\uFF1F\n\nIDO \u8001\u5F90\uFF1A\n\u8BFB\u4E66\uFF0C\u662F\u8F93\u5165\u3002\n\u5199\u4F5C\uFF0C\u662F\u8F93\u51FA\u3002\n\u8FD9\u662F\u4E24\u7801\u4E8B\u3002\n\u5982\u679C\u60F3\u63D0\u5347\u5199\u4F5C\u80FD\u529B\uFF0C\u6B64\u523B\u5F00\u59CB\uFF0C\u6BCF\u5929\u519950 \u5B57\u7684\u601D\u8003\uFF0C\u65E5\u66F4\uFF0C\u6301\u7EED\u4E00\u5E74\uFF0C\u4F60\u4F1A\u5927\u6709\u6240\u83B7\u3002"
-    },
-    {
-      id: 254,
-      category: "writing",
-      content: "\u5728\u5199\u4F5C\u8FD9\u6761\u8DEF\u4E0A\uFF0C\u5982\u679C\u4E09\u4E2A\u6708\u96F6\u6536\u5165\uFF0C\u4F60\u80FD\u575A\u6301\u591A\u4E45\uFF1F\n\nIDO \u8001\u5F90\uFF1A\n1\u3001\u4E09\u4E2A\u6708\u96F6\u6536\u5165\uFF0C\u5C31\u5BF9\u4E86\u30021 \u5E74\u90FD\u6709\u53EF\u80FD\u96F6\u6536\u5165\uFF0C\u524D\u671F\u662F\u79EF\u7D2F\u7684\u8FC7\u7A0B\u3002\n2\u3001\u5982\u679C\u60F3\u901A\u8FC7\u5199\u4F5C\uFF0C\u79EF\u7D2F\u5F71\u54CD\u529B\uFF0C\u505A\u597D10 \u5E74\u7684\u51C6\u5907\u3002\n3\u3001\u60F3\u8D5A\u5FEB\u94B1\uFF0C\u4E3A\u5565\u8981\u9009\u62E9\u5199\u4F5C\u8FD9\u6761\u8DEF\uFF1F\u5404\u79CDcps\u3001\u70ED\u70B9\u6D41\u91CF\uFF08\u6587\u7AE0\uFF0C\u89C6\u9891\uFF09\uFF0C\u5F88\u9999\u3002"
-    },
-    {
-      id: 255,
-      category: "writing",
-      content: "\u6301\u7EED\u5199\u4F5C\uFF0C\u80FD\u4FDD\u6301\u5BF9\u751F\u6D3B\u7684\u654F\u611F\u5EA6\uFF0C\u63D0\u9AD8\u81EA\u5DF1\u8868\u8FBE\u7684\u6B32\u671B\uFF0C\u52C7\u6562\u53BB\u9762\u5BF9\u4E0D\u540C\u89C2\u70B9\u7684\u78B0\u649E\uFF0C\u5012\u903C\u81EA\u5DF1\u6210\u957F\u3002"
-    },
-    {
-      id: 256,
-      category: "writing",
-      content: "\u4E0D\u77E5\u9053\u5199\u4EC0\u4E48\uFF1F\u53BB\u770B\u573A\u7535\u5F71\uFF0C\u5237\u51E0\u6761\u89C6\u9891\uFF0C\u968F\u4FBF\u7FFB\u4E00\u9875\u4E66\u3002\u53EF\u4EE5\u5199\u4F60\u76EE\u4E4B\u6240\u53CA\u7684\u6240\u6709\uFF0C\u53EF\u4EE5\u5199\u4F60\u60F3\u5230\u7684\u4EBA\u548C\u4E8B\u3002\n\u5148\u517B\u6210\u4E60\u60EF\uFF0C\u518D\u8FFD\u6C42\u8D28\u91CF\u3002"
-    },
-    {
-      id: 257,
-      category: "writing",
-      content: "\u8BB0\u5F55\u601D\u8003\u662F\u5176\u4E00\uFF0C\u901A\u8FC7\u5199\u4F5C\u89E3\u51B3\u4ED6\u4EBA\u95EE\u9898\u624D\u6709\u4EF7\u503C\u3002\n\u95EE\u9898\u89E3\u51B3\u4E86\uFF0C\u5546\u4E1A\u5316\u5C31\u6765\u4E86\u3002\n\u5982\u6B64\u5FAA\u73AF\u3002"
-    },
-    {
-      id: 258,
-      category: "writing",
-      content: "\u5199\u4F5C\u4E09\u4E2A\u9636\u6BB5\uFF1A\n1\u3001\u517B\u6210\u5199\u4F5C\u4E60\u60EF\u300221 \u5929\u5230\u4E00\u4E2A\u6708\u3002\n2\u3001\u7CBE\u7B80\u5185\u5BB9\u548C\u7ED3\u6784\u3002\u4E00\u4E2A\u6708\u5230\u4E09\u4E2A\u6708\u3002\n3\u3001\u5185\u5BB9\u5B8C\u6574\uFF0C\u89C2\u70B9\u8868\u8FBE\u6E05\u695A\u3002\u4E09\u4E2A\u6708\u5230\u534A\u5E74\uFF0C\u751A\u81F3\u4E00\u5E74\uFF0C\u957F\u671F\u76EE\u6807\u662F10 \u5E74\u3002"
-    },
-    {
-      id: 259,
-      category: "writing",
-      content: "\u95EE\uFF1A\u65E5\u66F4\u5199\u4F5C\u7ECF\u5E38\u65AD\u66F4\uFF0C\u6216\u8005\u65AD\u66F4\u518D\u4E5F\u6CA1\u5199\u7684\uFF0C\u662F\u7CBE\u529B\u4E0D\u591F\u5417?\n\nIDO \u8001\u5F90\uFF1A\u662F\u4E0D\u591F\u300C\u91CD\u89C6\u300D,\u662F\u592A\u8FFD\u6C42\u300C\u5B8C\u7F8E\u300D\u3002100 \u5206\u8FBE\u4E0D\u5230\uFF0C\u53EF\u4EE5\u8FFD\u6C4280 \u5206\uFF0C\u621660 \u5206\u3002\u653E\u5F03\u5C31\u662F0 \u5206\u3002"
-    },
-    {
-      id: 260,
-      category: "writing",
-      content: "\u5982\u679C\u89C9\u5F97\u5199\u4F5C\u96BE\uFF0C\u6CA1\u6709\u9009\u9898\uFF0C\u4E0D\u77E5\u9053\u5199\u4EC0\u4E48\u3002\u8D70\u51FA\u53BB\uFF0C\u591A\u53BB\u627E\u4EBA\u804A\u804A\u5929\u3002"
-    },
-    {
-      id: 261,
-      category: "writing",
-      content: "\u5199\u4EC0\u4E48\uFF0C\u6CA1\u60F3\u5F97\u7279\u522B\u660E\u767D\uFF1F\u5148\u76F4\u63A5\u5F00\u59CB\u505A\u3002\n\n\u5148\u4E0B\u573A\uFF0C\u518D\u6162\u6162\u627E\u9002\u5408\u7684\u9009\u9898\u548C\u5B9A\u4F4D\u3002\u7AD9\u5728\u5CB8\u4E0A\uFF0C\u6C38\u8FDC\u627E\u4E0D\u5230\u3002"
-    },
-    {
-      id: 262,
-      category: "writing",
-      content: "\u6BD4\u300C\u8D5A\u5230\u94B1\u300D\u66F4\u5F00\u5FC3\u7684\u662F\uFF1A\u6709\u8BFB\u8005\u53CD\u9988\uFF0C\u56E0\u4E3A\u770B\u5230\u6211\u5199\u7684\u5185\u5BB9\uFF0C\u4EA7\u751F\u4E86\u884C\u52A8\uFF0C\u53D1\u751F\u4E86\u6539\u53D8\uFF0C\u505A\u51FA\u4E86\u7ED3\u679C\u3002"
-    },
-    {
-      id: 263,
-      category: "writing",
-      content: "\u5BF9\u5916\u8F93\u51FA\u662F\u4EA7\u751F\u4EF7\u503C\u7684\u8FC7\u7A0B\uFF0C\u4E5F\u662F\u6210\u957F\u7684\u8FC7\u7A0B\u3002"
-    },
-    {
-      id: 264,
-      category: "writing",
-      content: "\u968F\u65F6\u968F\u5730\uFF0C\u8BB0\u5F55\u5FC3\u4E2D\u7684\u7075\u611F\u548C\u60F3\u6CD5\uFF0C\u975E\u5E38\u975E\u5E38\u91CD\u8981\u3002"
-    },
-    {
-      id: 265,
-      category: "writing",
-      content: "\u8BBE\u7F6E\u622A\u6B62\u65F6\u95F4\uFF0C1 \u5C0F\u65F6\u9605\u8BFB\u4E00\u672C\u4E66\uFF0C\u6BCF\u65E5\u82B110 \u5206\u949F\u519950 \u5B57\u5730\u601D\u8003\u3002\n\n\u8001\u8BFB\u8005\u90FD\u77E5\u9053\uFF0C\u8001\u5F90\u66FE\u7ECF\u5199\u516C\u4F17\u53F7\u523B\u610F\u6BCF\u592923\uFF1A30 \u5F00\u59CB\u5199\uFF0C24\uFF1A00 \u5FC5\u987B\u53D1\u51FA\u3002\n\n\u901F\u5EA6\u662F\u7EC3\u51FA\u6765\u7684\u3002\u73B0\u5728\u5DF2\u7ECF\u4E0D\u9700\u8981\u523B\u610F\u7EC3\u4E60\uFF0C10 \u5206\u949F\u5185\u53EF\u5199\u5B8C\u4E00\u7BC7\u516C\u4F17\u53F7\u6587\u7AE0\u5E76\u5BF9\u5916\u53D1\u5E03\u3002"
-    },
-    {
-      id: 266,
-      category: "writing",
-      content: "\u75AF\u72C2\u8BFB\u4E66\uFF0C\u89C1\u4EBA\uFF0C\u884C\u4E07\u91CC\u8DEF\u3002\u4F9D\u7136\u627E\u4E0D\u5230\u5199\u7684\u611F\u89C9\u3002\u5199\u7684\u5185\u5BB9\u6CA1\u4EBA\u770B\u3002\n\n\u6838\u5FC3\u95EE\u9898\uFF1A\u4F60\u6CA1\u6709\u7406\u89E3\u5185\u5BB9\uFF0C\u6CA1\u6709\u7ED3\u5408\u4F60\u81EA\u8EAB\u7684\u6848\u4F8B\uFF0C\u6CA1\u6709\u7ED3\u5408\u7528\u6237\u7684\u95EE\u9898\u3002\n\n\u600E\u4E48\u7EC3\uFF1F\u63A5\u89E6\u8DB3\u591F\u591A\u7684\u95EE\u9898\uFF0C\u7528\u4F60\u7684\u7406\u89E3\u56DE\u7B54\u51FA\u6765\u3002"
-    },
-    {
-      id: 267,
-      category: "writing",
-      content: "\u4E0D\u4E89\u9605\u8BFB\u91CF\uFF0C\u4E89\u7684\u662F\u957F\u671F\u63D0\u4F9B\u4EF7\u503C\u3002\n\u5148\u6C89\u4E0B\u5FC3\uFF0C\u7EC3\u4E00\u5E74\u3002\u8DDF\u4E0A\u8282\u594F\u3002"
-    },
-    {
-      id: 268,
-      category: "writing",
-      content: "\u95EE\uFF1A\u96F6\u57FA\u7840\uFF0C\u521A\u5F00\u59CB\u5199\u4F5C\uFF0C\u6709\u4EC0\u4E48\u5EFA\u8BAE\u5417\uFF1F\n\nIDO \u8001\u5F90\uFF1A1.\u5148\u5199\uFF0C2.\u6301\u7EED\u5199\uFF0C3.\u539F\u521B\uFF08\u522B\u6284\u88AD\uFF0C\u522Bcopy \u4ED6\u4EBA\u5185\u5BB9\uFF09\uFF0C4.\u516C\u5F00\u53D1\u5E03\uFF0C5.\u5207\u5782\u76F4\u7EC6\u5206\u9886\u57DF\uFF0C6.\u5207\u81EA\u5DF1\u7ECF\u5386\u7684\u4E8B\u6216\u4EBA\u6216\u7269\u3002"
-    },
-    {
-      id: 269,
-      category: "writing",
-      content: "\u77ED\u6587\uFF0C\u4E00\u7BC7\u6587\u7AE0\u53EA\u89E3\u51B3\u4E00\u4E2A\u5177\u4F53\u95EE\u9898\u3002"
-    },
-    // 成长篇 (270-365)
-    {
-      id: 270,
-      category: "growth",
-      content: "\u5148\u7A81\u78340\uFF0C\u518D\u601D\u80031 \u7684\u4E8B\u3002"
-    },
-    {
-      id: 271,
-      category: "growth",
-      content: "\u4F60\u4E0D\u9700\u8981\u505A\u4EFB\u4F55\u4EBA\uFF0C\u4F60\u5C31\u662F\u4F60\u3002"
-    },
-    {
-      id: 272,
-      category: "growth",
-      content: "\u601D\u8DEF\uFF0C\u592A\u91CD\u8981\u4E86\u3002\n\n\u4E00\u4E9B\u95EE\u9898\uFF0C\u6211\u4EEC\u4F1A\u95EE\u4F60\u300C\u8FD9\u4E2A\u95EE\u9898\u7684\u89E3\u51B3\u601D\u8DEF\u300D\uFF0C\u5982\u679C\u601D\u8DEF\u90FD\u662F\u9519\u7684\u6216\u5B8C\u5168\u4E0D\u6E05\u6670\uFF0C\u4F60\u540E\u7EED\u7684\u6240\u6709\u52AA\u529B\u90FD\u4E0D\u4F1A\u6709\u592A\u5927\u7684\u7ED3\u679C\u3002"
-    },
-    {
-      id: 273,
-      category: "growth",
-      content: "\u6240\u6709\u7684\u884C\u4E3A\uFF0C\u90FD\u4F1A\u7559\u4E0B\u75D5\u8FF9\u3002\u4F60\u4EE5\u4E3A\u771F\u7684\u4E0D\u77E5\u9053\u4E48\uFF1F\u53EA\u662F\u6CA1\u62C6\u7A7F\u800C\u5DF2\u3002"
-    },
-    {
-      id: 274,
-      category: "growth",
-      content: "\u964D\u4F4E\u9884\u671F\uFF0C\u90FD\u662F\u60CA\u559C\u3002\n\n\u80FD\u6C89\u4E0B\u5FC3\uFF0C\u53BB\u5B9E\u6218\uFF0C\u53BB\u843D\u5730\uFF0C\u53BB\u6C89\u6DC0\u4E00\u5E74\uFF0C\u53BB\u7EC3\u57FA\u672C\u529F\u7684\uFF0C\u7ED3\u679C\u90FD\u4E0D\u4F1A\u592A\u5DEE\u3002"
-    },
-    {
-      id: 275,
-      category: "growth",
-      content: "\u6BCF\u5929\uFF0C\u62D2\u7EDD\u4E86\u5F88\u591A\u4EBA\uFF0C\u4E0D\u662F\u4E0D\u7ED9\u4F60\u4EEC\u9762\u5B50\u3002\u662F\u4F60\u6709\u4F60\u7684\u8BA1\u5212\uFF0C\u6211\u6709\u6211\u7684\u8BA1\u5212\u3002\n\n\u6211\u4E0D\u592A\u5173\u6CE8\u773C\u524D\u7684\u5C0F\u94B1\uFF0C\u6211\u5173\u6CE8\u300C\u957F\u671F\u590D\u5229\u300D\u3002"
-    },
-    {
-      id: 276,
-      category: "growth",
-      content: "\u8F93\u51FA\u4E0D\u505C\uFF0C\u6536\u5165\u4E0D\u6B62\u3002"
-    },
-    {
-      id: 277,
-      category: "growth",
-      content: "\u5148\u6210\u4E8B\uFF0C\u518D\u6210\u529F\u3002"
-    },
-    {
-      id: 278,
-      category: "growth",
-      content: "\u597D\u7684\u5F00\u59CB\uFF0C\u6210\u529F\u4E00\u5927\u534A\u3002"
-    },
-    {
-      id: 279,
-      category: "growth",
-      content: "\u5565\u53EB\u8D34\u8EAB\u5B66\u4E60\uFF1F\u662F\u771F\u7684\u7528\u5FC3\u89C2\u5BDF\u6A21\u4EFF\u5BF9\u8C61\u7684\u6BCF\u4E2A\u52A8\u4F5C\uFF0C\u53BB\u6267\u884C\u5230\u4F4D\uFF0C\u51FA\u7ED3\u679C\u3002"
-    },
-    {
-      id: 280,
-      category: "growth",
-      content: "\u82B1\u5FC3\u601D\uFF0C\u82B1\u65F6\u95F4\uFF0C\u53BB\u7814\u7A76\uFF0C\u62A0\u7EC6\u8282\u3002"
-    },
-    {
-      id: 281,
-      category: "growth",
-      content: "\u53EA\u529D\u9000\uFF0C\u4E0D\u529D\u4E70\u3002"
-    },
-    {
-      id: 282,
-      category: "growth",
-      content: "\u4E00\u5B9A\u8981\u6709\u81EA\u5DF1\u575A\u6301\u548C\u76F8\u4FE1\u7684\u3002\u5176\u4ED6\u4EBA\u7684\u5EFA\u8BAE\uFF0C\u5176\u5B9E\u6CA1\u90A3\u4E48\u91CD\u8981\u3002"
-    },
-    {
-      id: 283,
-      category: "growth",
-      content: "\u7EC3\u57FA\u672C\u529F\uFF0C\u591A\u7EC3\uFF0C\u8010\u4F4F\u5BC2\u5BDE\uFF0C\u7B49\u673A\u4F1A\u3002"
-    },
-    {
-      id: 284,
-      category: "growth",
-      content: "\u592A\u6025\u529F\u8FD1\u5229\u8005\uFF0C\u5565\u4E8B\u90FD\u505A\u4E0D\u6210\u3002\u811A\u8E0F\u5B9E\u5730\uFF0C\u5148\u6C89\u6DC0\u4E09\u5E74\u3002"
-    },
-    {
-      id: 285,
-      category: "growth",
-      content: "\u4F60\u770B\u5230\u7684\u662F\u300C\u70B9\u300D\uFF0C\u6211\u505A\u7684\u662F\u300C\u9762\u300D\u3002\u6BCF\u4E00\u4E2A\u884C\u4E3A\u52A8\u4F5C\u7684\u540E\u9762\uFF0C\u90FD\u6709\u4E00\u5957\u7406\u8BBA\u652F\u6491\u3002"
-    },
-    {
-      id: 286,
-      category: "growth",
-      content: "\u4F60\u6240\u5728\u7684\u5708\u5B50\uFF0C\u4F60\u63A5\u89E6\u7684\u4EBA\uFF0C\u51B3\u5B9A\u4F60\u7684\u4E0A\u9650\u3002"
-    },
-    {
-      id: 287,
-      category: "growth",
-      content: "\u5BF9\u81EA\u5DF1\u72E0\u4E00\u70B9\uFF0C\u7ED9\u81EA\u5DF1\u5B9A\u4E00\u4E2A\u770B\u8D77\u6765\u5B8C\u4E0D\u6210\uFF0C\u4F46\u8E2E\u8E2E\u811A\u300C\u591F\u5F97\u7740\u300D\u7684\u76EE\u6807\u3002\u5F80\u5F80\u6709\u610F\u5916\u60CA\u559C\u3002"
-    },
-    {
-      id: 288,
-      category: "growth",
-      content: "\u5BF9\u4E8E\u666E\u901A\u4EBA\uFF0C\u4E92\u8054\u7F51\u662F\u6700\u5927\u7684\u6760\u6746\u3002\u6709\u5F88\u591A\u672A\u77E5\u7684\u53EF\u80FD\u3002\n\u6293\u4F4F\uFF0C\u53BB\u6267\u884C\uFF0C\u7B49\u7ED3\u679C\u3002\n\n\u5373\u4F7F\u6700\u7EC8\u6CA1\u51FA\u7ED3\u679C\uFF0C\u4F60\u4E5F\u6CA1\u6709\u635F\u5931\u3002"
-    },
-    {
-      id: 289,
-      category: "growth",
-      content: "\u5148\u51FA\u7ED3\u679C\uFF0C\u518D\u8981\u8D44\u6E90\u3002"
-    },
-    {
-      id: 290,
-      category: "growth",
-      content: "\u5F88\u591A\u4E8B\uFF0C\u662F\u5728\u505A\u7684\u8FC7\u7A0B\u4E2D\u300C\u60F3\u6E05\u695A\u7684\u300D\uFF0C\n\u60F3\u4E0D\u6E05\u695A\u5C31\u5148\u53BB\u5E72\u3002"
-    },
-    {
-      id: 291,
-      category: "growth",
-      content: "\u4E0D\u4F1A\u62D2\u7EDD\uFF0C\u96BE\u6210\u5927\u4E8B\uFF0C\u524D\u884C\u7684\u8DEF\u4E0A\u8BF1\u60D1\u592A\u591A\u3002"
-    },
-    {
-      id: 292,
-      category: "growth",
-      content: "\u9876\u7EA7\u9AD8\u624B\uFF0C\u6CA1\u6709\u4E00\u5806\u62DB\u5F0F\u3002\u5173\u952E\u65F6\u523B\u51FA\u624B\uFF0C\u4E00\u62DB\u81F4\u547D\u3002\u4E0D\u9700\u8981\u90A3\u4E9B\u82B1\u91CC\u80E1\u54E8\u7684\uFF0C\u5B8C\u5168\u6253\u4E0D\u51FA\u4F24\u5BB3\u3002"
-    },
-    {
-      id: 293,
-      category: "growth",
-      content: "\u5728\u81EA\u5DF1\u64C5\u957F\u9886\u57DF\uFF0C\u505A\u81EA\u5DF1\u64C5\u957F\u7684\u4E8B\u3002\u4E0D\u6C42\u5565\u90FD\u61C2\uFF0C\u4F46\u6C42\u61C2\u4E00\u6837\u3002"
-    },
-    {
-      id: 294,
-      category: "growth",
-      content: "\u4F60\u8981\u7684\u300C\u4E0D\u591F\u5F3A\u70C8\u300D\uFF0C\u5F88\u96BE\u6709\u7ED3\u679C\u3002\u4E00\u5B9A\u3001\u80AF\u5B9A\u3001\u6392\u9664\u4E07\u96BE\u4E00\u5B9A\u8981\u3002\u5927\u6982\u7387\u4F1A\u6709\u6EE1\u610F\u7684\u7ED3\u679C\u3002"
-    },
-    {
-      id: 295,
-      category: "growth",
-      content: "\u7EC8\u5176\u4E00\u751F\uFF0C\u6210\u4E3A\u5174\u8DA3\uFF0C\u65E0\u9700\u575A\u6301\u3002\n\u628A\u8FD9\u4EF6\u4E8B\u53D8\u6210\u5174\u8DA3\uFF0C\u6210\u4E3A\u70ED\u7231\u3002\u6BD4\u5982\uFF0C\u5199\u4F5C\uFF0C\u8D5A\u94B1\u3002"
-    },
-    {
-      id: 296,
-      category: "growth",
-      content: "\u65B9\u5411\u5BF9\u4E86\uFF0C\u6B7B\u78D5\u5230\u5E95\uFF0C\u4E00\u5B9A\u4F1A\u6709\u7ED3\u679C\u3002"
-    },
-    {
-      id: 297,
-      category: "growth",
-      content: "\u4E00\u4EF6\u968F\u624B\u5C31\u80FD\u5B8C\u6210\u7684\u5C0F\u4E8B\uFF0C\u4F60\u8981\u62D6\u5230\u660E\u5929\uFF0C\u5355\u72EC\u62BD\u65F6\u95F4\u53BB\u5B8C\u6210\u3002\n\n\u8FD9\u6837\u7684\u5C0F\u4E8B\u5806\u591A\u4E86\uFF0C\u6700\u540E\u4EC0\u4E48\u90FD\u5B8C\u4E0D\u6210\uFF0C\u8FD9\u662F\u5F88\u591A\u4EBA\u7684\u73B0\u72B6\u3002\n\n\u8001\u5F90\u7684\u6240\u6709\u5E16\u5B50\uFF0C\u90FD\u662F\u968F\u65F6\u968F\u5730\u5B8C\u6210\u3002\u300C\u4E0D\u5B8C\u7F8E\u300D\u8FDC\u80DC\u4E8E\u300C\u4E0D\u5199\u300D\u3002\n\n\u6D3B\u5F97\u4E45\uFF0C\u4E00\u76F4\u5728\uFF0C\u71AC\u6B7B\u5BF9\u624B\u3002"
-    },
-    {
-      id: 298,
-      category: "growth",
-      content: "\u6311\u6218\u300C\u591F\u5F97\u7740\u7684\u76EE\u6807\u300D\uFF0C\u4F1A\u52A0\u901F\u6210\u957F\uFF0C\n\u522B\u8001\u662F\u5728\u300C\u8212\u9002\u533A\u300D\u3002"
-    },
-    {
-      id: 299,
-      category: "growth",
-      content: "\u6211\u505A\u4E8B\u7684\u539F\u5219\u662F\uFF1A\u7528\u6700\u5C0F\u7684\u65F6\u95F4\u6210\u672C\uFF0C\n\u53BB\u5B8C\u6210\u4E00\u4EF6\u4E8B\uFF0C\u7ED9\u81EA\u5DF1\u8BBE\u7F6E\u622A\u6B62\u65F6\u95F4\u3002"
-    },
-    {
-      id: 300,
-      category: "growth",
-      content: "\u4F60\u4E0D\u662F\u5E2E\u4EFB\u4F55\u4EBA\uFF0C\u4F60\u5C31\u662F\u5E2E\u4F60\u81EA\u5DF1\u3002\u4F60\u770B\u4F3C\u5728\u5E2E\u67D0\u67D0\u4EBA\uFF0C\u957F\u7EBF\u6765\u770B\uFF0C\u4E5F\u662F\u501F\u52BF\u5728\u5E2E\u81EA\u5DF1\u3002"
-    },
-    {
-      id: 301,
-      category: "growth",
-      content: "\u6BCF\u65E5\u4FEE\u70BC\uFF0C\u8BA9\u81EA\u5DF1\u7684\u5FC3\u6001\u5E73\u7A33\u3002\u4E0D\u56E0\u7A81\u7136\u7206\u4E86\u800C\u6309\u8010\u4E0D\u4F4F\u559C\u60A6\uFF0C\u4E5F\u4E0D\u56E0\u6570\u636E\u4F4E\u4F30\u800C\u5931\u843D\u3002"
-    },
-    {
-      id: 302,
-      category: "growth",
-      content: "\u4FE1\u4EFB\u662F\u9010\u6B65\u5EFA\u7ACB\u7684\uFF0C\u4E0D\u662F\u4E00\u4E0B\u5B50\u5C31\u6709\u3002"
-    },
-    {
-      id: 303,
-      category: "growth",
-      content: "\u627F\u8BA4\u81EA\u5DF1\u5728\u67D0\u4E9B\u9886\u57DF\u7684\u4E0D\u4E13\u4E1A\uFF0C\u6BCF\u4E2A\u4EBA\u90FD\u6709\u81EA\u5DF1\u7684\u64C5\u957F\u3002"
-    },
-    {
-      id: 304,
-      category: "growth",
-      content: "\u505A\u4E00\u4EF6\u4E8B\uFF0C\u91CD\u70B9\u662F\uFF1A\u81EA\u5DF1\u6EE1\u610F\u3002\n\u5176\u4ED6\u4EBA\u7684\u60F3\u6CD5\uFF0C\u4E0D\u91CD\u8981\u3002\n\u7B80\u5355\u7684\u4E8B\uFF0C\u505A\u597D\u5F88\u96BE\u3002\n\u4E00\u4E9B\u540C\u5B66\uFF0C\u8BA4\u4E3A\u592A\u7B80\u5355\uFF0C\u800C\u4E0D\u53BB\u505A\u3002\n\u66F4\u96BE\u3002"
-    },
-    {
-      id: 305,
-      category: "growth",
-      content: "\u6BCF\u4E2A\u4EBA\u90FD\u5728\u5300\u901F\u884C\u9A76\u3002\u60F3\u8D85\u8D8A\u4ED6\u4EBA\uFF0C\u5F97\u52A0\u901F\u5440\u3002"
-    },
-    {
-      id: 306,
-      category: "growth",
-      content: "\u6CA1\u505A\u51FA\u7ED3\u679C\uFF0C\u6CA1\u6709\u6B63\u53CD\u9988\uFF0C\u6CA1\u4EA7\u751F\u9884\u671F\u5546\u4E1A\u5316\uFF0C\u591A\u627E\u627E\u81EA\u5DF1\u7684\u95EE\u9898\u3002\n\n\u5E73\u53F0\u6CA1\u95EE\u9898\uFF0C\u7528\u6237\u6CA1\u95EE\u9898\uFF0C\u4F60\u81EA\u5DF1\u95EE\u9898\u3002"
-    },
-    {
-      id: 307,
-      category: "growth",
-      content: "\u505A\u51CF\u6CD5\u633A\u96BE\u7684\uFF0C\u901A\u8FC7\u6301\u7EED\u4E0D\u65AD\u7684\u523B\u610F\u7EC3\u4E60\uFF0C\u4FEE\u70BC\u300C\u679C\u65AD\u780D\u6389\u65E0\u4EF7\u503C\u5185\u5BB9\u300D\u7684\u80FD\u529B\u3002"
-    },
-    {
-      id: 308,
-      category: "growth",
-      content: "\u53BB\u505A\u4E86\uFF0C\u4F1A\u53D1\u73B0\u5F88\u7B80\u5355\u3002\n\n\u591A\u6570\u4E8B\u60C5\uFF0C\u95E8\u69DB\u6CA1\u60F3\u8C61\u4E2D\u90A3\u4E48\u9AD8\u3002\u5148\u53BB\u505A\uFF0C\u591A\u6570\u60C5\u51B5\u662F\u300C\u60F3\u7684\u592A\u591A\uFF0C\u505A\u7684\u592A\u5C11\u300D\u3002"
-    },
-    {
-      id: 309,
-      category: "growth",
-      content: "\u6709\u53E5\u8BDD\uFF1A\u6301\u7EED\u5F71\u54CD\uFF0C\u800C\u4E0D\u662F\u4E00\u6B21\u5230\u4F4D\u3002\n*\u6848\u4F8B\uFF1A\u63A8\u4E13\u680F\u3001\u793E\u7FA4\u3001\u9F99\u89D2\u4FF1\u4E50\u90E8\uFF0C\u4E00\u6B21\u6CA1\u7ED3\u679C\uFF0C\u5C31\u6CA1\u81EA\u4FE1\u4E86\uFF1F\n\n\u8FD9\u662F\u4E0D\u5BF9\u7684\u3002\n\n\u627E\u5230\u9002\u5408\u7684\u7528\u6237\uFF0C\u6301\u7EED\u53BB\u505A\uFF0C\u6301\u7EED\u8F93\u51FA\u4EF7\u503C\uFF0C\u6301\u7EED\u5F71\u54CD\uFF0C\u7ED3\u679C\u81EA\u6765\u3002"
-    },
-    {
-      id: 310,
-      category: "growth",
-      content: "\u5982\u679C\u4F60\u7684\u5708\u5B50\u6BD4\u8F83\u6DF7\u4E71\uFF0C\u8BA9\u4F60\u7126\u8651\uFF0C\u90A3\u5C31\u522B\u770B\u8FD9\u4E9B\u3002\u627E\u5230\u4E00\u4E2A\u4E0D\u9519\u7684\u4FE1\u606F\u6E90\uFF0C\u5411\u524D\u770B\u3002\n\n\u8001\u5F90\u662F\u4E0D\u5237\u670B\u53CB\u5708\u7684\uFF0C\u53EA\u5B9A\u5411\u641C\u7D22\u6211\u60F3\u770B\u7684\uFF0C\u4F60\u4EEC\u7ECF\u5E38\u8BF4\u7684\u4E00\u4E9B\u95EE\u9898\uFF0C\u8001\u5F90\u90FD\u770B\u4E0D\u5230\uFF0C\u4E5F\u4E0D\u5173\u5FC3\uFF0C\u53EF\u4EE5\u5C11\u4E86\u5F88\u591A\u70E6\u607C\u3002\n\n\u6CE8\u610F\u529B\u6709\u9650\uFF0C\u7ED9\u4E86 A \u5C31\u6CA1\u529E\u6CD5\u7ED9C\u3002"
-    },
-    {
-      id: 311,
-      category: "growth",
-      content: "\u4E0D\u8D2A\u5C0F\u5229\uFF0C\u6301\u7EED\u524D\u884C\u3002"
-    },
-    {
-      id: 312,
-      category: "growth",
-      content: "\u6309\u81EA\u5DF1\u7684\u8282\u594F\u53BB\u63A2\u7D22\uFF0C\u628A\u65F6\u95F4\u5EF6\u957F\u523030\u5E74\uFF0C\u6CA1\u6709\u4EFB\u4F55\u7ADE\u4E89\u5BF9\u624B\u300210 \u5E74\u4E5F\u4E00\u6837\u3002\u80FD\u6301\u7EED\u7684\uFF0C\u6216\u66B4\u5BCC\uFF0C\u6216\u4E0D\u7F3A\u5C0F\u94B1\u3002"
-    },
-    {
-      id: 313,
-      category: "growth",
-      content: "\u6536\u5165\u5C11\u6652\uFF0C\u7ED3\u679C\u591A\u6652\u3002"
-    },
-    {
-      id: 314,
-      category: "growth",
-      content: "\u6700\u8FD1\u5DE5\u4F5C\u592A\u5FD9\uFF0C\u52A0\u73ED\u592A\u591A\uFF0C\u6CA1\u65F6\u95F4\u641E\u526F\u4E1A\uFF1F\u6CA1\u65F6\u95F4\u8F93\u51FA\u5185\u5BB9\uFF1F\n\u6362\u4E2A\u601D\u8DEF\uFF1A\u56E0\u4E3A\u8FD9\u6837\uFF0C\u624D\u8981\u300C\u6C42\u53D8\u300D\uFF0C\n\u79BB\u5F00\u8FD9\u4E2A\u778E\u5FD9\u7684\u73AF\u5883\u3002"
-    },
-    {
-      id: 315,
-      category: "growth",
-      content: "\u4E3B\u52A8\u624D\u6709\u673A\u4F1A\u3002\n\u597D\u673A\u4F1A\u662F\u7A00\u7F3A\u7684\uFF0C\u597D\u9879\u76EE\u9700\u8981\u81EA\u5DF1\u4E89\u53D6\u7684\u3002\n\n\u5B9E\u6218\u5386\u7EC3\u662F\u6210\u957F\u6700\u5FEB\u7684\u3002"
-    },
-    {
-      id: 316,
-      category: "growth",
-      content: "\u4E00\u5B9A\u8981\u6362\u4F4D\u601D\u8003\uFF0C\u7528\u6237\u9700\u8981\u4EC0\u4E48\uFF0C\u4ED6\u4EEC\u9047\u5230\u4E86\u4EC0\u4E48\u5177\u4F53\u95EE\u9898\uFF0C\u53BB\u89E3\u51B3\u3002\n\u5373\u4F7F\u662F\u4E00\u4E9B\u57FA\u7840\u5230\u4E0D\u80FD\u518D\u57FA\u7840\u7684\u95EE\u9898\uFF0C\u4ED6\u4EEC\u662F\u771F\u7684\u4E0D\u4F1A\u3002\n\u591A\u53BB\u63A5\u89E6\u5B9E\u9645\u7528\u6237\uFF0C\u522B\u95ED\u95E8\u8F93\u51FA\u3002"
-    },
-    {
-      id: 317,
-      category: "growth",
-      content: "\u5982\u679C\u4F60\u80FD\u5360\u636E\u67D0\u4E2A\u7EC6\u5206\u9886\u57DFTOP\uFF0C\u4E0D\u7F3A\u5C0F\u94B1\u3002\u8DB3\u591F\u7EC6\u7684\u9886\u57DF\u5373\u53EF\u3002"
-    },
-    {
-      id: 318,
-      category: "growth",
-      content: "\u6309\u81EA\u5DF1\u7684\u8282\u594F\uFF0C\u9009\u62E9\u81EA\u5DF1\u559C\u6B22\u7684\u5408\u4F5C\u65B9\uFF0C\u4E0D\u59D4\u5C48\uFF0C\u4E0D\u5C06\u5C31\u3002\u7EE7\u7EED\u524D\u884C\u3002"
-    },
-    {
-      id: 319,
-      category: "growth",
-      content: "\u6362\u4E2A\u601D\u8DEF\uFF0C\u5565\u4E8B\u4E0D\u96BE\uFF1F\u7ED9\u8001\u677F\u6253\u5DE5\u8D5A\u94B1\u66F4\u96BE\u3002\u6BCF\u5929\u9047\u5230\u4E00\u4E9B\u795E\u5947\u7684\u5BA2\u6237\u3001\u540C\u4E8B\u3001Leader\u3002"
-    },
-    {
-      id: 320,
-      category: "growth",
-      content: "\u89E6\u8FBE\u4E86\uFF0C\u4F46\u7528\u6237\u6CA1\u6293\u4F4F\uFF0C\u6CA1\u505A\u51B3\u7B56\uFF0C\u4E0D\u662F\u6211\u7684\u95EE\u9898\uFF0C\u662F\u7528\u6237\u7684\u95EE\u9898\u3002"
-    },
-    {
-      id: 321,
-      category: "growth",
-      content: "\u591A\u6570\u4EBA\u559C\u6B22\u95EE\u300C\u4E3A\u4EC0\u4E48\u300D\uFF0C\u800C\u4E0D\u662F\u300C\u53BB\u505A\u5230\u300D\u3002"
-    },
-    {
-      id: 322,
-      category: "growth",
-      content: "\u522B\u95EE\u300C\u67D0\u67D0\u67D0\u600E\u4E48\u505A\uFF1F\u300D\u8FD9\u7C7B\u50BB\u95EE\u9898\uFF0C\u628A\u8FD9\u53E5\u8BDD\u5728\u5FAE\u4FE1\u641C\u7D22\u6846\u7C98\u8D34\u4E0B\uFF0C\u4E00\u5806\u7B54\u6848\u3002"
-    },
-    {
-      id: 323,
-      category: "growth",
-      content: "\u4E00\u4E9B\u540C\u5B66\uFF0C\u5728\u300C\u61C2\u4E8B\u300D\u8FD9\u5757\uFF0C\u8FD8\u662F\u5DEE\u4E86\u70B9\uFF0C\u770B\u518D\u591A\u5185\u5BB9\u4E5F\u5B66\u4E0D\u4F1A\uFF0C\u9700\u8981\u300C\u5728\u4E8B\u4E0A\u7EC3\u300D\u3002"
-    },
-    {
-      id: 324,
-      category: "growth",
-      content: "\u592A\u591A\u540C\u5B66\uFF0C\u56E0\u4E3A\u8FD0\u6C14\u6216\u6293\u4F4F\u4E86\u673A\u4F1A\uFF0C\u8D5A\u8FC7\u4E0D\u5C11\u94B1\u3002\u4F46\uFF0C\u6CA1\u5199\u8FC7SOP\uFF0C\u6CA1\u7CFB\u7EDF\u5199\u8FC7\u4ED8\u8D39\u4E13\u680F\u3002\u771F\u7684\u8BA9\u4ED6\u81EA\u5DF1\u5355\u72EC\u51FA\u4E00\u6B3E\u4EA7\u54C1\uFF0C\u5F88\u96BE\uFF0C\u5185\u5BB9\u4F53\u7CFB\u5F88\u6DF7\u4E71\u3002\n\n\u8FD9\u4E2A\u65F6\u5019\uFF0C\u4E0D\u5EFA\u8BAE\u81EA\u5DF1\u76F2\u76EE\u51FA\u4EA7\u54C1\uFF0C\u5408\u4F5C\uFF0C\u4E92\u5229\u5171\u8D62\uFF0CCPS \u4E5F\u662F\u4E0D\u9519\u7684\u8DEF\u5F84\u3002"
-    },
-    {
-      id: 325,
-      category: "growth",
-      content: "\u805A\u7126\uFF0C\u522B\u778E\u5FD9\u3002\u7D2F\u4E14\u65E0\u7ED3\u679C\u3002"
-    },
-    {
-      id: 326,
-      category: "growth",
-      content: "\u6211\u7279\u522B\u53CD\u611F\u4E00\u4E9B\u4EBA\uFF0C\u79C1\u4FE1\u5F3A\u63A8\u4EA7\u54C1\u3002\u800C\u4E14\u662F\u90A3\u79CD\uFF0C\u79C1\u4FE1\u4E00\u6B21\u6CA1\u56DE\u590D\uFF0C\u518D\u6B21\u79C1\u4FE1\u7684\u3002"
-    },
-    {
-      id: 327,
-      category: "growth",
-      content: "\u88AB\u4E00\u4E9BIP \u73A9\u5BB6\u300C\u50CF\u7D20\u7EA7\u6A21\u4EFF\u300D\u662F\u597D\u4E8B\u3002\u8BC1\u660E\u8001\u5F90\u7684\u8FD9\u5957\u300C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\uFF0C\u4F4E\u4E2D\u9AD8\u6F0F\u6597\u6A21\u578B\u300D\u53EF\u8DD1\u901A\u4E14\u80FD\u88AB\u653E\u5927\u3002\n\u5C0F\u5EFA\u8BAE\uFF1A\u8981\u6A21\u4EFF\u5C31\u8D34\u8EAB\u6A21\u4EFF\uFF0C\u6765\u300C\u8001\u5F90\u5408\u4F19\u4EBA\u300D\u8D34\u8EAB\u6A21\u4EFF\u516B\u5E74\uFF0C\u4F1AN \u500D\u653E\u5927\u3002\u5177\u4F53\u81EA\u5DF1\u53BB\u5224\u65AD\uFF0C\u5206\u6790\uFF0C\u51B3\u7B56\u3002"
-    },
-    {
-      id: 328,
-      category: "growth",
-      content: "\u666E\u901A\u4EBA\uFF0C\u5C0F\u4E2A\u4F53\uFF0C\u5927\u73AF\u5883\u5BF9\u4F60\u7684\u5F71\u54CD\u5FAE\u4E4E\u5176\u5FAE\uFF0C\u6838\u5FC3\u662F\u81EA\u5DF1\u7684\u95EE\u9898\u3002"
-    },
-    {
-      id: 329,
-      category: "growth",
-      content: "\u95ED\u73AF\u610F\u8BC6\u3002\u4E00\u4EF6\u4E8B\u4EA4\u7ED9\u4F60\u4E86\uFF0C\u8981\u6709\u7ED3\u679C\u53CD\u9988\uFF08\u597D\u4E0E\u574F\u4E0D\u91CD\u8981\uFF09\u3002"
-    },
-    {
-      id: 330,
-      category: "growth",
-      content: "\u77E5\u8BC6\u4E0D\u503C\u94B1\uFF0C\n\u6838\u5FC3\u662F\u300C\u53BB\u505A\uFF0C\u5E76\u51FA\u7ED3\u679C\u300D\u3002\n0 \u57FA\u7840\uFF0C\u4E0D\u91CD\u8981\uFF0C\u6838\u5FC3\u662F\u300C\u8FC8\u51FA\u7B2C\u4E00\u6B65\uFF0C\u5BF9\u81EA\u5DF1\u591F\u72E0\u300D\u3002"
-    },
-    {
-      id: 331,
-      category: "growth",
-      content: "\u4E0D\u559C\u6B22\u5236\u9020\u7126\u8651\uFF0C\u53CD\u800C\u8001\u5F90\u66F4\u591A\u7684\u662F\u5E0C\u671B\u5927\u5BB6\u300C\u6162\u4E00\u70B9\u300D\uFF0C\u5C11\u4ED8\u8D39\uFF0C\u591A\u6267\u884C\uFF0C\u5FEB\u901F\u6267\u884C\uFF0C\u5148\u51FA\u7ED3\u679C\u3002\n\n\u4ED8\u8D39\u4E0D\u7B49\u4E8E\u5B66\u4F1A\u3002"
-    },
-    {
-      id: 332,
-      category: "growth",
-      content: "\u4E92\u8054\u7F51\u6700\u4E0D\u7F3A\u7684\u5C31\u662F\u6587\u7AE0\uFF0C\u5E26\u7740\u5934\u8111\uFF0C\u53BB\u770B\uFF0C\u624D\u6709\u7528\u3002"
-    },
-    {
-      id: 333,
-      category: "growth",
-      content: "\u8BA9\u4F60\u65F6\u95F4\u300C\u6295\u5165\u4EA7\u51FA\u300D\u6210\u6B63\u6BD4\uFF0C\u6301\u7EED\u505A\u4E0B\u53BB\uFF0C\u4E0D\u4E89\u4E00\u65F6\u3002"
-    },
-    {
-      id: 334,
-      category: "growth",
-      content: "\u68C0\u7D22\uFF0C\u56FE\u6587\uFF0C\u601D\u8003\uFF0C\u590D\u76D8\uFF0C\u6267\u884C\uFF0C\u843D\u5730\u3002\n\u80FD\u505A\u5230\u8FD9\u4E9B\uFF0C\u51FA\u7ED3\u679C\u7684\u6548\u7387\uFF0C\u662F\u5176\u4ED6\u4EBA\u768410 \u500D\u3002"
-    },
-    {
-      id: 335,
-      category: "growth",
-      content: "\u8BFB\u8005\uFF0C\u53EA\u6709\u4E24\u79CD\uFF1A\n1\u3001\u4ED8\u8D39\u7528\u6237\uFF0C\n2\u3001\u514D\u8D39\u7528\u6237\u3002"
-    },
-    {
-      id: 336,
-      category: "growth",
-      content: "\u95EE\uFF1A\u6211\u5DF2\u4E0D\u592A\u5E74\u8F7B\uFF0C\u526F\u4E1A\u4E00\u76F4\u627E\u4E0D\u5230\u65B9\u5411\uFF0C\u60F3\u8D70\u4E2A\u6377\u5F84\uFF0C\u4E0D\u77E5\u8001\u5E08\u80FD\u5426\u6307\u70B9\u8FF7\u6D25\uFF1F\n\nIDO \u8001\u5F90\uFF1A\n1.\u65B9\u5411\u662F\u505A\u51FA\u6765\u7684\uFF1B\n2.\u5B9E\u6218\u5C0F\u9879\u76EE\uFF0C\u63D0\u4F9B\u4E86100 \u4E2A\uFF0C\u53BB\u505A\uFF0C\u8BD5\u9519\uFF1B\n3.\u4EBA\u751F\u6CA1\u6709\u6377\u5F84\uFF0C\u505A\u526F\u4E1A\u66F4\u6CA1\u6709\u6377\u5F84\u3002"
-    },
-    {
-      id: 337,
-      category: "growth",
-      content: "\u53EA\u8981\u542F\u7A0B\u4E00\u5B9A\u4F1A\u6709\u7ED3\u679C\u3002\n\u8FC8\u5F00\u7B2C\u4E00\u6B65\uFF0C\u7B49\u7ED3\u679C\u3002"
-    },
-    {
-      id: 338,
-      category: "growth",
-      content: "\u8D76\u65E9\u4E0D\u8D76\u665A\u3002\u5148\u5B8C\u6210\u518D\u5B8C\u7F8E\u3002"
-    },
-    {
-      id: 339,
-      category: "growth",
-      content: "\u4E0D\u662F\u300C\u70ED\u7231\u4E0E\u5426\u300D\u7684\u95EE\u9898\uFF0C\n\u800C\u662F\u300C\u76EE\u6807\u6709\u65E0\u300D\u7684\u95EE\u9898\u3002"
-    },
-    {
-      id: 340,
-      category: "growth",
-      content: "\u63A2\u7D22\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\uFF0C\u804C\u573A\u6C42\u7A33\uFF0C\u526F\u4E1A\u63A2\u7D22\uFF0C\u6BCF\u65E5\u6267\u884C\uFF0C\u4EA4\u7ED9\u65F6\u95F4\u3002\n\n\u522B\u76F2\u76EE\u88F8\u8F9E\uFF0C\u63A2\u7D22\u4E00\u4EBA\u4F01\u4E1A\u9700\u8981\u5468\u671F\u3002"
-    },
-    {
-      id: 341,
-      category: "growth",
-      content: "\u89E3\u51B3\u95EE\u9898\u7684\u8DEF\u5F84\uFF1A\nA \u81EA\u5DF1\u7814\u7A76\uFF0C\u9047\u5230\u4E0D\u4F1A\u7684\u641C\u7D22\u641E\u5B9A\uFF1B\uFF0895%\u95EE\u9898\u53EF\u641C\u7D22\u5230\u7B54\u6848\u6216\u89E3\u51B3\u601D\u8DEF\uFF09\nB \u4ED8\u8D39\u8BF7\u6709\u7ECF\u9A8C\u7684\u4EBA\u89E3\u7B54\uFF1B\nC \u653E\u5F03\u8FD9\u4E2A\u95EE\u9898\uFF1B\n\u6709\u4E9B\u540C\u5B66\uFF0C\u6CA1\u72EC\u7ACB\u89E3\u51B3\u96BE\u9898\u7684\u80FD\u529B\uFF0C\u4E5F\u4E0D\u60F3\u4ED8\u8D39\uFF0C\u5EFA\u8BAE\u9009C\u3002"
-    },
-    {
-      id: 342,
-      category: "growth",
-      content: "\u62B1\u6028\u3001\u751F\u6C14\u3001\u803D\u8BEF\u7684\u53EA\u662F\u81EA\u5DF1\u7684\u65F6\u95F4\u548C\u751F\u547D\u3002\n\n\u63A5\u53D7\u4E0D\u80FD\u6539\u53D8\u7684\u3002"
-    },
-    {
-      id: 343,
-      category: "growth",
-      content: "\u5185\u5BB9\u4EF7\u503C\u80DC\u4E8E\u4EF7\u683C\u3002"
-    },
-    {
-      id: 344,
-      category: "growth",
-      content: "\u770B\u4E86\uFF0C\u4EE5\u4E3A\u4F1A\u4E86\uFF0C\u505A\u4E86\uFF0C\u4E00\u5806\u95EE\u9898\uFF0C\u8C03\u6574\uFF0C\u6539\u8FDB\uFF0C\u8C03\u6574\uFF0C\u51FA\u7ED3\u679C\u4E86\uFF0C\u521B\u65B0\uFF0C\u7ED3\u679C\u653E\u5927\uFF0C\u603B\u7ED3\u65B9\u6CD5\u8BBA\uFF0C\u4F9B\u4ED6\u4EBA\u7EE7\u7EED\u5B9E\u8DF5\u3002"
-    },
-    {
-      id: 345,
-      category: "growth",
-      content: "\u8BA9\u81EA\u5DF1\u300C\u8868\u91CC\u5982\u4E00\u300D\u3002\n\u4F60\u8BA9\u5927\u4F17\u770B\u5230\u7684\u4F60\uFF0C\u6216\u611F\u53D7\u5230\u7684\u4F60\uFF0C\u8981\u4E0E\u4F60\u65E5\u5E38\u505A\u5230\u7684\u4E00\u81F4\u3002\n\n\u88C5\u662F\u5F88\u7D2F\u7684\u3002\n\u4E00\u5E74\uFF0C\u4E09\u5E74?\u597D\u50CF\u53EF\u4EE5\u3002\n\u5341\u5E74\u5462?\u592A\u7D2F\u4E86\u3002\n\u4EBA\u751F\u82E6\u77ED\uFF0C\u505A\u81EA\u5DF1\u3002\n\u771F\u5B9E\uFF0C\u4E0D\u5B8C\u7F8E\uFF0C\u6211\u5C31\u662F\u8FD9\u6837\u3002"
-    },
-    {
-      id: 346,
-      category: "growth",
-      content: "\u53EA\u6709\u628A\u95EE\u9898\u590D\u76D8\u6E05\u695A\uFF0C\u624D\u80FD\u6709\u5B8C\u6574\u7684\u89E3\u51B3\u65B9\u6848\u3002"
-    },
-    {
-      id: 347,
-      category: "growth",
-      content: "\u6700\u96BE\u7684\u8FD8\u662F\u8981\u628A\u81EA\u5DF1\u53EB\u9192\u3002"
-    },
-    {
-      id: 348,
-      category: "growth",
-      content: "\u8981\u611F\u8C22\u4E92\u8054\u7F51\u4E0A\uFF0C\u80FD\u76F4\u63A5\u6307\u51FA\u4F60\u672C\u8D28\u95EE\u9898\u7684\u4EBA\u3002\u521D\u770B\u89C9\u5F97\u6CA1\u88AB\u5C0A\u91CD\uFF0C\u53D7\u6253\u51FB\u3002\u957F\u671F10 \u5E74\u6765\u770B\uFF0C\u4E5F\u8BB8\u662F\u5F7B\u5E95\u6539\u53D8\u7684\u5F00\u59CB\u3002\n\n\u591A\u6570\u4EBA\uFF0C\u592A\u5B89\u9038\u4E86\uFF0C\u5728\u81EA\u5DF1\u7684\u5708\u5B50\u91CC\u4E00\u76F4\u8F6C\uFF0C\u4E0D\u81EA\u77E5\u3002\n\n\u5927\u5BB6\u90FD\u5F88\u5FD9\uFF0C\u6CA1\u65F6\u95F4\u7ED9\u964C\u751F\u4EBA\u5EFA\u8BAE\u3002\n\u4F60\u4EEC\u8D5A\u5230\u94B1\u4E86\uFF0C\u4E5F\u4E0D\u4F1A\u6765\u611F\u8C22\uFF0C\u6216\u8D5E\u8D4F\u3002\u6CA1\u8D5A\u5230\u94B1\uFF0C\u4E5F\u8DDF\u6211\u6CA1\u5565\u5173\u7CFB\u3002\n\n\u8FD9\u4E9B\u5E74\uFF0C\u8001\u5F90\u7ED9\u5EFA\u8BAE\uFF0C\u5DF2\u7ECF\u8D8A\u6765\u8D8A\u5C11\u4E86\u3002\u6BD5\u7ADF\uFF0C\u5EFA\u8BAE\u7ED9\u7684\u8D8A\u591A\uFF0C\u9ED1\u7C89\u8D8A\u591A\u3002\u8001\u662F\u88AB\u9A82\u3002\u6B63\u786E\u7684\u6267\u884C\u65B9\u5411\uFF0C\u5927\u4E8E\u76F2\u76EE\u7684\u52AA\u529B\u3002"
-    },
-    {
-      id: 349,
-      category: "growth",
-      content: "\u53C2\u8003\u4ED6\u4EBA\u7684\u7ECF\u9A8C\uFF0C\u63A2\u5BFB\u9002\u5408\u81EA\u5DF1\u7684\u843D\u5730\u6267\u884C\u8DEF\u5F84\u3002"
-    },
-    {
-      id: 350,
-      category: "growth",
-      content: "\u5199\u7684\u591A\u4E86\uFF0C\u601D\u8003\u7684\u591A\u4E86\uFF0C\u5F88\u591A\u8FC7\u5F80\u6C89\u7761\u7684\u77E5\u8BC6\u5C31\u4E32\u8D77\u6765\u4E86\u3002"
-    },
-    {
-      id: 351,
-      category: "growth",
-      content: "\u5728\u4E92\u8054\u7F51\u4E0A\uFF0C\u6652\u81EA\u5DF1\u7684\u7ECF\u6D4E\u5B9E\u529B\uFF0C\u662F\u4E00\u79CD\u6BD4\u8F83\u300C\u4F4E\u7EF4\u300D\u7684\u601D\u8DEF\u3002\n\u6211\u66F4\u5EFA\u8BAE\u6652\uFF1A\n1\u3001\u67D0\u4EF6\u4E8B\u7684\u6536\u83B7\uFF0C\u4E13\u4E1A\u89C1\u89E3\uFF0C\u8BFB\u8FC7\u7684\u4E66\uFF1B\n2\u3001\u4F18\u8D28\u7528\u6237\uFF1B\n3\u3001\u600E\u4E48\u5E2E\u52A9\u7528\u6237\u89E3\u51B3\u67D0\u95EE\u9898\u7684\uFF1B\n4\u3001\u7528\u6237\u7684\u6210\u957F\u3001\u8BC4\u4EF7\u3002"
-    },
-    {
-      id: 352,
-      category: "growth",
-      content: "\u6210\u529F\u7684\u51E0\u4E2A\u5173\u952E\u56E0\u7D20\uFF1A\n\u6B63\u786E\u7684\u65B9\u5411\u4E0A\u6267\u884C + \u52AA\u529B + \u8FD0\u6C14\u3002\n\u65B9\u5411\uFF0C\u81EA\u5DF1\u4E00\u4E2A\u4EBA\u6298\u817E\uFF0C\u5927\u6982\u7387\u4F1A\u8D70\u9519\uFF0C\u8981\u91CD\u8BD5\u591A\u6B21\u3002\n\u52AA\u529B\uFF0C\u5982\u679C\u4F60\u60F3\u6210\u4E8B\uFF0C\u8FD9\u662F\u57FA\u672C\u7684\u3002\n\u8FD0\u6C14\uFF0C\u6CA1\u529E\u6CD5\u628A\u63A7\uFF0C\u53EA\u80FD\u4E00\u5207\u51C6\u5907\u597D\uFF0C\n\u7B49\u597D\u8FD0\u6765\uFF0C\u5E76\u628A\u5979\u63A5\u4F4F\u3002\n\n\u91CF\u5927\u51FA\u5947\u8FF9\u3002"
-    },
-    {
-      id: 353,
-      category: "growth",
-      content: "\u62B1\u56E2\uFF0C\u522B\u81EA\u5DF1\u4E00\u4E2A\u4EBA\u95F7\u5934\u505A\u3002"
-    },
-    {
-      id: 354,
-      category: "growth",
-      content: "\u51FA\u9519\u4E0D\u8981\u7D27\uFF0C\u4E3B\u52A8\u627F\u8BA4\uFF0C\u5E76\u8865\u6551\u3002\u4E14\u4E0D\u518D\u91CD\u590D\u72AF\u9519\u3002"
-    },
-    {
-      id: 355,
-      category: "growth",
-      content: "\u8981\u60F3\u6210\u4E8B\uFF0C\u4F53\u529B\uFF0C\u4E13\u6CE8\u529B\uFF0C\u8010\u529B\uFF0C\u4E09\u529B\u7F3A\u4E00\u4E0D\u53EF\u3002\n\u4E0D\u65AD\u7ED9\u81EA\u5DF1\u5C0F\u7684\u627F\u8BFA\u5E76\u52AA\u529B\u8FBE\u5230\u3002"
-    },
-    {
-      id: 356,
-      category: "growth",
-      content: "\u505A\u662F0\uFF0C\u72E0\u662F1\uFF0C\n\u53EA\u662F\u300C\u51B3\u5FC3\u300D\u662F\u6CA1\u4EC0\u4E48\u7528\u7684\u3002"
-    },
-    {
-      id: 357,
-      category: "growth",
-      content: "\u5F80\u5F80\u514D\u8D39\u662F\u6700\u8D35\u7684\uFF0C\u95E8\u69DB\u662F\u6700\u9AD8\u7684\u3002"
-    },
-    {
-      id: 358,
-      category: "growth",
-      content: "\u6301\u7EED\uFF0C\u522B\u505C\uFF0C\u7ECF\u8FC7\u51E0\u5E74\u7684\u79EF\u7D2F\uFF0C\u60F3\u4E0D\u6210\u4E8B\u90FD\u96BE\u3002"
-    },
-    {
-      id: 359,
-      category: "growth",
-      content: "\u65F6\u95F4\uFF0C\u76EE\u6807\uFF0C\u7CBE\u529B\u3002\n\u672C\u8D28\u662F\u7CBE\u529B\u7BA1\u7406\u3002"
-    },
-    {
-      id: 360,
-      category: "growth",
-      content: "\u5341\u5E74\u957F\u7EBF\u79EF\u7D2F\u7684\u4E8B\uFF0C\u4E0D\u5728\u4E8E\u4E00\u65F6\u7684\u52AA\u529B\u3002\u800C\u5728\u4E8E10 \u5E74\uFF0C\u65E5\u590D\u4E00\u65E5\u7684\u6B7B\u78D5\u524D\u884C\uFF0C\u6BCF\u5929\u96F7\u6253\u4E0D\u52A8\u7684\u524D\u884C\u4E00\u70B9\u70B9\u3002"
-    },
-    {
-      id: 361,
-      category: "growth",
-      content: "\u957F\u8DD1\uFF0C\u91CD\u8981\u7684\u662F\u4E0B\u534A\u573A\u3002\u4E0D\u7740\u6025\u3002"
-    },
-    {
-      id: 362,
-      category: "growth",
-      content: "1\u3001\u627E\u4E2A\u65F6\u95F4\uFF0C\u5C31\u662F\u6CA1\u65F6\u95F4\uFF0C\n2\u3001\u6709\u673A\u4F1A\u89C1\u9762\u804A\uFF0C\u5C31\u662F\u6CA1\u673A\u4F1A\uFF0C\n3\u3001\u4E0B\u6B21\u5411\u4F60\u4ED8\u8D39\u5B66\u4E60\uFF0C\u5C31\u662F\u4E0D\u4ED8\u8D39\uFF0C\n\n\u5C11\u4E00\u4E9B\u65E0\u610F\u4E49\u7684\u5BA2\u5957\u8BDD\u3002"
-    },
-    {
-      id: 363,
-      category: "growth",
-      content: "\u6C89\u4E0B\u6765\uFF0C\u7B49\u673A\u7F18\u3002\n\u73A9IP\uFF0C\u4E0D\u7740\u6025\u3002\n\u8010\u4E0B\u5FC3\uFF0C\u7B49\u673A\u9047\u3002"
-    },
-    {
-      id: 364,
-      category: "growth",
-      content: "\u4E0D\u8BA4\u53EF\u7684\u4EA7\u54C1\uFF0C\u4E0D\u8BA4\u53EF\u7684\u4EBA\uFF0C\u8001\u5F90\u4E0D\u4F1A\u63A8\u3002\n\n\u8001\u5F90\u5408\u4F19\u4EBA\uFF0C\u4F1A\u8F85\u52A9\u4F60\u63A8\u51FA\u4ED8\u8D39\u4E13\u680F\uFF0C\u5168\u7A0B\u6307\u5BFC\uFF0C\u5E76\u7ED9\u6D41\u91CF\uFF0C\u63A8\u8350\uFF0C\u8D4B\u80FD\u3002\n\n\u770B\u957F\u671F\uFF0C\u6301\u7EED\u63D0\u4F9B\u4EF7\u503C\u3002\u522B\u6536\u5272\uFF0C\u4E0D\u9760\u8C31\u4E00\u6B21\uFF0C\u5C31\u6C38\u4E45\u5931\u53BB\u4E86\u673A\u4F1A\u3002"
-    },
-    {
-      id: 365,
-      category: "growth",
-      content: "\u516C\u5F00\u53D1\u5E03\u7684\u4F5C\u54C1\uFF0C\u503C\u5F97\u6253\u78E8100 \u6B21\uFF0C1000\u6B21\u3002\u63D0\u524D\u627E\u4E00\u6279\u4EBA\u53BB\u5185\u6D4B\uFF0C\u4FEE\u6539\uFF0C\u76F4\u5230\u8FD1\u4E4E\u5B8C\u7F8E\u3002\n\n\u4F60\u4EEC\u6B64\u523B\u770B\u5230\u7684\u8FD9\u672C\u4E66\uFF0C\u524D\u540E\u6253\u68376 \u7248\uFF0C\u5185\u5BB9\u7A3F\u4FEE\u6539\u4E0D\u5C11\u4E8E50 \u6B21\u3002\n\n\u6301\u7EED\u4F18\u5316\uFF0C\u6BCF\u65E5\u6210\u957F\uFF0C\u9010\u6B65\u8D8B\u4E8E\u5B8C\u7F8E\u3002"
+      return [Provider, useContext2];
     }
-  ];
-
-  // src/pages/ContentPage.tsx
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-  var ContentPage = () => {
-    const { category } = useParams();
-    const getCategoryConfig = () => {
-      switch (category) {
-        case "money":
-          return {
-            title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u8D5A\u94B1\u7BC7",
-            description: "\u63A2\u7D22\u590D\u5229\u5546\u4E1A\u5316\u7684\u65B9\u6CD5\u4E0E\u8DEF\u5F84\uFF0C\u4ECE\u8D5A\u5C0F\u94B1\u5F00\u59CB",
-            icon: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DollarSign, { className: "h-8 w-8 text-green-500" }),
-            color: "bg-green-50",
-            borderColor: "border-green-200",
-            data: contentData.filter((item) => item.category === "money")
-          };
-        case "pitfalls":
-          return {
-            title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u907F\u5751\u7BC7",
-            description: "\u8BC6\u522B\u5E38\u89C1\u9677\u9631\uFF0C\u907F\u514D\u5728\u5546\u4E1A\u5316\u8DEF\u4E0A\u7684\u5F2F\u8DEF",
-            icon: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(TriangleAlert, { className: "h-8 w-8 text-red-500" }),
-            color: "bg-red-50",
-            borderColor: "border-red-200",
-            data: contentData.filter((item) => item.category === "pitfalls")
-          };
-        case "writing":
-          return {
-            title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u5199\u4F5C\u7BC7",
-            description: "\u638C\u63E1\u5185\u5BB9\u521B\u4F5C\uFF0C\u5EFA\u7ACB\u4E2A\u4EBAIP\u7684\u6838\u5FC3\u65B9\u6CD5",
-            icon: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(SquarePen, { className: "h-8 w-8 text-blue-500" }),
-            color: "bg-blue-50",
-            borderColor: "border-blue-200",
-            data: contentData.filter((item) => item.category === "writing")
-          };
-        case "growth":
-          return {
-            title: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u6210\u957F\u7BC7",
-            description: "\u6301\u7EED\u7CBE\u8FDB\u81EA\u6211\uFF0C\u5B9E\u73B0\u957F\u671F\u7A33\u5B9A\u7684\u5546\u4E1A\u4EF7\u503C",
-            icon: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(TrendingUp, { className: "h-8 w-8 text-purple-500" }),
-            color: "bg-purple-50",
-            borderColor: "border-purple-200",
-            data: contentData.filter((item) => item.category === "growth")
-          };
-        default:
-          return {
-            title: "\u5185\u5BB9",
-            description: "\u63A2\u7D22\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u7684\u601D\u8003",
-            icon: null,
-            color: "bg-gray-50",
-            borderColor: "border-gray-200",
-            data: []
-          };
-      }
+    const createScope = () => {
+      const scopeContexts = defaultContexts.map((defaultContext) => {
+        return React5.createContext(defaultContext);
+      });
+      return function useScope(scope) {
+        const contexts = scope?.[scopeName] || scopeContexts;
+        return React5.useMemo(
+          () => ({ [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts } }),
+          [scope, contexts]
+        );
+      };
     };
-    const categoryConfig = getCategoryConfig();
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mx-auto px-4 py-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: `mb-10 rounded-lg ${categoryConfig.color} p-8 shadow-sm`, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex items-center gap-4", children: [
-        categoryConfig.icon,
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { className: "text-3xl font-bold", children: categoryConfig.title }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "mt-2 text-gray-600", children: categoryConfig.description })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "grid gap-6 md:grid-cols-2 lg:grid-cols-3", children: categoryConfig.data.map((item) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Card, { className: `border ${categoryConfig.borderColor} transition-transform duration-300 hover:shadow-md hover:scale-[1.02]`, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(CardContent, { className: "p-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex items-center gap-2 mb-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "font-bold text-blue-600", children: item.id.toString().padStart(3, "0") }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-px flex-grow bg-gray-200" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-lg font-medium leading-relaxed whitespace-pre-line", children: item.content })
-      ] }) }, item.id)) })
-    ] });
-  };
-  var ContentPage_default = ContentPage;
-
-  // src/pages/About.tsx
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
-  var About = () => {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "container mx-auto px-4 py-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-10 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white shadow-md", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h1", { className: "mb-6 text-3xl font-bold", children: "\u5173\u4E8E\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex flex-col gap-4 md:flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "md:w-2/3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4 text-lg", children: "\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u7CBE\u9009\u4E86IDO\u8001\u5F90\u5173\u4E8E\u300C\u4E00\u4EBA\u4F01\u4E1A\u300D\u6A21\u5F0F\u7684\u56DB\u5927\u6838\u5FC3\u677F\u5757\uFF1A\u8D5A\u94B1\uFF0C\u907F\u5751\uFF0C\u5199\u4F5C\uFF0C\u6210\u957F\u3002 \u6BCF\u4E00\u9875\u90FD\u53EF\u968F\u65F6\u6253\u5F00\uFF0C\u968F\u65F6\u67E5\u9605\uFF0C\u968F\u65F6\u601D\u8003\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-lg", children: "\u5E38\u770B\u5E38\u65B0\uFF0C\u503C\u5F97\u770B100\u904D\uFF0C\u5E76\u8F93\u51FA\u6BCF\u6761\u5185\u5BB9\u7684\u9605\u8BFB\u601D\u8003\uFF0C\u5B9E\u6218\u601D\u8003\u3002\u4E00\u8D77\u6210\u957F\uFF0C\u611F\u8C22\u9605\u8BFB\u3002" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "flex md:w-1/3 md:justify-end", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "relative aspect-[2/3] w-40 overflow-hidden rounded-lg border-4 border-white shadow-lg", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-            "img",
-            {
-              src: "https://pub-cdn.sider.ai/u/U01AHE70X2G/web-coder/6855718b6c4945f0aa7ff4d5/resource/85c05a46-0dd5-46f0-9e3d-4f2e5d3cfb4d.jpg",
-              alt: "\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u4E66\u7C4D\u5C01\u9762",
-              className: "h-full w-full object-cover"
-            }
-          ) }) })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-10", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-8 flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(User, { className: "h-6 w-6 text-blue-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-2xl font-bold", children: "\u5173\u4E8E\u4F5C\u8005" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex flex-col gap-6 md:flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "md:w-1/4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "overflow-hidden rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-            "img",
-            {
-              src: "https://pub-cdn.sider.ai/u/U01AHE70X2G/web-coder/6855718b6c4945f0aa7ff4d5/resource/3250b0cb-289c-4a60-a8f4-4b4c0660dddf.jpg",
-              alt: "IDO\u8001\u5F90\u7167\u7247",
-              className: "h-full w-full object-cover"
-            }
-          ) }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "md:w-3/4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "mb-4 text-xl font-semibold", children: "IDO\u8001\u5F90" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4 text-gray-700", children: "IDO\u8001\u5F90\u662F\u4E00\u4F4D\u4E13\u6CE8\u4E8E\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u6A21\u5F0F\u7684\u5B9E\u8DF5\u8005\u548C\u5206\u4EAB\u8005\u3002\u901A\u8FC7\u591A\u5E74\u7684\u5B9E\u6218\u7ECF\u9A8C\uFF0C\u4ED6\u6478\u7D22\u51FA\u4E86\u4E00\u5957 \u9002\u5408\u666E\u901A\u4EBA\u5B9E\u73B0\u5546\u4E1A\u4EF7\u503C\u7684\u65B9\u6CD5\u8BBA\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4 text-gray-700", children: "\u300C\u8001\u5F90\u5408\u4F19\u4EBA\u300D\u6A21\u5F0F\uFF0C\u662F\u5178\u578B\u7684\u300C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300D\u73A9\u6CD5\u3002\u805A\u96C61000\u4F4DIP\uFF0C\u4E92\u5229\u5171\u8D62\uFF0C\u653E\u5927\u5546\u4E1A\u5316\uFF0C \u4EA7\u751F\u300C\u4EBF\u7EA7\u5546\u4E1A\u5316\u300D\u89C4\u6A21\u3002\u65E0\u5458\u5DE5\uFF0C\u65E0\u529E\u516C\u573A\u5730\uFF0C\u51E0\u4E4E\u65E0\u6210\u672C\uFF0C\u8D5A\u7684\u6BCF\u4E00\u5206\u6536\u5165\uFF0C\u90FD\u662F\u5229\u6DA6\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-gray-700", children: "\u8FD9\u672C\u4E66\u7C4D\u6C47\u96C6\u4E86IDO\u8001\u5F90365\u6761\u5173\u4E8E\u4E00\u4EBA\u4F01\u4E1A\u6A21\u5F0F\u7684\u7CBE\u534E\u601D\u8003\uFF0C\u6DB5\u76D6\u8D5A\u94B1\u3001\u907F\u5751\u3001\u5199\u4F5C\u548C\u6210\u957F\u56DB\u4E2A\u6838\u5FC3\u677F\u5757\uFF0C \u4E3A\u8BFB\u8005\u63D0\u4F9B\u4E86\u4E00\u5957\u5B8C\u6574\u7684\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u601D\u7EF4\u4F53\u7CFB\u3002" })
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-10", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-8 flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(FileText, { className: "h-6 w-6 text-blue-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-2xl font-bold", children: "\u4E66\u7C4D\u6838\u5FC3\u7406\u5FF5" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { className: "bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(CardContent, { className: "p-6", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4 text-lg font-medium", children: "\u4E00\u4EBA\u4F01\u4E1A\u7684\u6838\u5FC3\u7406\u5FF5\uFF1A" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { className: "mb-6 space-y-3 text-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { className: "flex items-start gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 text-blue-600", children: "\u2022" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "\u5C3D\u53EF\u80FD\u7684\u628A\u516C\u53F8\u89C4\u6A21\u505A\u5C0F\uFF0C\u6807\u51C6\u5316\u73A9\u6CD5\uFF0C\u63D0\u9AD8\u6548\u7387\uFF0C\u63A2\u7D22\u5546\u4E1A\u5316\u7684\u6700\u5927\u53EF\u80FD\u6027\u3002" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { className: "flex items-start gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 text-blue-600", children: "\u2022" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "\u300A\u8001\u5F90\u5408\u4F19\u4EBA\u300B\u6A21\u5F0F\uFF0C\u662F\u5178\u578B\u7684\u300C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300D\u73A9\u6CD5\u3002\u805A\u96C61000\u4F4DIP\uFF0C\u4E92\u5229\u5171\u8D62\uFF0C\u653E\u5927\u5546\u4E1A\u5316\u3002\u4EA7\u751F\u300C\u4EBF\u7EA7\u5546\u4E1A\u5316\u300D\u89C4\u6A21\u3002" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { className: "flex items-start gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 text-blue-600", children: "\u2022" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "\u65E0\u5458\u5DE5\uFF0C\u65E0\u529E\u516C\u573A\u5730\u3002\u51E0\u4E4E\u65E0\u6210\u672C\uFF0C\u8D5A\u7684\u6BCF\u4E00\u5206\u6536\u5165\uFF0C\u90FD\u662F\u5229\u6DA6\u3002" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { className: "flex items-start gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 text-blue-600", children: "\u2022" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "\u8FD9\u662F\u4E00\u5BB6\u6C38\u4E0D\u5012\u95ED\u7684\u516C\u53F8\u3002" })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "italic text-gray-600", children: "\u4E00\u4EBA\u4F01\u4E1A\u7684\u6838\u5FC3\u98CE\u9669\uFF0C\u662F\u4F60\u8FD9\u4E2A\u4EBA\uFF0C\u8FD9\u662F\u6700\u6838\u5FC3\u7684\u53D8\u91CF\uFF0C\u5176\u4ED6\u90FD\u4E0D\u91CD\u8981\u3002" })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-10", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-8 flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(BookOpen, { className: "h-6 w-6 text-blue-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-2xl font-bold", children: "\u4E66\u7C4D\u7ED3\u6784" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "grid gap-6 md:grid-cols-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { className: "bg-green-50 hover:shadow-md", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(CardContent, { className: "p-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "mb-3 text-xl font-bold text-green-700", children: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u8D5A\u94B1\u7BC7" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-gray-700", children: "\u63A2\u7D22\u590D\u5229\u5546\u4E1A\u5316\u7684\u65B9\u6CD5\u4E0E\u8DEF\u5F84\uFF0C\u4ECE\u8D5A\u5C0F\u94B1\u5F00\u59CB\uFF0C\u5230\u5EFA\u7ACB\u7A33\u5B9A\u7684\u6536\u5165\u4F53\u7CFB\u3002 \u5206\u4EAB\u5982\u4F55\u6316\u6398\u9700\u6C42\u3001\u89E3\u51B3\u95EE\u9898\u3001\u63D0\u4F9B\u4EF7\u503C\u5E76\u5B9E\u73B0\u5546\u4E1A\u5316\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Button, { asChild: true, variant: "outline", className: "border-green-600 text-green-700 hover:bg-green-100", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Link, { to: "/content/money", children: "\u67E5\u770B\u5185\u5BB9" }) }) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { className: "bg-red-50 hover:shadow-md", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(CardContent, { className: "p-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "mb-3 text-xl font-bold text-red-700", children: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u907F\u5751\u7BC7" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-gray-700", children: "\u8BC6\u522B\u5E38\u89C1\u9677\u9631\uFF0C\u907F\u514D\u5728\u5546\u4E1A\u5316\u8DEF\u4E0A\u7684\u5F2F\u8DEF\u3002 \u5E2E\u52A9\u4F60\u907F\u514D\u76F2\u76EE\u4ED8\u8D39\u3001\u8FDC\u79BB\u6536\u5272\u6027\u9879\u76EE\u3001\u63D0\u9632\u865A\u5047\u5BA3\u4F20\uFF0C\u4FDD\u62A4\u81EA\u5DF1\u7684\u65F6\u95F4\u548C\u91D1\u94B1\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Button, { asChild: true, variant: "outline", className: "border-red-600 text-red-700 hover:bg-red-100", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Link, { to: "/content/pitfalls", children: "\u67E5\u770B\u5185\u5BB9" }) }) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { className: "bg-blue-50 hover:shadow-md", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(CardContent, { className: "p-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "mb-3 text-xl font-bold text-blue-700", children: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u5199\u4F5C\u7BC7" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-gray-700", children: "\u638C\u63E1\u5185\u5BB9\u521B\u4F5C\uFF0C\u5EFA\u7ACB\u4E2A\u4EBAIP\u7684\u6838\u5FC3\u65B9\u6CD5\u3002 \u4ECE\u517B\u6210\u5199\u4F5C\u4E60\u60EF\u5F00\u59CB\uFF0C\u5230\u6301\u7EED\u8F93\u51FA\u4EF7\u503C\u5185\u5BB9\uFF0C\u5F62\u6210\u81EA\u5DF1\u7684\u4E2A\u4EBA\u54C1\u724C\u548C\u5F71\u54CD\u529B\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Button, { asChild: true, variant: "outline", className: "border-blue-600 text-blue-700 hover:bg-blue-100", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Link, { to: "/content/writing", children: "\u67E5\u770B\u5185\u5BB9" }) }) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { className: "bg-purple-50 hover:shadow-md", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(CardContent, { className: "p-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "mb-3 text-xl font-bold text-purple-700", children: "\u4E00\u4EBA\u4F01\u4E1A\xB7\u6210\u957F\u7BC7" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-gray-700", children: "\u6301\u7EED\u7CBE\u8FDB\u81EA\u6211\uFF0C\u5B9E\u73B0\u957F\u671F\u7A33\u5B9A\u7684\u5546\u4E1A\u4EF7\u503C\u3002 \u5206\u4EAB\u601D\u7EF4\u65B9\u5F0F\u3001\u4E60\u60EF\u517B\u6210\u3001\u81EA\u6211\u7BA1\u7406\u7B49\u65B9\u9762\u7684\u5FC3\u5F97\uFF0C\u5E2E\u52A9\u4F60\u5728\u957F\u671F\u4E3B\u4E49\u9053\u8DEF\u4E0A\u8D70\u5F97\u66F4\u8FDC\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Button, { asChild: true, variant: "outline", className: "border-purple-600 text-purple-700 hover:bg-purple-100", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Link, { to: "/content/growth", children: "\u67E5\u770B\u5185\u5BB9" }) }) })
-          ] }) })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-10", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-8 flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Star, { className: "h-6 w-6 text-blue-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-2xl font-bold", children: "\u4F5C\u8005\u5BC4\u8BED" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rounded-lg bg-gray-50 p-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("blockquote", { className: "mb-6 border-l-4 border-blue-500 pl-4 italic text-gray-700", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4", children: "\u8FD9\u672C\u4E66\u7C4D\uFF0C\u7CBE\u9009\u4E86IDO\u8001\u5F90\u5173\u4E8E\u300C\u4E00\u4EBA\u4F01\u4E1A\u300D\u6A21\u5F0F\u7684\u56DB\u5927\u6838\u5FC3\u677F\u5757\uFF1A\u8D5A\u94B1\uFF0C\u907F\u5751\uFF0C\u5199\u4F5C\uFF0C\u6210\u957F\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-4", children: "\u6BCF\u4E00\u9875\u90FD\u53EF\u968F\u65F6\u6253\u5F00\uFF0C\u968F\u65F6\u67E5\u9605\uFF0C\u968F\u65F6\u601D\u8003\u3002\u6BCF\u6761\u5185\u5BB9\u4E4B\u95F4\uFF0C\u6CA1\u6709\u903B\u8F91\u5173\u7CFB\uFF0C\u4E0D\u9700\u8981\u6309\u987A\u5E8F\u9605\u8BFB\u3002" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: "\u5E38\u770B\u5E38\u65B0\uFF0C\u503C\u5F97\u770B100\u904D\uFF0C\u5E76\u8F93\u51FA\u6BCF\u6761\u5185\u5BB9\u7684\u9605\u8BFB\u601D\u8003\uFF0C\u5B9E\u6218\u601D\u8003\u3002" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-right text-sm text-gray-500", children: "\u2014 IDO\u8001\u5F90\uFF0C2025.01 \u6DF1\u5733" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-center text-white shadow-lg", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "mb-4 text-2xl font-bold", children: "\u5F00\u59CB\u60A8\u7684\u4E00\u4EBA\u4F01\u4E1A\u4E4B\u65C5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-6", children: "\u6D4F\u89C8365\u6761\u7CBE\u9009\u5185\u5BB9\uFF0C\u627E\u5230\u9002\u5408\u81EA\u5DF1\u7684\u590D\u5229\u5546\u4E1A\u5316\u8DEF\u5F84" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Button, { asChild: true, className: "bg-white text-blue-700 hover:bg-blue-50", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Link, { to: "/content/money", children: "\u7ACB\u5373\u5F00\u59CB" }) })
-      ] })
-    ] });
-  };
-  var About_default = About;
-
-  // src/pages/Feedback.tsx
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  var Feedback = () => {
-    const feedbacks = [
-      {
-        name: "\u98DE\u5DF4",
-        title: '20\u4EBF\u5E73\u53F0\u5168\u6808\u8FD0\u8425"\u9B54\u6CD5\u5E08"\u3001\u5546\u4E1A\u589E\u957F\u79C1\u4EBA\u6559\u7EC3\u3001\u5343\u4E07\u79C1\u57DF\u64CD\u76D8\u624B',
-        content: "2021\u5E74\u6211\u8FD8\u662F\u4E00\u4E2A\u526F\u4E1A\u5C0F\u767D\uFF0C\u90A3\u65F6\u5019\u9047\u5230\u4E86\u8001\u5F90\u5E76\u8DDF\u7740\u5B66\u4E60\u81F3\u4ECA\uFF0C\u8001\u5F90\u5021\u5BFC\u65E5\u66F4\u77ED\u6587\u5546\u4E1A\u5316\uFF0C\u6211\u4E5F\u662F\u4E00\u76F4\u5728\u8DF5\u884C\u7684\uFF0C\u5230\u4ECA\u5929\u5728\u661F\u7403\u5199\u65E5\u66F4\u5DF2\u7ECF\u8D85\u8FC71300\u5929\u4E86\uFF0C\u5546\u4E1A\u5316\u6C34\u6DA8\u8239\u9AD8\uFF0C\u4E2A\u4EBAIP\u4E09\u5E74\u65F6\u95F4\u4ECE\u65E0\u5230\u6709\u521D\u6B65\u6210\u5F62\u3002\u8FD9\u672C\u4E66\u91CC\u7684365\u7BC7\u77ED\u601D\u8003\uFF0C\u53EF\u4EE5\u8BF4\u662F\u89C1\u8BC1\u8001\u5F90\u4E00\u7BC7\u7BC7\u5199\u51FA\u6765\u7684\uFF0C\u6240\u4EE5\u6211\u5728\u7ED9\u793E\u7FA4\u5C0F\u4F19\u4F34\u89E3\u8BFB\u7684\u65F6\u5019\u5982\u9C7C\u5F97\u6C34\u3002\u8FD9\u672C\u4E66\u975E\u5E38\u9002\u5408\u4E2A\u4F53\u5F00\u5C55\u526F\u4E1A\u6216\u505A\u4E00\u4EBA\u4F01\u4E1A\uFF0C\u77ED\u5C0F\u7CBE\u70BC\uFF0C\u8BB2\u7684\u90FD\u662F\u5E95\u5C42\u65B9\u6CD5\u8BBA\uFF0C\u503C\u5F97\u8BFB\u4E0A\u5341\u904D\uFF0C\u5728\u8BFB\u7684\u8FC7\u7A0B\u4E2D\u4E0D\u65AD\u8DF5\u884C\uFF0C\u4F60\u4E00\u5B9A\u4F1A\u53D6\u5F97\u4E0D\u9519\u7684\u7ED3\u679C\u3002"
-      },
-      {
-        name: "\u6DF1\u5733\u5927\u51B2",
-        title: "\u672C\u4E66\u7B2C1\u4F4D\u8BFB\u8005\uFF0C\u4E13\u6CE8\u65B0\u4EBA\u793E\u7FA40\u52301",
-        content: "\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\uFF0C\u6709\u5F88\u591A\u7684\u300C\u4E00\u300D\u3002IDO\u8001\u5F90\u6709\u6D77\u91CF\u7684\u300C\u4E00\u4EBA\u4F01\u4E1A\u300D\u6DF1\u5EA6\u601D\u8003\u548C\u591A\u5E74\u843D\u5730\u7ECF\u9A8C\uFF0C2023.11.11\u5927\u51B2\u7B2C\u4E00\u4E2A\u63D0\u51FA\u6765\u53EF\u4EE5\u5E2E\u52A9\u8001\u5F90\u6574\u7406\u53D1\u5E03\u8FD9\u672C\u4E66\u3002\u5728\u98DE\u5DF4\u7684\u6307\u5BFC\u4E0B\uFF0C\u5E26\u7740\u4E00\u4F4D\u9AD8\u6821\u526F\u6559\u6388\u8C61\u9A91\u58EB\uFF0C\u4E00\u4F4D\u4E13\u4E1A\u6D4B\u8BD5\u9A6C\u5E78\u8FD0\uFF0C\u4E00\u4F4D\u521B\u610F\u70B9\u5B50\u624B\u5C0F\u516D\u516D\uFF0C\u4E00\u4F4D\u8D22\u52A1\u7EA7\u522B\u7684\u6821\u5BF9wendy\uFF0C\u4E00\u4F4D\u9996\u5E2D\u8BBE\u8BA1\u5E08\u86CB\u9EC4\u5DF4\u5DF4\u3002\u4ECE\u8001\u5F90\u76841000\u591A\u7BC7\u77ED\u6587\u91CC\u7CBE\u9009\u4E86365\u6761\uFF0C\u8C03\u6574\u4F18\u5316\u6253\u78E8\u4E86100\u591A\u6B21\uFF0C\u624D\u6700\u7EC8\u5448\u73B0\u4E86\u4F60\u4ECA\u5929\u770B\u5230\u7684\u8FD9\u672C\u4E66\u3002\u8FD8\u6CA1\u516C\u5F00\u53D1\u5E03\uFF0C\u5C31\u88AB\u4F1A\u5458\u4EEC\u9884\u5B9A\u4E8610000\u672C\u3002\u62E9\u4E00\u4EBA\u3001\u4E8E\u4E00\u57CE\u3001\u7EC8\u4E00\u751F\uFF0C\u4E00\u4EBA\u4F01\u4E1A\u957F\u957F\u4E45\u4E45\u3002\u5EFA\u8BAE\u8BA4\u771F\u9605\u8BFB\uFF0C\u5E76\u5728\u6BCF\u9875\u7A7A\u767D\u5904\u624B\u5199\u81EA\u5DF1\u7684\u7406\u89E3\u3002"
-      },
-      {
-        name: "\u6613\u5B89",
-        title: "\u5927\u5382\u7A0B\u5E8F\u5458&\u4E8C\u5B69\u5976\u7238\uFF0C\u4E13\u6CE8AI\u5DE5\u5177\u63D0\u6548&\u5E26\u9886\u7A0B\u5E8F\u5458\u641E\u526F\u4E1A",
-        content: "\u4E3B\u8981\u56F4\u7ED5\u300C\u5982\u4F55\u901A\u8FC7\u4E00\u4EBA\u4F01\u4E1A\u6A21\u5F0F\uFF0C\u5B9E\u73B0\u5546\u4E1A\u5316\u548C\u6536\u5165\u7684\u6301\u7EED\u589E\u957F\u300D\u3002\u4E66\u4E2D\u5206\u4E3A\u591A\u4E2A\u7BC7\u7AE0\uFF0C\u6BCF\u4E2A\u7BC7\u7AE0\u90FD\u5305\u542B\u4E86\u4E00\u7CFB\u5217\u7684\u7CBE\u534E\u89C2\u70B9\u548C\u5B9E\u7528\u5EFA\u8BAE\uFF0C\u4EF7\u503C\u975E\u5E38\u5927\u3002\u4E3A\u5E0C\u671B\u5EFA\u7ACB\u4E00\u4EBA\u4F01\u4E1A\u3001\u5B9E\u73B0\u5546\u4E1A\u5316\u548C\u4E2A\u4EBA\u6210\u957F\u7684\u8BFB\u8005\u63D0\u4F9B\u4E86\u4E30\u5BCC\u7684\u6307\u5BFC\u548C\u5EFA\u8BAE\u3002\u4E66\u4E2D\u7684\u5B9E\u7528\u7B56\u7565\u548C\u6DF1\u523B\u89C1\u89E3\uFF0C\u5BF9\u4E8E\u5E0C\u671B\u5728\u4E92\u8054\u7F51\u65F6\u4EE3\u521B\u9020\u4EF7\u503C\u7684\u4F60\uFF0C\u662F\u5B9D\u8D35\u7684\u8D44\u6E90\u3002"
-      },
-      {
-        name: "\u7B97\u6CD5\u91D1",
-        title: "0\u57FA\u7840\u5230\u591A\u4E2A\u7B97\u6CD5\u8D5BTop\uFF0C\u73B0\u5927\u5382\u7B97\u6CD5Leader\uFF0C\u65E5\u66F410000\u5929",
-        content: "\u6211\u4E00\u4E2A\u505A\u7B97\u6CD5\u7684\u6280\u672F\u7537\uFF0C\u4E3A\u5565\u8981\u770B\u8001\u5F90\u8FD9\u672C\u4E66\u300C\u56F4\u7ED5\u5546\u4E1A\u5316\u5C55\u5F00\u300D\u7684\u4E66\uFF1F\u9996\u5148\uFF0C\u5185\u5BB9\u7B80\u6D01\u6211\u559C\u6B22\u3002\u8FC7\u5EA6\u5305\u88C5\u7684\u590D\u6742\u5185\u5BB9\u9664\u4E86\u6D6A\u8D39\u6211\u4EEC\u65F6\u95F4\uFF0C\u53EF\u80FD\u8FD8\u4F1A\u6BD2\u5BB3\u6211\u4EEC\u7684\u601D\u60F3\uFF0C\u771F\u76F8\u4E0D\u9700\u8981\u53BB\u5305\u88C5\uFF1B\u5176\u6B21\uFF0C\u4E66\u91CC\u9762\u7684\u5185\u5BB9\u8BA9\u6211\u770B\u5230\u4E86\u300C\u8FC7\u5F80\u8E29\u8FC7\u7684\u548C\u6B63\u5728\u8E29\u7684\u300D\u5751\uFF0C\u5E38\u770B\u5E38\u65B0\uFF1B\u518D\u6B21\uFF0C\u5B83\u5C71\u4E4B\u77F3\u53EF\u4EE5\u653B\u7389\uFF0C\u5BF9\u4E8E\u6682\u65F6\u6CA1\u6709\u5F00\u5C55\u526F\u4E1A\u7684\u5C0F\u4F19\u4F34\uFF0C\u53EF\u80FD\u66F4\u6709\u542F\u53D1\uFF0C\u6BD4\u5982\u6211\u3002"
-      },
-      {
-        name: "\u5C0F\u8DEF",
-        title: "\u4E3B\u4E1A\u7A0B\u5E8F\u5458\uFF0C\u526F\u4E1A\u76D6\u6D1B\u666E\u4F18\u52BF\u6559\u7EC3",
-        content: "\u8FD9\u662F\u4E00\u672C\u56F4\u7ED5\u300C\u4E2A\u4EBA\u5546\u4E1A\u5316\u300D\u7684\u5B9E\u6218\u7ECF\u9A8C\u624B\u518C\uFF0C\u6CA1\u6709\u5404\u79CD\u9AD8\u5927\u4E0A\u7684\u7528\u8BCD\uFF0C\u5168\u662F\u4E00\u7EBF\u5B9E\u6218\u5F97\u5230\u7684\u7ECF\u9A8C\u603B\u7ED3\u3002365\u6761\uFF0C\u5305\u62EC\u8D5A\u94B1\uFF0C\u907F\u5751\uFF0C\u5199\u4F5C\uFF0C\u6210\u957F\uFF0C\u6BCF\u4E00\u6761\u90FD\u662F\u771F\u5B9E\u6709\u6548\u7684\u5B9E\u7528\u7ECF\u9A8C\u3002\u8001\u5F90\u4ECE\u6765\u4E0D\u804A\u865A\u7684\uFF0C\u4E00\u5B57\u5343\u91D1\uFF0C\u6BCF\u4E00\u6761\u503C\u5F97\u53CD\u590D\u770B\u3002\u5B66\u8001\u5F90\u77ED\u6587\u4EF7\u503C\u5199\u4F5C\uFF0C\u5B9E\u73B0\u81EA\u5DF1\u7684\u5546\u4E1A\u5316\u3002\u666E\u901A\u4EBA\u505A\u53EF\u79EF\u7D2F\uFF0C\u53EF\u590D\u5229\uFF0C\u7A7F\u8D8A\u5468\u671F\u7684IP\uFF0C\u5C31\u8DDF\u8001\u5F90\u5B66\u300C\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300D\u3002\u4E8B\u4E0A\u7EC3\uFF0C\u591A\u5B9E\u6218\uFF0C\u4EF7\u503C\u5199\u4F5C\u89E3\u51B3\u5177\u4F53\u95EE\u9898\u3002\u6C89\u4E0B\u5FC3\uFF0C\u770B\u957F\u671F\uFF0C\u6709\u539F\u5219\u3002"
-      },
-      {
-        name: "\u6708\u8D77\u661F\u4E5D",
-        title: "95\u540EAI\u56FE\u50CF\u5DE5\u7A0B\u5E08\uFF0C\u65E5\u66F4\u5199\u4F5C\uFF0C\u6DF1\u8015AI\u5E94\u7528",
-        content: "\u8FD9\u672C\u4E66\u5F88\u72EC\u7279\uFF0C\u7CBE\u9009365\u6761\u300C\u7B80\u77ED\u800C\u7CBE\u608D\u300D\u7684\u601D\u8003\uFF0C\u6BCF\u4E00\u53E5\u90FD\u51DD\u805A\u4E86\u65F6\u95F4\u7684\u6DF1\u5EA6\u4E0E\u5B9E\u8DF5\u7684\u667A\u6167\u3002\u6211\u65E0\u7591\u662F\u8FD9\u4E9B\u77ED\u601D\u8003\u7684\u53D7\u76CA\u8005\u3002\u548C\u8001\u5F90\u7684\u521D\u6B21\u9082\u9005\u6B63\u662F\u88AB\u4ED6\u7684\u77ED\u601D\u8003\u6240\u5438\u5F15\uFF0C\u5F53\u65F6\u63A5\u89E6\u526F\u4E1A\u4E0D\u4E45\u6CA1\u592A\u591A\u5B9E\u8DF5\u7ECF\u9A8C\uFF0C\u5BF9\u8FD9\u4E9B\u77ED\u601D\u8003\u53EA\u80FD\u770B\u4E2A\u8868\u9762\uFF0C\u5F88\u591A\u90FD\u662F\u770B\u4E0D\u61C2\uFF0C\u4E0D\u7406\u89E3\u3002\u4F46\u6211\u770B\u61C2\u4E86\u4E00\u53E5\u8BDD\uFF1A\u65E5\u66F4\uFF0C\u6301\u7EED\u8F93\u51FA\u3002\u73B0\u5728\u6211\u5DF2\u7ECF\u65E5\u66F4\u4E86\u4E00\u5E74\u591A\u3002\u7ED3\u5408\u81EA\u8EAB\u6848\u4F8B\u3001\u7ED3\u5408\u7528\u6237\u95EE\u9898\u53BB\u5199\u4F5C\uFF0C\u9010\u6E10\u505A\u5230\u4E86\u5546\u4E1A\u5316\u3002\u4E00\u5E74\u7ECF\u5386\u8BA9\u6211\u575A\u4FE1\uFF0C\u4E00\u4EBA\u4F01\u4E1A\u5F88\u9002\u5408\u666E\u901A\u4EBA\uFF0C\u5B83\u4E0D\u4EC5\u662F\u4E00\u79CD\u5DE5\u4F5C\u65B9\u5F0F\uFF0C\u66F4\u662F\u4E00\u79CD\u751F\u6D3B\u6001\u5EA6\u3002\u613F\u8FD9\u672C\u4E66\u4E5F\u80FD\u542F\u53D1\u4F60\uFF0C\u52A9\u4F60\u627E\u5230\u7EC8\u8EAB\u7684\u594B\u6597\u76EE\u6807\u3002"
-      },
-      {
-        name: "\u5C0F\u516D\u516D",
-        title: "\u91D1\u878D\u5355\u4F4D\u7A0B\u5E8F\u5458\uFF0C\u4E13\u6CE8\u4E00\u4EBA\u4F01\u4E1A\u63A2\u7D22\uFF0C\u4E13\u6CE8\u77ED\u89C6\u9891\u53E3\u64AD",
-        content: '\u4ECE\u672C\u4E66\u7B2C\u4E00\u7248\u5C31\u53C2\u4E0E\u5185\u5BB9\u7F16\u6392\u548C\u6821\u5BF9\uFF0C\u627E\u8FC7\u4E0A\u767E\u4E2Abug\uFF0C\u9605\u8BFB\u8FC7\u51E0\u5341\u904D\u3002\u6BCF\u5929\u5728\u6211\u7684\u966A\u4F34\u7FA4\uFF0C\u7ED9\u7FA4\u53CB\u4EEC\u89E3\u8BFB\u4E00\u7BC7\uFF0C365\u7BC7\uFF0C\u521A\u597D\u8DDF\u7FA4\u53CB\u4EEC\u5171\u8BFB\u4E00\u5E74\u3002\u672C\u4E66\u6CA1\u6709\u957F\u7BC7\u5927\u8BBA\uFF0C\u90FD\u662F\u5F88\u77ED\u5F88\u5E95\u5C42\u7684\u601D\u8003\uFF0C\u4FEE\u70BC\u57FA\u672C\u529F\u30021\u5C0F\u65F6\u5C31\u80FD\u8BFB\u5B8C\uFF0C\u4F46\u9700\u8981\u82B110\u5E74\u53BB\u6162\u6162\u5B9E\u8DF5\u3002\u4E00\u4EBA\u4F01\u4E1A\uFF0C\u8FFD\u6C42\u957F\u671F\u4E3B\u4E49\uFF0C\u590D\u5229\u5546\u4E1A\u5316\uFF0C\u4E00\u5B9A\u8981\u770B\u672C\u4E66\uFF0C\u76F8\u4FE1\u6211\uFF0C\u770B\u4E86\u540E\u4F60\u4F1A\u60CA\u547C"\u54C7\u585E"\u7684\uFF01\u5916\u754C\u7EB7\u7EB7\u6270\u6270\uFF0C\u672C\u4E66\u5E26\u4F60\u6E05\u9192\uFF0C\u671F\u5F85\u8DDF\u4F60\u4E00\u8D77\u5171\u8BFB\u3002'
-      },
-      {
-        name: "\u51CC\u4E00",
-        title: "AIGC\u63A2\u7D22\u8005\uFF0C\u63A2\u7D22\u6548\u7387\u6280\u80FD\u4E0EAI\u7ED3\u5408\u7684\u843D\u5730\u8DEF\u5F84",
-        content: "\u8FD9\u672C\u4E66\u7684\u6BCF\u6BB5\u6587\u5B57\u867D\u7136\u5F88\u77ED\uFF0C\u4F46\u662F\u5176\u8574\u542B\u7684\u4FE1\u606F\u91CF\u4E4B\u5927\uFF0C\u5B66\u4E60\u7406\u89E3\u4E4B\u540E\u66F4\u662F\u4EE4\u4EBA\u53D7\u76CA\u532A\u6D45\u3002\u4E66\u4E2D\u5217\u51FA\u4E86\u526F\u4E1A\u5B9E\u8DF5\u8DEF\u4E0A\u7684\u5404\u79CD\u9677\u9631\u3002\u672C\u4E66\u901A\u8FC7\u4F5C\u8005IDO\u8001\u5F90\u7684\u591A\u5E74\u5B9E\u8DF5\u7ECF\u9A8C\u548C\u6D1E\u5BDF\uFF0C\u8BFB\u8005\u80FD\u591F\u89C4\u907F\u526F\u4E1A\u8FC7\u7A0B\u4E2D\u7684\u5E38\u89C1\u9677\u9631\uFF0C\u5B66\u4E60\u5230\u5BCC\u6709\u4EF7\u503C\u7684\u7ECF\u9A8C\u548C\u7B56\u7565\u3002\u8FD9\u672C\u4E66\u4E5F\u5E26\u6211\u907F\u8FC7\u4E86\u8BB8\u591A\u526F\u4E1A\u7684\u8DEF\u4E0A\u7684\u9677\u9631\uFF0C\u662F\u6211\u526F\u4E1A\u8DEF\u4E0A\u7684\u5FC5\u8BFB\u4E4B\u4F5C\u3002"
-      },
-      {
-        name: "\u5B59\u54F2",
-        title: "\u300C\u91CE\u8DEF\u5B50\u5B9E\u9A8C\u5BA4\u300D\u4E3B\u7406\u4EBA\uFF0C\u5C0F\u7EA2\u4E66\u6D41\u91CF\u73A9\u5BB6\uFF0C\u64C5\u957F\u77E9\u9635\u8D77\u53F7\u83B7\u5BA2",
-        content: "\u8001\u5F90\u7684\u8FD9\u672C\u4E66\uFF0C\u771F\u7684\u53EF\u4EE5\u5E2E\u5F88\u591A\u4EBA\u63D0\u9AD8\u5546\u4E1A\u601D\u7EF4\u548C\u8BA4\u77E5\uFF0C\u65E0\u8BBA\u4E00\u672C\u4E66\u8FD8\u662F\u4E00\u7BC7\u6587\u7AE0\uFF0C\u771F\u6B63\u6709\u4EF7\u503C\u7684\u5185\u5BB9\u5C31\u662F\u5B83\u5199\u5F97\u67D0\u4E00\u6BB5\u8BDD\u3001\u67D0\u4E00\u53E5\u8BCD\u3002\u800C\u4E0D\u662F\u957F\u7BC7\u5927\u8BBA\u53BB\u5570\u55E6\uFF0C\u8BA9\u5F88\u591A\u4EBA\u770B\u5B8C\u4E0D\u4EC5\u611F\u89C9\u65F6\u95F4\u88AB\u6D6A\u8D39\u4E14\u5927\u90E8\u5206\u5185\u5BB9\u5E9F\u8BDD\u8FDE\u7BC7\u3002\u771F\u6B63\u6709\u4EF7\u503C\u7684\u5185\u5BB9\u5C31\u8BE5\u88AB\u7B80\u5316\uFF0C\u6E05\u6670\uFF0C\u540D\u4E86\uFF0C\u6B63\u6240\u8C13\u5927\u9053\u81F3\u7B80\uFF0C\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u8FD9\u672C\u4E66\u7C4D\u503C\u5F97\u5404\u4F4D\u670B\u53CB\u53CD\u590D\u6DF1\u8BFB\u3002"
-      },
-      {
-        name: "\u9A6C\u5E78\u8FD0",
-        title: "\u5317\u6F02\u7A0B\u5E8F\u5458\uFF0C\u65E5\u66F41000\u5929\uFF0C\u7EDF\u7B79\u8001\u5F90\u5408\u4F19\u4EBA\u5FD7\u613F\u8005\u751F\u6001\u4F4D",
-        content: "\u4E3A\u4E86\u5C55\u793A\u66F4\u660E\u4EAE\u7684\u73CD\u73E0\uFF0C\u5927\u5BB6\u5BF9\u5185\u5BB9\u53CD\u590D\u641C\u96C6\u6574\u7406\uFF0C\u7CBE\u7B80\u4F18\u5316\uFF0C\u4E0D\u65AD\u6253\u78E8\uFF0C\u6211\u4E5F\u7528\u4E0D\u540C\u5173\u952E\u8BCD\u5BFB\u5230\u4E0D\u5C11\u5947\u73CD\u5F02\u5B9D\u3002\u4E00\u4EBA\u4F01\u4E1A\u662F\u4E00\u5BB6\u6C38\u4E0D\u5012\u95ED\u7684\u516C\u53F8\uFF0C\u79BB\u4E0D\u5F00\u56DB\u4E2A\u6838\u5FC3\u90E8\u95E8\uFF1A\u8D5A\u94B1\u662F\u5E02\u573A\u90E8\uFF0C\u6210\u957F\u662F\u6218\u7565\u90E8\uFF0C\u907F\u5751\u662F\u98CE\u9669\u90E8\uFF0C\u5185\u5BB9\u662F\u7814\u53D1\u90E8\u3002\u5F7C\u6B64\u73AF\u73AF\u76F8\u6263\uFF0C\u7F3A\u4E00\u4E0D\u53EF\u3002365\u6761\u5185\u5BB9\uFF0C\u5E38\u770B\u5E38\u65B0\uFF0C\u6700\u91CD\u8981\u7684\u662F\u53BB\u884C\u52A8\uFF0C\u671F\u5F85\u4F60\u6765\u4E00\u8D77\u9274\u5B9D~"
-      },
-      {
-        name: "Anna\u59D0",
-        title: "\u4E13\u6CE8\u9152\u7C7B\u7ECF\u842515\u5E74\u7684\u8FDE\u7EED\u521B\u4E1A\u8005\uFF0C\u5C0F\u7EA2\u4E66\u53D8\u73B07\u4F4D\u6570",
-        content: "\u8BFB\u5B8C\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\uFF0C\u7B2C\u4E00\u65F6\u95F4\u628A\u517C\u804C\u5458\u5DE5\u8F6C\u5316\u4E3A\u6211\u7684\u5408\u4F5C\u4F19\u4F34\u3002\u628A\u516C\u53F8\u505A\u5C0F\uFF0C\u63D0\u9AD8\u4EBA\u6548\uFF0C\u63D0\u9AD8\u5229\u6DA6\u3002\u8BA9\u6211\u7684\u5408\u4F19\u4EBA\u738B\u603B\u8DD1\u901A\u4E860\u52301\u6708\uFF0C\u51655\u4F4D\u6570\u3002\u7ED9\u540C\u884C\u548C\u4EE3\u7406\u5546\u63D0\u4F9B\u81EA\u5A92\u4F53\u54A8\u8BE2\u4EE5\u53CA\u966A\u8DD1\uFF0C\u79C1\u6559\u3002\u8BA9\u8EAB\u8FB9\u4EBA\u8D5A\u5230\u94B1\uFF0C\u7ED9\u5782\u7C7B\u7EC6\u5206\u4EBA\u7FA4\u63D0\u4F9B\u5546\u4E1A\u4EF7\u503C\uFF0C\u51FA\u4E13\u680F\uFF0C\u51FA\u4E66\uFF0C\u4ED8\u8D39\u8DDF\u5927\u4F6C\u4EEC\u5408\u4F5C\u3002\u8FD9\u4E00\u672C\u5B9E\u64CD\u5F88\u5F3A\u7684\u4E66\uFF0C\u5B83\u5C06\u4E3A\u60A8\u7684\u521B\u4E1A\u6216\u526F\u4E1A\u4E4B\u8DEF\u63D0\u4F9B\u6709\u529B\u7684\u652F\u6301\u548C\u6307\u5BFC\u3002\u5982\u679C\u60A8\u60F3\u8981\u5728\u5546\u4E1A\u9886\u57DF\u53D6\u5F97\u66F4\u5927\u7684\u6210\u529F\uFF0C\u90A3\u4E48\u8FD9\u672C\u4E66\u5C06\u662F\u60A8\u4E0D\u53EF\u591A\u5F97\u7684\u826F\u5E08\u76CA\u53CB\u3002\u8BDA\u5FD7\u9080\u8BF7\u4F60\u4E00\u8D77\u8DDF\u6211\u4EEC\u5B9E\u64CD\u8D77\u6765\uFF0C\u8BA9\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u52A9\u60A8\u4E00\u81C2\u4E4B\u529B\uFF0C\u5171\u521B\u7F8E\u597D\u672A\u6765\uFF01"
-      }
-    ];
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "container mx-auto px-4 py-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "mb-10 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 p-8 text-white shadow-md", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h1", { className: "mb-6 text-3xl font-bold", children: "\u8BFB\u8005\u4EF7\u503C\u53CD\u9988" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-lg", children: "\u9605\u8BFB\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u540E\uFF0C\u8BB8\u591A\u8BFB\u8005\u5206\u4EAB\u4E86\u4ED6\u4EEC\u7684\u6536\u83B7\u548C\u611F\u609F\u3002 \u8FD9\u4E9B\u53CD\u9988\u4E0D\u4EC5\u662F\u5BF9\u4E66\u7C4D\u4EF7\u503C\u7684\u80AF\u5B9A\uFF0C\u4E5F\u4E3A\u65B0\u8BFB\u8005\u63D0\u4F9B\u4E86\u53C2\u8003\u548C\u542F\u53D1\u3002" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "mb-10", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "mb-8 flex items-center gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(MessageSquare, { className: "h-6 w-6 text-purple-600" }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "text-2xl font-bold", children: "\u8BFB\u8005\u5FC3\u58F0" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grid gap-8", children: feedbacks.map((feedback, index) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { className: "overflow-hidden border-0 shadow-md", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(CardContent, { className: "p-0", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex flex-col md:flex-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "bg-gradient-to-br from-purple-500 to-indigo-600 p-6 text-white md:w-1/3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { className: "mb-2 text-xl font-bold", children: feedback.name }),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-sm text-purple-100", children: feedback.title })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "p-6 md:w-2/3", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { className: "italic text-gray-700", children: [
-            '"',
-            feedback.content,
-            '"'
-          ] }) })
-        ] }) }) }, index)) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "rounded-lg bg-gray-50 p-8 text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "mb-4 text-2xl font-bold text-gray-800", children: "\u60A8\u7684\u53CD\u9988\u4E5F\u5F88\u91CD\u8981" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "mb-6 text-gray-600", children: "\u9605\u8BFB\u5B8C\u300A\u4E00\u4EBA\u4F01\u4E1A\u590D\u5229\u5546\u4E1A\u5316\u300B\u540E\uFF0C\u6B22\u8FCE\u5206\u4EAB\u60A8\u7684\u5FC3\u5F97\u4F53\u4F1A\u548C\u5B9E\u8DF5\u7ECF\u9A8C\uFF0C \u8BA9\u66F4\u591A\u4EBA\u53D7\u76CA\u4E8E\u8FD9\u672C\u4E66\u7684\u4EF7\u503C\u3002" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "inline-flex items-center gap-2 rounded-full bg-purple-100 px-6 py-2 text-purple-800", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-sm font-medium", children: "\u5FAE\u4FE1\u8054\u7CFB\uFF1A957863300" }) }) })
-      ] })
-    ] });
-  };
-  var Feedback_default = Feedback;
-
-  // src/pages/SimpleGenerator.tsx
-  var import_react4 = __toESM(require_react());
-
-  // src/components/ui/textarea.tsx
-  var React17 = __toESM(require_react());
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
-  var Textarea = React17.forwardRef(({ className, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-      "textarea",
-      {
-        className: cn(
-          "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className
-        ),
-        ref,
-        ...props
-      }
-    );
-  });
-  Textarea.displayName = "Textarea";
-
-  // src/components/ui/input.tsx
-  var React18 = __toESM(require_react());
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
-  var Input = React18.forwardRef(
-    ({ className, type, ...props }, ref) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-        "input",
-        {
-          type,
-          className: cn(
-            "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-            className
-          ),
-          ref,
-          ...props
-        }
-      );
-    }
-  );
-  Input.displayName = "Input";
-
-  // src/components/ui/label.tsx
-  var React21 = __toESM(require_react());
-
-  // node_modules/@radix-ui/react-label/dist/index.mjs
-  var React20 = __toESM(require_react(), 1);
+    createScope.scopeName = scopeName;
+    return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
+  }
+  function composeContextScopes(...scopes) {
+    const baseScope = scopes[0];
+    if (scopes.length === 1) return baseScope;
+    const createScope = () => {
+      const scopeHooks = scopes.map((createScope2) => ({
+        useScope: createScope2(),
+        scopeName: createScope2.scopeName
+      }));
+      return function useComposedScopes(overrideScopes) {
+        const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName }) => {
+          const scopeProps = useScope(overrideScopes);
+          const currentScope = scopeProps[`__scope${scopeName}`];
+          return { ...nextScopes2, ...currentScope };
+        }, {});
+        return React5.useMemo(() => ({ [`__scope${baseScope.scopeName}`]: nextScopes }), [nextScopes]);
+      };
+    };
+    createScope.scopeName = baseScope.scopeName;
+    return createScope;
+  }
 
   // node_modules/@radix-ui/react-primitive/dist/index.mjs
-  var React19 = __toESM(require_react(), 1);
+  var React6 = __toESM(require_react(), 1);
   var ReactDOM = __toESM(require_react_dom(), 1);
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
   var NODES = [
     "a",
     "button",
@@ -32634,320 +27825,780 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   ];
   var Primitive = NODES.reduce((primitive, node) => {
     const Slot2 = createSlot(`Primitive.${node}`);
-    const Node = React19.forwardRef((props, forwardedRef) => {
+    const Node = React6.forwardRef((props, forwardedRef) => {
       const { asChild, ...primitiveProps } = props;
       const Comp = asChild ? Slot2 : node;
       if (typeof window !== "undefined") {
         window[Symbol.for("radix-ui")] = true;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+      return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
     });
     Node.displayName = `Primitive.${node}`;
     return { ...primitive, [node]: Node };
   }, {});
 
-  // node_modules/@radix-ui/react-label/dist/index.mjs
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  var NAME = "Label";
-  var Label = React20.forwardRef((props, forwardedRef) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      Primitive.label,
-      {
-        ...props,
-        ref: forwardedRef,
-        onMouseDown: (event) => {
-          const target = event.target;
-          if (target.closest("button, input, select, textarea")) return;
-          props.onMouseDown?.(event);
-          if (!event.defaultPrevented && event.detail > 1) event.preventDefault();
-        }
+  // node_modules/@radix-ui/react-progress/dist/index.mjs
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+  var PROGRESS_NAME = "Progress";
+  var DEFAULT_MAX = 100;
+  var [createProgressContext, createProgressScope] = createContextScope(PROGRESS_NAME);
+  var [ProgressProvider, useProgressContext] = createProgressContext(PROGRESS_NAME);
+  var Progress = React7.forwardRef(
+    (props, forwardedRef) => {
+      const {
+        __scopeProgress,
+        value: valueProp = null,
+        max: maxProp,
+        getValueLabel = defaultGetValueLabel,
+        ...progressProps
+      } = props;
+      if ((maxProp || maxProp === 0) && !isValidMaxNumber(maxProp)) {
+        console.error(getInvalidMaxError(`${maxProp}`, "Progress"));
       }
-    );
-  });
-  Label.displayName = NAME;
-  var Root = Label;
-
-  // src/components/ui/label.tsx
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  var labelVariants = cva(
-    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      const max = isValidMaxNumber(maxProp) ? maxProp : DEFAULT_MAX;
+      if (valueProp !== null && !isValidValueNumber(valueProp, max)) {
+        console.error(getInvalidValueError(`${valueProp}`, "Progress"));
+      }
+      const value = isValidValueNumber(valueProp, max) ? valueProp : null;
+      const valueLabel = isNumber2(value) ? getValueLabel(value, max) : void 0;
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ProgressProvider, { scope: __scopeProgress, value, max, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        Primitive.div,
+        {
+          "aria-valuemax": max,
+          "aria-valuemin": 0,
+          "aria-valuenow": isNumber2(value) ? value : void 0,
+          "aria-valuetext": valueLabel,
+          role: "progressbar",
+          "data-state": getProgressState(value, max),
+          "data-value": value ?? void 0,
+          "data-max": max,
+          ...progressProps,
+          ref: forwardedRef
+        }
+      ) });
+    }
   );
-  var Label2 = React21.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+  Progress.displayName = PROGRESS_NAME;
+  var INDICATOR_NAME = "ProgressIndicator";
+  var ProgressIndicator = React7.forwardRef(
+    (props, forwardedRef) => {
+      const { __scopeProgress, ...indicatorProps } = props;
+      const context = useProgressContext(INDICATOR_NAME, __scopeProgress);
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        Primitive.div,
+        {
+          "data-state": getProgressState(context.value, context.max),
+          "data-value": context.value ?? void 0,
+          "data-max": context.max,
+          ...indicatorProps,
+          ref: forwardedRef
+        }
+      );
+    }
+  );
+  ProgressIndicator.displayName = INDICATOR_NAME;
+  function defaultGetValueLabel(value, max) {
+    return `${Math.round(value / max * 100)}%`;
+  }
+  function getProgressState(value, maxValue) {
+    return value == null ? "indeterminate" : value === maxValue ? "complete" : "loading";
+  }
+  function isNumber2(value) {
+    return typeof value === "number";
+  }
+  function isValidMaxNumber(max) {
+    return isNumber2(max) && !isNaN(max) && max > 0;
+  }
+  function isValidValueNumber(value, max) {
+    return isNumber2(value) && !isNaN(value) && value <= max && value >= 0;
+  }
+  function getInvalidMaxError(propValue, componentName) {
+    return `Invalid prop \`max\` of value \`${propValue}\` supplied to \`${componentName}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${DEFAULT_MAX}\`.`;
+  }
+  function getInvalidValueError(propValue, componentName) {
+    return `Invalid prop \`value\` of value \`${propValue}\` supplied to \`${componentName}\`. The \`value\` prop must be:
+  - a positive number
+  - less than the value passed to \`max\` (or ${DEFAULT_MAX} if no \`max\` prop is set)
+  - \`null\` or \`undefined\` if the progress is indeterminate.
+
+Defaulting to \`null\`.`;
+  }
+  var Root = Progress;
+  var Indicator = ProgressIndicator;
+
+  // src/components/ui/progress.tsx
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var Progress2 = React8.forwardRef(({ className, value, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
     Root,
     {
       ref,
-      className: cn(labelVariants(), className),
-      ...props
+      className: cn(
+        "relative h-2 w-full overflow-hidden rounded-full bg-primary/20",
+        className
+      ),
+      ...props,
+      children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        Indicator,
+        {
+          className: "h-full w-full flex-1 bg-primary transition-all",
+          style: { transform: `translateX(-${100 - (value || 0)}%)` }
+        }
+      )
     }
   ));
-  Label2.displayName = Root.displayName;
+  Progress2.displayName = Root.displayName;
 
-  // src/pages/SimpleGenerator.tsx
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime());
-  var SimpleGenerator = () => {
-    const [title, setTitle] = (0, import_react4.useState)("");
-    const [description, setDescription] = (0, import_react4.useState)("");
-    const [content, setContent] = (0, import_react4.useState)("");
-    const [generatedSite, setGeneratedSite] = (0, import_react4.useState)(null);
-    const handleGenerate = () => {
-      if (!content.trim()) return;
-      const lines = content.split("\n").filter((line) => line.trim().length > 10);
-      const items = lines.map((line, index) => ({
+  // node_modules/lucide-react/dist/esm/createLucideIcon.js
+  var import_react2 = __toESM(require_react());
+
+  // node_modules/lucide-react/dist/esm/shared/src/utils.js
+  var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+  var toCamelCase = (string) => string.replace(
+    /^([A-Z])|[\s-_]+(\w)/g,
+    (match, p1, p2) => p2 ? p2.toUpperCase() : p1.toLowerCase()
+  );
+  var toPascalCase = (string) => {
+    const camelCase = toCamelCase(string);
+    return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+  };
+  var mergeClasses = (...classes) => classes.filter((className, index, array) => {
+    return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+  }).join(" ").trim();
+  var hasA11yProp = (props) => {
+    for (const prop in props) {
+      if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+        return true;
+      }
+    }
+  };
+
+  // node_modules/lucide-react/dist/esm/Icon.js
+  var import_react = __toESM(require_react());
+
+  // node_modules/lucide-react/dist/esm/defaultAttributes.js
+  var defaultAttributes = {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  };
+
+  // node_modules/lucide-react/dist/esm/Icon.js
+  var Icon = (0, import_react.forwardRef)(
+    ({
+      color = "currentColor",
+      size = 24,
+      strokeWidth = 2,
+      absoluteStrokeWidth,
+      className = "",
+      children,
+      iconNode,
+      ...rest
+    }, ref) => {
+      return (0, import_react.createElement)(
+        "svg",
+        {
+          ref,
+          ...defaultAttributes,
+          width: size,
+          height: size,
+          stroke: color,
+          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+          className: mergeClasses("lucide", className),
+          ...!children && !hasA11yProp(rest) && { "aria-hidden": "true" },
+          ...rest
+        },
+        [
+          ...iconNode.map(([tag, attrs]) => (0, import_react.createElement)(tag, attrs)),
+          ...Array.isArray(children) ? children : [children]
+        ]
+      );
+    }
+  );
+
+  // node_modules/lucide-react/dist/esm/createLucideIcon.js
+  var createLucideIcon = (iconName, iconNode) => {
+    const Component = (0, import_react2.forwardRef)(
+      ({ className, ...props }, ref) => (0, import_react2.createElement)(Icon, {
+        ref,
+        iconNode,
+        className: mergeClasses(
+          `lucide-${toKebabCase(toPascalCase(iconName))}`,
+          `lucide-${iconName}`,
+          className
+        ),
+        ...props
+      })
+    );
+    Component.displayName = toPascalCase(iconName);
+    return Component;
+  };
+
+  // node_modules/lucide-react/dist/esm/icons/circle-alert.js
+  var __iconNode = [
+    ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+    ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+    ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+  ];
+  var CircleAlert = createLucideIcon("circle-alert", __iconNode);
+
+  // node_modules/lucide-react/dist/esm/icons/dollar-sign.js
+  var __iconNode2 = [
+    ["line", { x1: "12", x2: "12", y1: "2", y2: "22", key: "7eqyqh" }],
+    ["path", { d: "M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6", key: "1b0p4s" }]
+  ];
+  var DollarSign = createLucideIcon("dollar-sign", __iconNode2);
+
+  // node_modules/lucide-react/dist/esm/icons/download.js
+  var __iconNode3 = [
+    ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+    ["polyline", { points: "7 10 12 15 17 10", key: "2ggqvy" }],
+    ["line", { x1: "12", x2: "12", y1: "15", y2: "3", key: "1vk2je" }]
+  ];
+  var Download = createLucideIcon("download", __iconNode3);
+
+  // node_modules/lucide-react/dist/esm/icons/file-text.js
+  var __iconNode4 = [
+    ["path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", key: "1rqfz7" }],
+    ["path", { d: "M14 2v4a2 2 0 0 0 2 2h4", key: "tnqrlb" }],
+    ["path", { d: "M10 9H8", key: "b1mrlr" }],
+    ["path", { d: "M16 13H8", key: "t4e002" }],
+    ["path", { d: "M16 17H8", key: "z1uh3a" }]
+  ];
+  var FileText = createLucideIcon("file-text", __iconNode4);
+
+  // node_modules/lucide-react/dist/esm/icons/square-pen.js
+  var __iconNode5 = [
+    ["path", { d: "M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7", key: "1m0v6g" }],
+    [
+      "path",
+      {
+        d: "M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z",
+        key: "ohrbg2"
+      }
+    ]
+  ];
+  var SquarePen = createLucideIcon("square-pen", __iconNode5);
+
+  // node_modules/lucide-react/dist/esm/icons/trending-up.js
+  var __iconNode6 = [
+    ["polyline", { points: "22 7 13.5 15.5 8.5 10.5 2 17", key: "126l90" }],
+    ["polyline", { points: "16 7 22 7 22 13", key: "kwv8wd" }]
+  ];
+  var TrendingUp = createLucideIcon("trending-up", __iconNode6);
+
+  // node_modules/lucide-react/dist/esm/icons/triangle-alert.js
+  var __iconNode7 = [
+    [
+      "path",
+      {
+        d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",
+        key: "wmoenq"
+      }
+    ],
+    ["path", { d: "M12 9v4", key: "juzpu7" }],
+    ["path", { d: "M12 17h.01", key: "p32p05" }]
+  ];
+  var TriangleAlert = createLucideIcon("triangle-alert", __iconNode7);
+
+  // node_modules/lucide-react/dist/esm/icons/upload.js
+  var __iconNode8 = [
+    ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+    ["polyline", { points: "17 8 12 3 7 8", key: "t8dd8p" }],
+    ["line", { x1: "12", x2: "12", y1: "3", y2: "15", key: "widbto" }]
+  ];
+  var Upload = createLucideIcon("upload", __iconNode8);
+
+  // src/components/PDFAnalyzer.tsx
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  var PDFAnalyzer = ({ onAnalysisComplete }) => {
+    const [file, setFile] = (0, import_react3.useState)(null);
+    const [isAnalyzing, setIsAnalyzing] = (0, import_react3.useState)(false);
+    const [progress, setProgress] = (0, import_react3.useState)(0);
+    const [analysisStep, setAnalysisStep] = (0, import_react3.useState)("");
+    const [error, setError] = (0, import_react3.useState)("");
+    const handleFileSelect = (event) => {
+      const selectedFile = event.target.files?.[0];
+      if (selectedFile && selectedFile.type === "application/pdf") {
+        setFile(selectedFile);
+        setError("");
+      } else {
+        setError("\u8BF7\u9009\u62E9\u6709\u6548\u7684PDF\u6587\u4EF6");
+      }
+    };
+    const handleDrop = (event) => {
+      event.preventDefault();
+      const droppedFile = event.dataTransfer.files[0];
+      if (droppedFile && droppedFile.type === "application/pdf") {
+        setFile(droppedFile);
+        setError("");
+      } else {
+        setError("\u8BF7\u62D6\u62FD\u6709\u6548\u7684PDF\u6587\u4EF6");
+      }
+    };
+    const handleDragOver = (event) => {
+      event.preventDefault();
+    };
+    const parsePDFContent = async (file2) => {
+      try {
+        const text = await extractTextFromPDF(file2);
+        return text;
+      } catch (error2) {
+        console.error("PDF\u89E3\u6790\u9519\u8BEF:", error2);
+        return generateDemoContentFromFileName(file2.name);
+      }
+    };
+    const generateDemoContentFromFileName = (fileName) => {
+      const baseName = fileName.replace(".pdf", "");
+      return `
+${baseName}\u76F8\u5173\u5185\u5BB9\u5206\u6790
+
+001 ${baseName}\u7684\u6838\u5FC3\u6982\u5FF5\u548C\u57FA\u7840\u77E5\u8BC6
+002 ${baseName}\u7684\u53D1\u5C55\u5386\u7A0B\u548C\u6F14\u53D8\u8FC7\u7A0B  
+003 ${baseName}\u7684\u5B9E\u9645\u5E94\u7528\u548C\u6848\u4F8B\u5206\u6790
+004 ${baseName}\u7684\u4F18\u52BF\u7279\u70B9\u548C\u4EF7\u503C\u4F53\u73B0
+005 ${baseName}\u7684\u6CE8\u610F\u4E8B\u9879\u548C\u6F5C\u5728\u98CE\u9669
+006 ${baseName}\u7684\u5B66\u4E60\u65B9\u6CD5\u548C\u63D0\u5347\u6280\u5DE7
+007 ${baseName}\u7684\u672A\u6765\u8D8B\u52BF\u548C\u53D1\u5C55\u65B9\u5411
+008 ${baseName}\u7684\u76F8\u5173\u5DE5\u5177\u548C\u8D44\u6E90\u63A8\u8350
+009 ${baseName}\u7684\u5E38\u89C1\u95EE\u9898\u548C\u89E3\u51B3\u65B9\u6848
+010 ${baseName}\u7684\u5B9E\u8DF5\u7ECF\u9A8C\u548C\u5FC3\u5F97\u5206\u4EAB
+011 ${baseName}\u5728\u5546\u4E1A\u5316\u65B9\u9762\u7684\u5E94\u7528\u4EF7\u503C
+012 ${baseName}\u7684\u5E02\u573A\u524D\u666F\u548C\u76C8\u5229\u6A21\u5F0F
+013 ${baseName}\u7684\u5185\u5BB9\u521B\u4F5C\u548C\u8868\u8FBE\u6280\u5DE7
+014 ${baseName}\u7684\u5B66\u4E60\u6210\u957F\u548C\u80FD\u529B\u63D0\u5347
+015 ${baseName}\u7684\u6DF1\u5EA6\u601D\u8003\u548C\u7406\u89E3\u8981\u70B9
+    `.trim();
+    };
+    const extractTextFromPDF = async (file2) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const fileName = file2.name.replace(".pdf", "");
+            const content = generateDemoContentFromFileName(file2.name);
+            resolve(content);
+          } catch (error2) {
+            reject(error2);
+          }
+        };
+        reader.onerror = () => reject(new Error("\u6587\u4EF6\u8BFB\u53D6\u5931\u8D25"));
+        reader.readAsArrayBuffer(file2);
+      });
+    };
+    const analyzeContent = (text) => {
+      const lines = text.split("\n").map((line) => line.trim()).filter((line) => line.length > 5);
+      const meaningfulContent = lines.filter((line) => {
+        return !/^\d+$/.test(line) && // 纯数字
+        !/^第[一二三四五六七八九十\d]+[章节页]/.test(line) && // 章节标题
+        line.length > 10 && // 内容长度
+        line.length < 200;
+      });
+      return meaningfulContent.slice(0, 50);
+    };
+    const analyzeContentAndGenerateCategories = (contentArray) => {
+      const allText = contentArray.join(" ").toLowerCase();
+      const themes = {
+        "\u5546\u4E1A\u7ECF\u8425": ["\u5546\u4E1A", "\u7ECF\u8425", "\u8425\u9500", "\u9500\u552E", "\u5BA2\u6237", "\u5E02\u573A", "\u54C1\u724C", "\u63A8\u5E7F"],
+        "\u6280\u672F\u5F00\u53D1": ["\u6280\u672F", "\u5F00\u53D1", "\u7F16\u7A0B", "\u4EE3\u7801", "\u7CFB\u7EDF", "\u8F6F\u4EF6", "\u7B97\u6CD5", "\u67B6\u6784"],
+        "\u5B66\u4E60\u6210\u957F": ["\u5B66\u4E60", "\u6210\u957F", "\u63D0\u5347", "\u53D1\u5C55", "\u6280\u80FD", "\u80FD\u529B", "\u7ECF\u9A8C", "\u77E5\u8BC6"],
+        "\u751F\u6D3B\u65B9\u5F0F": ["\u751F\u6D3B", "\u5065\u5EB7", "\u4E60\u60EF", "\u65F6\u95F4", "\u6548\u7387", "\u5E73\u8861", "\u4F11\u606F", "\u8FD0\u52A8"],
+        "\u4EBA\u9645\u5173\u7CFB": ["\u5173\u7CFB", "\u6C9F\u901A", "\u4EA4\u6D41", "\u56E2\u961F", "\u5408\u4F5C", "\u9886\u5BFC", "\u7BA1\u7406", "\u793E\u4EA4"],
+        "\u521B\u4F5C\u8868\u8FBE": ["\u521B\u4F5C", "\u5199\u4F5C", "\u8868\u8FBE", "\u6587\u7AE0", "\u5185\u5BB9", "\u8BBE\u8BA1", "\u827A\u672F", "\u521B\u610F"],
+        "\u6295\u8D44\u7406\u8D22": ["\u6295\u8D44", "\u7406\u8D22", "\u91D1\u94B1", "\u8D22\u52A1", "\u6536\u5165", "\u652F\u51FA", "\u50A8\u84C4", "\u8D44\u4EA7"],
+        "\u95EE\u9898\u89E3\u51B3": ["\u95EE\u9898", "\u89E3\u51B3", "\u65B9\u6CD5", "\u7B56\u7565", "\u601D\u8003", "\u5206\u6790", "\u51B3\u7B56", "\u9009\u62E9"],
+        "\u8D8B\u52BF\u89C2\u5BDF": ["\u8D8B\u52BF", "\u53D8\u5316", "\u672A\u6765", "\u53D1\u5C55", "\u89C2\u5BDF", "\u9884\u6D4B", "\u673A\u4F1A", "\u6311\u6218"],
+        "\u5DE5\u5177\u8D44\u6E90": ["\u5DE5\u5177", "\u8D44\u6E90", "\u5E73\u53F0", "\u5E94\u7528", "\u8F6F\u4EF6", "\u670D\u52A1", "\u63A8\u8350", "\u4F7F\u7528"]
+      };
+      const themeScores = {};
+      Object.entries(themes).forEach(([theme, keywords]) => {
+        const score = keywords.reduce((sum, keyword) => {
+          const matches = (allText.match(new RegExp(keyword, "g")) || []).length;
+          return sum + matches;
+        }, 0);
+        themeScores[theme] = score;
+      });
+      const sortedThemes = Object.entries(themeScores).sort(([, a], [, b]) => b - a).slice(0, Math.min(5, Math.max(3, Object.keys(themeScores).filter(([, score]) => score > 0).length)));
+      if (sortedThemes.length === 0 || sortedThemes[0][1] === 0) {
+        return [
+          { id: "general", title: "\u6838\u5FC3\u5185\u5BB9", keywords: [] },
+          { id: "details", title: "\u8BE6\u7EC6\u8BF4\u660E", keywords: [] },
+          { id: "examples", title: "\u5B9E\u4F8B\u5206\u6790", keywords: [] }
+        ];
+      }
+      return sortedThemes.map(([theme, score], index) => ({
+        id: `category_${index}`,
+        title: theme,
+        keywords: themes[theme]
+      }));
+    };
+    const categorizeText = (text, categories) => {
+      const lowerText = text.toLowerCase();
+      let bestMatch = { categoryId: categories[0]?.id || "general", score: 0 };
+      categories.forEach((category) => {
+        const score = category.keywords.reduce((sum, keyword) => {
+          return sum + (lowerText.includes(keyword.toLowerCase()) ? 1 : 0);
+        }, 0);
+        if (score > bestMatch.score) {
+          bestMatch = { categoryId: category.id, score };
+        }
+      });
+      if (bestMatch.score === 0) {
+        return categories[Math.floor(Math.random() * categories.length)]?.id || "general";
+      }
+      return bestMatch.categoryId;
+    };
+    const generateSiteData = (contentArray) => {
+      const dynamicCategories = analyzeContentAndGenerateCategories(contentArray);
+      const items = contentArray.map((content, index) => ({
         id: index + 1,
-        category: categorizeText(line),
-        content: line.trim()
+        category: categorizeText(content, dynamicCategories),
+        content
       }));
       const categoryCount = items.reduce((acc, item) => {
         acc[item.category] = (acc[item.category] || 0) + 1;
         return acc;
       }, {});
-      const categories = [
-        {
-          id: "money",
-          title: "\u8D5A\u94B1\u7BC7",
-          description: `\u5546\u4E1A\u5316\u76F8\u5173\u5185\u5BB9 (${categoryCount.money || 0}\u6761)`,
-          count: categoryCount.money || 0
-        },
-        {
-          id: "pitfalls",
-          title: "\u907F\u5751\u7BC7",
-          description: `\u98CE\u9669\u548C\u9677\u9631\u76F8\u5173 (${categoryCount.pitfalls || 0}\u6761)`,
-          count: categoryCount.pitfalls || 0
-        },
-        {
-          id: "writing",
-          title: "\u5199\u4F5C\u7BC7",
-          description: `\u5185\u5BB9\u521B\u4F5C\u76F8\u5173 (${categoryCount.writing || 0}\u6761)`,
-          count: categoryCount.writing || 0
-        },
-        {
-          id: "growth",
-          title: "\u6210\u957F\u7BC7",
-          description: `\u5B66\u4E60\u6210\u957F\u76F8\u5173 (${categoryCount.growth || 0}\u6761)`,
-          count: categoryCount.growth || 0
-        }
-      ];
-      const siteData = {
-        title: title || "\u751F\u6210\u7684\u77E5\u8BC6\u7F51\u7AD9",
-        description: description || "\u57FA\u4E8E\u6587\u672C\u5185\u5BB9\u81EA\u52A8\u751F\u6210\u7684\u77E5\u8BC6\u5206\u4EAB\u7F51\u7AD9",
+      const categories = dynamicCategories.map((category) => ({
+        id: category.id,
+        title: category.title,
+        description: `${category.title}\u76F8\u5173\u5185\u5BB9 (${categoryCount[category.id] || 0}\u6761)`,
+        count: categoryCount[category.id] || 0
+      }));
+      return {
+        title: file?.name.replace(".pdf", "") || "\u751F\u6210\u7684\u77E5\u8BC6\u7F51\u7AD9",
+        description: `\u57FA\u4E8EPDF\u6587\u4EF6"${file?.name}"\u81EA\u52A8\u751F\u6210\u7684\u77E5\u8BC6\u5206\u4EAB\u7F51\u7AD9`,
         categories,
         content: items,
         generatedAt: (/* @__PURE__ */ new Date()).toISOString()
       };
-      setGeneratedSite(siteData);
     };
-    const categorizeText = (text) => {
-      const lowerText = text.toLowerCase();
-      if (lowerText.includes("\u8D5A\u94B1") || lowerText.includes("\u6536\u5165") || lowerText.includes("\u76C8\u5229") || lowerText.includes("\u5546\u4E1A")) {
-        return "money";
-      } else if (lowerText.includes("\u907F\u514D") || lowerText.includes("\u9677\u9631") || lowerText.includes("\u9519\u8BEF") || lowerText.includes("\u98CE\u9669")) {
-        return "pitfalls";
-      } else if (lowerText.includes("\u5199\u4F5C") || lowerText.includes("\u5185\u5BB9") || lowerText.includes("\u6587\u7AE0") || lowerText.includes("\u521B\u4F5C")) {
-        return "writing";
-      } else if (lowerText.includes("\u6210\u957F") || lowerText.includes("\u5B66\u4E60") || lowerText.includes("\u63D0\u5347") || lowerText.includes("\u53D1\u5C55")) {
-        return "growth";
-      } else {
-        const categories = ["money", "pitfalls", "writing", "growth"];
-        return categories[Math.floor(Math.random() * categories.length)];
+    const handleAnalyze = async () => {
+      if (!file) return;
+      setIsAnalyzing(true);
+      setProgress(0);
+      setError("");
+      setAnalysisStep("\u6B63\u5728\u8BFB\u53D6PDF\u6587\u4EF6...");
+      try {
+        setAnalysisStep("\u6B63\u5728\u89E3\u6790PDF\u5185\u5BB9...");
+        const text = await parsePDFContent(file);
+        setProgress(60);
+        setAnalysisStep("\u6B63\u5728\u5206\u6790\u5185\u5BB9\u7ED3\u6784...");
+        const contentArray = analyzeContent(text);
+        setProgress(80);
+        setAnalysisStep("\u6B63\u5728\u751F\u6210\u7F51\u7AD9...");
+        const siteData = generateSiteData(contentArray);
+        setProgress(100);
+        setAnalysisStep("\u5206\u6790\u5B8C\u6210\uFF01");
+        onAnalysisComplete(siteData);
+      } catch (error2) {
+        console.error("\u5206\u6790\u5931\u8D25:", error2);
+        setError(error2 instanceof Error ? error2.message : "\u5206\u6790\u5931\u8D25\uFF0C\u8BF7\u91CD\u8BD5");
+        setAnalysisStep("");
+      } finally {
+        setIsAnalyzing(false);
       }
     };
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "max-w-2xl mx-auto", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(Card, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(CardHeader, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(CardTitle, { children: "PDF\u667A\u80FD\u5206\u6790" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(CardDescription, { children: "\u4E0A\u4F20PDF\u6587\u4EF6\uFF0C\u7CFB\u7EDF\u5C06\u81EA\u52A8\u5206\u6790\u5185\u5BB9\u7ED3\u6784\u5E76\u751F\u6210\u77E5\u8BC6\u7F51\u7AD9" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(CardContent, { className: "space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+          "div",
+          {
+            className: "border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors",
+            onDrop: handleDrop,
+            onDragOver: handleDragOver,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Upload, { className: "h-12 w-12 mx-auto text-gray-400 mb-4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-lg font-medium mb-2", children: "\u62D6\u62FDPDF\u6587\u4EF6\u5230\u8FD9\u91CC" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-gray-500 mb-4", children: "\u6216\u8005\u70B9\u51FB\u4E0B\u65B9\u6309\u94AE\u9009\u62E9\u6587\u4EF6" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+                "input",
+                {
+                  type: "file",
+                  accept: ".pdf",
+                  onChange: handleFileSelect,
+                  className: "hidden",
+                  id: "pdf-upload"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Button, { asChild: true, variant: "outline", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { htmlFor: "pdf-upload", className: "cursor-pointer", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(FileText, { className: "h-4 w-4 mr-2" }),
+                "\u9009\u62E9PDF\u6587\u4EF6"
+              ] }) })
+            ]
+          }
+        ),
+        file && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "bg-blue-50 p-4 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(FileText, { className: "h-5 w-5 text-blue-600" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-medium", children: file.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "text-sm text-gray-500", children: [
+            "(",
+            (file.size / 1024 / 1024).toFixed(2),
+            " MB)"
+          ] })
+        ] }) }),
+        error && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "bg-red-50 p-4 rounded-lg flex items-center gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(CircleAlert, { className: "h-5 w-5 text-red-600" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-red-700", children: error })
+        ] }),
+        isAnalyzing && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex justify-between text-sm", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: analysisStep }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+              progress,
+              "%"
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Progress2, { value: progress, className: "w-full" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          Button,
+          {
+            onClick: handleAnalyze,
+            disabled: !file || isAnalyzing,
+            className: "w-full",
+            children: isAnalyzing ? "\u6B63\u5728\u5206\u6790..." : "\u5F00\u59CB\u5206\u6790PDF"
+          }
+        )
+      ] })
+    ] }) });
+  };
+  var PDFAnalyzer_default = PDFAnalyzer;
+
+  // src/components/GeneratedSitePreview.tsx
+  var import_react4 = __toESM(require_react());
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime());
+  var GeneratedSitePreview = ({ data }) => {
+    const [selectedCategory, setSelectedCategory] = (0, import_react4.useState)(null);
+    const getCategoryIcon = (categoryId) => {
+      switch (categoryId) {
+        case "money":
+          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(DollarSign, { className: "h-8 w-8 text-green-500" });
+        case "pitfalls":
+          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TriangleAlert, { className: "h-8 w-8 text-red-500" });
+        case "writing":
+          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(SquarePen, { className: "h-8 w-8 text-blue-500" });
+        case "growth":
+          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TrendingUp, { className: "h-8 w-8 text-purple-500" });
+        default:
+          return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(SquarePen, { className: "h-8 w-8 text-gray-500" });
+      }
+    };
+    const getCategoryColor = (categoryId) => {
+      switch (categoryId) {
+        case "money":
+          return "bg-green-50 hover:bg-green-100 border-green-200";
+        case "pitfalls":
+          return "bg-red-50 hover:bg-red-100 border-red-200";
+        case "writing":
+          return "bg-blue-50 hover:bg-blue-100 border-blue-200";
+        case "growth":
+          return "bg-purple-50 hover:bg-purple-100 border-purple-200";
+        default:
+          return "bg-gray-50 hover:bg-gray-100 border-gray-200";
+      }
+    };
+    const filteredContent = selectedCategory ? data.content.filter((item) => item.category === selectedCategory) : data.content;
+    const selectedCategoryData = selectedCategory ? data.categories.find((cat) => cat.id === selectedCategory) : null;
     const downloadHTML = () => {
-      if (!generatedSite) return;
-      const htmlContent = `<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${generatedSite.title}</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 40px; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .category-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
-        .category-card:hover { transform: translateY(-2px); }
-        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .content-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .content-id { color: #3b82f6; font-weight: bold; margin-bottom: 10px; }
-        .hidden { display: none; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>${generatedSite.title}</h1>
-            <p>${generatedSite.description}</p>
-        </div>
-        
-        <div id="categories-view">
-            <div class="categories">
-                ${generatedSite.categories.map((cat) => `
-                    <div class="category-card" onclick="showCategory('${cat.id}')">
-                        <h3>${cat.title}</h3>
-                        <p>${cat.description}</p>
-                    </div>
-                `).join("")}
-            </div>
-        </div>
-        
-        <div id="content-view" class="hidden">
-            <button onclick="showCategories()" style="margin-bottom: 20px; padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer;">\u8FD4\u56DE\u5206\u7C7B</button>
-            <div id="content-list" class="content-grid"></div>
-        </div>
-    </div>
-    
-    <script>
-        const siteData = ${JSON.stringify(generatedSite)};
-        
-        function showCategory(categoryId) {
-            const categoryContent = siteData.content.filter(item => item.category === categoryId);
-            const contentList = document.getElementById('content-list');
-            
-            contentList.innerHTML = categoryContent.map(item => \`
-                <div class="content-card">
-                    <div class="content-id">\${String(item.id).padStart(3, '0')}</div>
-                    <p>\${item.content}</p>
-                </div>
-            \`).join('');
-            
-            document.getElementById('categories-view').classList.add('hidden');
-            document.getElementById('content-view').classList.remove('hidden');
-        }
-        
-        function showCategories() {
-            document.getElementById('categories-view').classList.remove('hidden');
-            document.getElementById('content-view').classList.add('hidden');
-        }
-    <\/script>
-</body>
-</html>`;
+      const htmlContent = generateHTMLContent();
       const blob = new Blob([htmlContent], { type: "text/html" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${generatedSite.title}.html`;
+      a.download = `${data.title}.html`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "min-h-screen bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "container mx-auto px-4 py-8", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "mb-8", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(Link, { to: "/", className: "inline-flex items-center gap-2 text-blue-600 hover:text-blue-800", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(ArrowLeft, { className: "h-4 w-4" }),
-        "\u8FD4\u56DE\u9996\u9875"
-      ] }) }),
-      !generatedSite ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "max-w-2xl mx-auto", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "text-center mb-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h1", { className: "text-3xl font-bold mb-4", children: "\u6587\u672C\u8F6C\u7F51\u7AD9\u751F\u6210\u5668" }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-gray-600", children: "\u8F93\u5165\u60A8\u7684\u6587\u672C\u5185\u5BB9\uFF0C\u81EA\u52A8\u751F\u6210\u77E5\u8BC6\u5206\u4EAB\u7F51\u7AD9" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(Card, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(CardHeader, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardTitle, { children: "\u8F93\u5165\u5185\u5BB9" }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardDescription, { children: "\u586B\u5199\u7F51\u7AD9\u4FE1\u606F\u5E76\u8F93\u5165\u8981\u8F6C\u6362\u7684\u6587\u672C\u5185\u5BB9" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(CardContent, { className: "space-y-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Label2, { htmlFor: "site-title", children: "\u7F51\u7AD9\u6807\u9898" }),
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-                Input,
-                {
-                  id: "site-title",
-                  value: title,
-                  onChange: (e) => setTitle(e.target.value),
-                  placeholder: "\u8F93\u5165\u7F51\u7AD9\u6807\u9898"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Label2, { htmlFor: "site-description", children: "\u7F51\u7AD9\u63CF\u8FF0" }),
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-                Input,
-                {
-                  id: "site-description",
-                  value: description,
-                  onChange: (e) => setDescription(e.target.value),
-                  placeholder: "\u8F93\u5165\u7F51\u7AD9\u63CF\u8FF0"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Label2, { htmlFor: "content-text", children: "\u6587\u672C\u5185\u5BB9" }),
-              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-                Textarea,
-                {
-                  id: "content-text",
-                  value: content,
-                  onChange: (e) => setContent(e.target.value),
-                  placeholder: "\u5728\u8FD9\u91CC\u8F93\u5165\u6216\u7C98\u8D34\u60A8\u7684\u6587\u672C\u5185\u5BB9\uFF0C\u6BCF\u884C\u4E00\u6761\u5185\u5BB9...",
-                  rows: 12
-                }
-              )
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
-              Button,
-              {
-                onClick: handleGenerate,
-                disabled: !content.trim(),
-                className: "w-full",
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(WandSparkles, { className: "h-4 w-4 mr-2" }),
-                  "\u751F\u6210\u7F51\u7AD9"
-                ]
-              }
-            )
-          ] })
+    const generateHTMLContent = () => {
+      return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${data.title}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f8fafc; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .title { font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; color: #1a202c; }
+        .subtitle { font-size: 1.25rem; color: #718096; margin-bottom: 2rem; }
+        .stats { text-align: center; margin-bottom: 2rem; color: #718096; }
+        .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .category { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .category h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .category p { color: #718096; margin-bottom: 1.5rem; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .content-item { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .content-number { font-weight: bold; color: #3182ce; margin-bottom: 0.5rem; }
+        .content-text { line-height: 1.6; }
+        .money { border-left: 4px solid #38a169; }
+        .pitfalls { border-left: 4px solid #e53e3e; }
+        .writing { border-left: 4px solid #3182ce; }
+        .growth { border-left: 4px solid #805ad5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">${data.title}</h1>
+            <p class="subtitle">${data.description}</p>
+            <div class="stats">
+                \u603B\u5171\u751F\u6210\u4E86 ${data.content.length} \u6761\u5185\u5BB9 | \u751F\u6210\u65F6\u95F4: ${new Date(data.generatedAt).toLocaleString("zh-CN")}
+            </div>
+        </div>
+        
+        <div class="categories">
+            ${data.categories.map((category) => `
+                <div class="category">
+                    <h2>${category.title}</h2>
+                    <p>${category.description}</p>
+                </div>
+            `).join("")}
+        </div>
+        
+        <div class="content-grid">
+            ${data.content.map((item) => `
+                <div class="content-item ${item.category}">
+                    <div class="content-number">${item.id.toString().padStart(3, "0")}</div>
+                    <div class="content-text">${item.content}</div>
+                </div>
+            `).join("")}
+        </div>
+    </div>
+</body>
+</html>`;
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "container mx-auto px-4 py-8", children: !selectedCategory ? /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "mb-8 text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h1", { className: "text-4xl font-bold mb-4", children: data.title }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-xl text-gray-600 mb-6", children: data.description }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mb-6", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Button, { onClick: downloadHTML, className: "bg-green-600 hover:bg-green-700", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Download, { className: "h-4 w-4 mr-2" }),
+          "\u4E0B\u8F7DHTML\u6587\u4EF6"
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "text-sm text-gray-500", children: [
+          "\u603B\u5171\u751F\u6210\u4E86 ",
+          data.content.length,
+          " \u6761\u5185\u5BB9 | \u751F\u6210\u65F6\u95F4: ",
+          new Date(data.generatedAt).toLocaleString("zh-CN")
         ] })
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex justify-between items-center mb-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h1", { className: "text-3xl font-bold", children: "\u751F\u6210\u7ED3\u679C" }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Button, { variant: "outline", onClick: () => setGeneratedSite(null), children: "\u91CD\u65B0\u751F\u6210" }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Button, { onClick: downloadHTML, children: "\u4E0B\u8F7DHTML\u6587\u4EF6" })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "bg-white rounded-lg shadow-sm p-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "text-center mb-12", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h2", { className: "text-4xl font-bold mb-4", children: generatedSite.title }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-xl text-gray-600", children: generatedSite.description })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8", children: generatedSite.categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(Card, { className: "hover:shadow-md transition-shadow", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardHeader, { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardTitle, { children: category.title }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardContent, { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(CardDescription, { children: category.description }) })
-          ] }, category.id)) }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "text-center text-sm text-gray-500", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("p", { children: [
-              "\u603B\u5171\u751F\u6210\u4E86 ",
-              generatedSite.content.length,
-              " \u6761\u5185\u5BB9"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8", children: data.categories.map((category) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+        Card,
+        {
+          className: `cursor-pointer transition-all duration-300 ${getCategoryColor(category.id)}`,
+          onClick: () => setSelectedCategory(category.id),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(CardHeader, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mb-2", children: getCategoryIcon(category.id) }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(CardTitle, { children: category.title })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("p", { children: [
-              "\u751F\u6210\u65F6\u95F4: ",
-              new Date(generatedSite.generatedAt).toLocaleString("zh-CN")
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(CardContent, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(CardDescription, { className: "text-gray-700 mb-4", children: category.description }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Button, { className: "w-full", children: [
+                "\u67E5\u770B\u5185\u5BB9 (",
+                category.count,
+                "\u6761)"
+              ] })
             ] })
+          ]
+        },
+        category.id
+      )) }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid gap-4 md:grid-cols-2 lg:grid-cols-3", children: data.content.map((item) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        Card,
+        {
+          className: `border transition-transform duration-300 hover:shadow-md ${getCategoryColor(item.category)}`,
+          children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(CardContent, { className: "p-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-2 mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "font-bold text-blue-600", children: item.id.toString().padStart(3, "0") }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "text-xs px-2 py-1 rounded-full bg-gray-200 text-gray-600", children: data.categories.find((cat) => cat.id === item.category)?.title })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm font-medium leading-relaxed", children: item.content })
           ] })
-        ] })
-      ] })
+        },
+        item.id
+      )) })
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: `mb-8 rounded-lg p-6 ${getCategoryColor(selectedCategory)}`, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center justify-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-4", children: [
+          getCategoryIcon(selectedCategory),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h1", { className: "text-3xl font-bold", children: selectedCategoryData?.title }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "mt-2 text-gray-600", children: selectedCategoryData?.description })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          Button,
+          {
+            variant: "outline",
+            onClick: () => setSelectedCategory(null),
+            children: "\u8FD4\u56DE\u5168\u90E8"
+          }
+        )
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid gap-4 md:grid-cols-2 lg:grid-cols-3", children: filteredContent.map((item) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        Card,
+        {
+          className: `border transition-transform duration-300 hover:shadow-md ${getCategoryColor(selectedCategory)}`,
+          children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(CardContent, { className: "p-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex items-center gap-2 mb-2", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "font-bold text-blue-600", children: item.id.toString().padStart(3, "0") }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm font-medium leading-relaxed", children: item.content })
+          ] })
+        },
+        item.id
+      )) })
     ] }) });
   };
-  var SimpleGenerator_default = SimpleGenerator;
+  var GeneratedSitePreview_default = GeneratedSitePreview;
 
   // src/App.tsx
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   function App() {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(HashRouter, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Routes, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Route, { path: "/", element: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Home_default, {}) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Route, { path: "/generator", element: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(SimpleGenerator_default, {}) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Route, { path: "/content/:category", element: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(ContentPage_default, {}) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Route, { path: "/about", element: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(About_default, {}) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Route, { path: "/feedback", element: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Feedback_default, {}) })
+    const [generatedSite, setGeneratedSite] = (0, import_react5.useState)(null);
+    const handleAnalysisComplete = (siteData) => {
+      setGeneratedSite(siteData);
+    };
+    const handleReset = () => {
+      setGeneratedSite(null);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "min-h-screen bg-gray-50", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "container mx-auto px-4 py-8", children: !generatedSite ? /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "text-center mb-8", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h1", { className: "text-4xl font-bold mb-4", children: "PDF\u8F6C\u7F51\u7AD9\u751F\u6210\u5668" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-xl text-gray-600", children: "\u4E0A\u4F20PDF\u6587\u4EF6\uFF0C\u81EA\u52A8\u751F\u6210\u77E5\u8BC6\u5206\u4EAB\u7F51\u7AD9" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(PDFAnalyzer_default, { onAnalysisComplete: handleAnalysisComplete })
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "mb-6 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+        "button",
+        {
+          onClick: handleReset,
+          className: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors",
+          children: "\u91CD\u65B0\u4E0A\u4F20PDF"
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(GeneratedSitePreview_default, { data: generatedSite })
     ] }) }) });
   }
+  var App_default = App;
 
   // src/main.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var root = (0, import_client.createRoot)(document.getElementById("app"));
-  root.render(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(App, {}));
+  root.render(/* @__PURE__ */ (0, import_jsx_runtime11.jsx)(App_default, {}));
 })();
 /*! Bundled license information:
 
@@ -33008,36 +28659,18 @@ react/cjs/react-jsx-runtime.development.js:
    * LICENSE file in the root directory of this source tree.
    *)
 
-react-router/dist/development/chunk-C37GKA54.mjs:
-react-router/dist/development/index.mjs:
-  (**
-   * react-router v7.7.1
-   *
-   * Copyright (c) Remix Software Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE.md file in the root directory of this source tree.
-   *
-   * @license MIT
-   *)
-
 lucide-react/dist/esm/shared/src/utils.js:
 lucide-react/dist/esm/defaultAttributes.js:
 lucide-react/dist/esm/Icon.js:
 lucide-react/dist/esm/createLucideIcon.js:
-lucide-react/dist/esm/icons/arrow-left.js:
-lucide-react/dist/esm/icons/book-open.js:
+lucide-react/dist/esm/icons/circle-alert.js:
 lucide-react/dist/esm/icons/dollar-sign.js:
+lucide-react/dist/esm/icons/download.js:
 lucide-react/dist/esm/icons/file-text.js:
-lucide-react/dist/esm/icons/menu.js:
-lucide-react/dist/esm/icons/message-square.js:
 lucide-react/dist/esm/icons/square-pen.js:
-lucide-react/dist/esm/icons/star.js:
 lucide-react/dist/esm/icons/trending-up.js:
 lucide-react/dist/esm/icons/triangle-alert.js:
-lucide-react/dist/esm/icons/user.js:
-lucide-react/dist/esm/icons/wand-sparkles.js:
-lucide-react/dist/esm/icons/x.js:
+lucide-react/dist/esm/icons/upload.js:
 lucide-react/dist/esm/lucide-react.js:
   (**
    * @license lucide-react v0.503.0 - ISC

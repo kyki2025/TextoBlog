@@ -8,7 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Textarea } from '../components/ui/textarea';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
-import { ArrowLeft, Wand2 } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { ArrowLeft, Wand2, FileText, Type } from 'lucide-react';
+import PDFAnalyzer from '../components/PDFAnalyzer';
 
 const SimpleGenerator = () => {
   const [title, setTitle] = useState('');
@@ -182,61 +184,82 @@ const SimpleGenerator = () => {
         </div>
 
         {!generatedSite ? (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold mb-4">文本转网站生成器</h1>
-              <p className="text-gray-600">输入您的文本内容，自动生成知识分享网站</p>
+              <p className="text-gray-600">上传PDF文件或输入文本内容，自动生成知识分享网站</p>
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>输入内容</CardTitle>
-                <CardDescription>
-                  填写网站信息并输入要转换的文本内容
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="site-title">网站标题</Label>
-                  <Input
-                    id="site-title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="输入网站标题"
-                  />
+            <Tabs defaultValue="pdf" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="pdf" className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  PDF智能分析
+                </TabsTrigger>
+                <TabsTrigger value="text" className="flex items-center gap-2">
+                  <Type className="h-4 w-4" />
+                  手动输入
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="pdf" className="mt-6">
+                <PDFAnalyzer onAnalysisComplete={setGeneratedSite} />
+              </TabsContent>
+
+              <TabsContent value="text" className="mt-6">
+                <div className="max-w-2xl mx-auto">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>手动输入内容</CardTitle>
+                      <CardDescription>
+                        填写网站信息并输入要转换的文本内容
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <Label htmlFor="site-title">网站标题</Label>
+                        <Input
+                          id="site-title"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder="输入网站标题"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="site-description">网站描述</Label>
+                        <Input
+                          id="site-description"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          placeholder="输入网站描述"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="content-text">文本内容</Label>
+                        <Textarea
+                          id="content-text"
+                          value={content}
+                          onChange={(e) => setContent(e.target.value)}
+                          placeholder="在这里输入或粘贴您的文本内容，每行一条内容..."
+                          rows={12}
+                        />
+                      </div>
+                      
+                      <Button 
+                        onClick={handleGenerate} 
+                        disabled={!content.trim()}
+                        className="w-full"
+                      >
+                        <Wand2 className="h-4 w-4 mr-2" />
+                        生成网站
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </div>
-                
-                <div>
-                  <Label htmlFor="site-description">网站描述</Label>
-                  <Input
-                    id="site-description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="输入网站描述"
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="content-text">文本内容</Label>
-                  <Textarea
-                    id="content-text"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="在这里输入或粘贴您的文本内容，每行一条内容..."
-                    rows={12}
-                  />
-                </div>
-                
-                <Button 
-                  onClick={handleGenerate} 
-                  disabled={!content.trim()}
-                  className="w-full"
-                >
-                  <Wand2 className="h-4 w-4 mr-2" />
-                  生成网站
-                </Button>
-              </CardContent>
-            </Card>
+              </TabsContent>
+            </Tabs>
           </div>
         ) : (
           <div>
@@ -273,7 +296,7 @@ const SimpleGenerator = () => {
               </div>
 
               <div className="text-center text-sm text-gray-500">
-                <p>总共生成了 {generatedSite.content.length} 条内容</p>
+                <p>总共生成了 {generatedSite.content?.length || 0} 条内容</p>
                 <p>生成时间: {new Date(generatedSite.generatedAt).toLocaleString('zh-CN')}</p>
               </div>
             </div>
